@@ -1,0 +1,25 @@
+---
+import { resolveUrl } from '../../utils.mjs';
+const { data } = Astro.props;
+---
+<section class="act act--wash" id="contact">
+  <div class="wrap act__inner">
+    <h2>{data.heading}</h2>
+    <p class="lede">{data.body}</p>
+
+    <div class="actions">
+      <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
+    </div>
+
+    <ul class="contact-list">
+      {data.email && (
+        <li><a href={`mailto:${data.email}`}>{data.email}</a></li>
+      )}
+      {data.facebook && (
+        <li><a href={data.facebook}>Message on Facebook</a></li>
+      )}
+    </ul>
+
+    {data.responseNote && <p class="contact-note">{data.responseNote}</p>}
+  </div>
+</section>

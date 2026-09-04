@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Hero from '../components/sections/Hero.astro';
+import Hook from '../components/sections/Hook.astro';
+import Explainer from '../components/sections/Explainer.astro';
+import Chapter from '../components/sections/Chapter.astro';
+import WhoFor from '../components/sections/WhoFor.astro';
+import Work from '../components/sections/Work.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import Packages from '../components/sections/Packages.astro';
+import About from '../components/sections/About.astro';
+import Process from '../components/sections/Process.astro';
+import Faq from '../components/sections/Faq.astro';
+import Contact from '../components/sections/Contact.astro';
+import Closing from '../components/sections/Closing.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages', ({ data }) => !data.draft);
+  return pages.map((entry) => {
+    const slug = entry.data.urlPath ?? entry.slug;
+    return {
+      params: { slug: slug === 'index' ? undefined : slug },
+      props: { entry },
+    };
+  });
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const slug = d.urlPath ?? entry.slug;
+const path = slug === 'index' ? '/' : `/${slug}/`;
+
+/* Three chapter breaks split the page into four acts. Remove one in
+   the CMS and the page still renders, just without that break. */
+const chapter = (i) => d.chapters?.[i];
+---
+
+<Base title={d.title} description={d.metaDescription} page={d} path={path}>
+
+  {/* ACT ONE: why you are here */}
+  <Hero data={d.hero} />
+  <Hook data={d.hook} />
+  <Explainer data={d.explainer} />
+
+  {chapter(0) && <Chapter data={chapter(0)} />}
+
+  {/* ACT TWO: is this you */}
+  <WhoFor data={d.whoFor} />
+  <Work data={d.work} />
+
+  {chapter(1) && <Chapter data={chapter(1)} />}
+
+  {/* ACT THREE: proof and price */}
+  <Testimonials data={d.testimonials} />
+  <Packages data={d.packages} bookingLabel={d.hero.cta.label} />
+  <About data={d.about} />
+
+  {chapter(2) && <Chapter data={chapter(2)} />}
+
+  {/* ACT FOUR: how we start */}
+  <Process data={d.process} />
+  <Faq data={d.faq} />
+  <Contact data={d.contact} />
+  <Closing data={d.closing} />
+
+</Base>

@@ -1,0 +1,36 @@
+---
+import { resolveUrl } from '../../utils.mjs';
+const { data, bookingLabel } = Astro.props;
+---
+<section class="act" id="packages">
+  <div class="wrap act__inner">
+    <h2>{data.heading}</h2>
+    {data.intro && <p>{data.intro}</p>}
+
+    <p class="swipe-cue">
+      <span>Swipe for all four</span>
+      <span class="swipe-cue__arrow" aria-hidden="true">&rarr;</span>
+    </p>
+
+    <div class="stack" style="margin-top:1.5rem">
+      {data.items.map((p) => (
+        <article class:list={['block', p.featured && 'block--featured']}>
+          <h3>{p.name}</h3>
+          <p class="price">
+            {p.price}
+            {p.cadence && <span class="cadence"> {p.cadence}</span>}
+          </p>
+          {p.summary && <p>{p.summary}</p>}
+          <ul>
+            {p.features.map((f) => <li>{f}</li>)}
+          </ul>
+          <a class="btn" href={resolveUrl(p.cta?.url ?? 'BOOKING_URL')}>
+            {p.cta?.label ?? bookingLabel}
+          </a>
+        </article>
+      ))}
+    </div>
+
+    {data.note && <p class="lede" style="margin-top:1.5rem">{data.note}</p>}
+  </div>
+</section>

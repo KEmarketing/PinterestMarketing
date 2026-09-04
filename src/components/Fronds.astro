@@ -1,0 +1,171 @@
+---
+/**
+ * Fronds: the site's signature motion.
+ *
+ * Fronds are ROOTED OFF-SCREEN at the edges, so they read as a frame
+ * growing into the page rather than clip-art floating in space.
+ * They sway on slow, offset cycles. On scroll a short "gust" raises
+ * the sway amplitude and then decays, so the page feels breathed on
+ * rather than animated at.
+ *
+ * Frozen at rest for anyone with reduced motion turned on.
+ *
+ * Props:
+ *   corner  - "tl" | "tr" | "bl" | "br"   which edge it grows from
+ *   scale   - visual size multiplier (default 1)
+ *   tone    - "mint" | "deep" | "pale"    which green
+ *   delay   - seconds, to offset its sway from its neighbours
+ */
+const {
+  corner = 'tl',
+  scale = 1,
+  tone = 'mint',
+  delay = 0,
+  blur = 0,
+  opacity = 1,
+} = Astro.props;
+
+/* ---- geometry -------------------------------------------------
+   Build one frond: a curved rachis (stem) with tapering leaflets
+   alternating down both sides. Generated here at build time so the
+   markup ships as plain static SVG with no runtime cost.        */
+
+const LEAFLETS = 15;
+const LEN = 300;      // stem length
+const ARC = 96;       // how much the stem curves
+
+function stemPoint(t) {
+  // quadratic bezier from root (0,0) to tip, bowing upward
+  const x = 2 * (1 - t) * t * (LEN * 0.45) + t * t * LEN;
+  const y = 2 * (1 - t) * t * -ARC + t * t * -ARC * 0.55;
+  return [x, y];
+}
+
+function stemTangent(t) {
+  const d = 0.001;
+  const [x1, y1] = stemPoint(Math.max(0, t - d));
+  const [x2, y2] = stemPoint(Math.min(1, t + d));
+  return Math.atan2(y2 - y1, x2 - x1);
+}
+
+const leaflets = [];
+for (let i = 0; i < LEAFLETS; i++) {
+  const t = 0.12 + (i / (LEAFLETS - 1)) * 0.86;
+  const [x, y] = stemPoint(t);
+  const ang = stemTangent(t);
+
+  // leaflets are longest in the middle of the frond, short at both ends
+  const bell = Math.sin(Math.PI * ((t - 0.08) / 0.94));
+  const bladeLen = 34 + bell * 74;
+  const bladeWide = 5 + bell * 9;
+
+  for (const side of [-1, 1]) {
+    // sweep back toward the root a little, like a real frond
+    const spread = (0.95 - 0.28 * t) * side;
+    const a = ang + spread;
+    const tipX = x + Math.cos(a) * bladeLen;
+    const tipY = y + Math.sin(a) * bladeLen;
+    const midX = x + Math.cos(a) * bladeLen * 0.5;
+    const midY = y + Math.sin(a) * bladeLen * 0.5;
+    const nx = Math.cos(a + Math.PI / 2) * bladeWide;
+    const ny = Math.sin(a + Math.PI / 2) * bladeWide;
+
+    leaflets.push({
+      d: `M ${x.toFixed(1)} ${y.toFixed(1)}
+          Q ${(midX + nx).toFixed(1)} ${(midY + ny).toFixed(1)} ${tipX.toFixed(1)} ${tipY.toFixed(1)}
+          Q ${(midX - nx * 0.55).toFixed(1)} ${(midY - ny * 0.55).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)} Z`,
+      i,
+      side,
+    });
+  }
+}
+
+const stemPath = `M 0 0 Q ${(LEN * 0.45).toFixed(1)} ${(-ARC).toFixed(1)} ${LEN} ${(-ARC * 0.55).toFixed(1)}`;
+
+const tones = {
+  mint:  { fill: '#B8E0D0', stem: '#8FC7B2' },
+  deep:  { fill: '#8FC7B2', stem: '#6FAE97' },
+  pale:  { fill: '#D8F0E8', stem: '#B8E0D0' },
+};
+const c = tones[tone] || tones.mint;
+const uid = 'f' + Math.random().toString(36).slice(2, 8);
+---
+
+<div
+  class:list={['frond', `frond--${corner}`]}
+  style={`--frond-scale:${scale}; --frond-delay:${delay}s; --frond-blur:${blur}px; --frond-opacity:${opacity};`}
+  aria-hidden="true"
+>
+  <svg viewBox="-40 -220 420 260" class="frond__svg" role="presentation" focusable="false">
+    <g class="frond__pivot">
+      <path d={stemPath} fill="none" stroke={c.stem} stroke-width="3.5" stroke-linecap="round" />
+      {leaflets.map((l) => (
+        <path
+          d={l.d}
+          fill={c.fill}
+          class="frond__leaf"
+          style={`--leaf-i:${l.i}; --leaf-side:${l.side};`}
+        />
+      ))}
+    </g>
+  </svg>
+</div>
+
+<style>
+  .frond {
+    position: absolute;
+    width: calc(300px * var(--frond-scale));
+    pointer-events: none;
+    opacity: var(--frond-opacity);
+    filter: blur(var(--frond-blur));
+    z-index: 0;
+  }
+
+  .frond__svg { width: 100%; height: auto; overflow: visible; }
+
+  /* Root each frond just past the edge so no cut stem is visible */
+  .frond--tl { top: -3%;    left: -9%;  transform: rotate(8deg); }
+  .frond--tr { top: -3%;    right: -9%; transform: scaleX(-1) rotate(8deg); }
+  .frond--bl { bottom: -6%; left: -9%;  transform: scaleY(-1) rotate(8deg); }
+  .frond--br { bottom: -6%; right: -9%; transform: scale(-1, -1) rotate(8deg); }
+
+  /* --- the breeze ------------------------------------------- */
+  .frond__pivot {
+    transform-origin: 0px 0px;   /* pivot at the root, like a real stem */
+    transform-box: view-box;
+    animation: sway var(--breeze-base) ease-in-out infinite;
+    animation-delay: var(--frond-delay);
+    will-change: transform;
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(calc(-1.6deg * var(--gust-mult, 1))); }
+    50%      { transform: rotate(calc(2.4deg * var(--gust-mult, 1))); }
+  }
+
+  /* Leaflets flutter a touch out of phase with the stem, which is
+     what stops it reading as one flat shape rotating. */
+  .frond__leaf {
+    transform-origin: 0px 0px;
+    transform-box: view-box;
+    animation: flutter calc(var(--breeze-base) * 0.42) ease-in-out infinite;
+    animation-delay: calc(var(--frond-delay) + var(--leaf-i) * 0.11s);
+  }
+
+  @keyframes flutter {
+    0%, 100% { transform: rotate(calc(-0.7deg * var(--leaf-side) * var(--gust-mult, 1))); }
+    50%      { transform: rotate(calc(0.9deg  * var(--leaf-side) * var(--gust-mult, 1))); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .frond__pivot, .frond__leaf { animation: none; }
+  }
+
+  /* Smaller phones: pull the fronds further off-edge so they frame
+     rather than crowd the copy. */
+  @media (max-width: 600px) {
+    .frond { width: calc(210px * var(--frond-scale)); }
+    .frond--tl, .frond--bl { left: -16%; }
+    .frond--tr, .frond--br { right: -16%; }
+  }
+</style>

@@ -1,0 +1,16 @@
+---
+const { data } = Astro.props;
+---
+<section class="act" id="how-it-works">
+  <div class="wrap act__inner">
+    <h2>{data.heading}</h2>
+    <ol style="margin-top:1.5rem">
+      {data.steps.map((s) => (
+        <li style="margin-bottom:1rem">
+          <h3>{s.heading}</h3>
+          <p>{s.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

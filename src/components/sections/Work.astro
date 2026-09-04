@@ -1,0 +1,23 @@
+---
+/* Horizontal swipe strip rather than a grid: Pinterest is a
+   horizontal-browsing platform, so it matches the subject, and on a
+   phone it is the most natural gesture on the page. */
+const { data } = Astro.props;
+---
+<section class="act" id="pin-examples">
+  <div class="wrap act__inner">
+    <h2>{data.heading}</h2>
+    {data.intro && <p class="lede">{data.intro}</p>}
+  </div>
+  <div class="strip" role="region" aria-label="Pin design examples" tabindex="0">
+    {data.images.map((img) => (
+      <img src={img.src} alt={img.alt} width="400" height="600" loading="lazy" />
+    ))}
+  </div>
+  <div class="wrap">
+    <p class="swipe-cue">
+      <span>Swipe to see more</span>
+      <span class="swipe-cue__arrow" aria-hidden="true">&rarr;</span>
+    </p>
+  </div>
+</section>

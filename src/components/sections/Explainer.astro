@@ -1,0 +1,19 @@
+---
+const { data } = Astro.props;
+---
+<section class="act act--pin" id="how-pinterest-works">
+  <div class="wrap act__inner">
+    <h2>{data.heading}</h2>
+    <p>{data.body}</p>
+    {data.points.length > 0 && (
+      <div class="grid grid--2" style="margin-top:1.5rem">
+        {data.points.map((p) => (
+          <div>
+            <h3>{p.heading}</h3>
+            <p>{p.body}</p>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>

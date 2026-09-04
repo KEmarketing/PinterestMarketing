@@ -1,0 +1,188 @@
+---
+import { SITE } from '../site.config.mjs';
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+import '../styles/components.css';
+
+const { title, description, page, path = '/' } = Astro.props;
+const canonical = new URL(path, SITE.url).href;
+
+/* ---------------------------------------------------------------
+   Structured data. This is the bulk of the AEO/GEO work: answer
+   engines lean on it heavily, and it costs nothing to serve.
+   Built from the same content fields the CMS edits, so it can
+   never drift out of sync with what is on the page.
+   --------------------------------------------------------------- */
+
+const person = {
+  '@type': 'Person',
+  '@id': `${SITE.url}/#kandace`,
+  name: 'Kandace Emory',
+  jobTitle: 'Pinterest Marketing Manager',
+  email: SITE.email,
+  sameAs: [SITE.facebook],
+  url: SITE.url,
+};
+
+const services = (page?.packages?.items ?? []).map((p) => ({
+  '@type': 'Service',
+  name: p.name,
+  provider: { '@id': `${SITE.url}/#business` },
+  serviceType: 'Pinterest marketing',
+  offers: {
+    '@type': 'Offer',
+    price: String(p.price).replace(/[^0-9.]/g, ''),
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+    description: p.cadence ? `${p.price} ${p.cadence}` : p.price,
+  },
+}));
+
+const reviews = (page?.testimonials?.items ?? [])
+  .filter((t) => !t.quote.startsWith('PLACEHOLDER'))
+  .map((t) => ({
+    '@type': 'Review',
+    reviewBody: t.quote,
+    author: { '@type': 'Person', name: t.name },
+    itemReviewed: { '@id': `${SITE.url}/#business` },
+  }));
+
+const faqs = (page?.faq?.items ?? [])
+  .filter((f) => !f.question.startsWith('PLACEHOLDER'))
+  .map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  }));
+
+const graph = [
+  person,
+  {
+    '@type': 'ProfessionalService',
+    '@id': `${SITE.url}/#business`,
+    name: SITE.name,
+    description,
+    url: SITE.url,
+    email: SITE.email,
+    founder: { '@id': `${SITE.url}/#kandace` },
+    areaServed: { '@type': 'Country', name: 'United States' },
+    address: { '@type': 'PostalAddress', addressRegion: SITE.region, addressCountry: SITE.country },
+    sameAs: [SITE.facebook],
+    ...(reviews.length ? { review: reviews } : {}),
+  },
+  ...services,
+  {
+    '@type': 'WebPage',
+    '@id': canonical,
+    url: canonical,
+    name: title,
+    description,
+    isPartOf: { '@id': `${SITE.url}/#business` },
+  },
+];
+
+if (faqs.length) {
+  graph.push({ '@type': 'FAQPage', mainEntity: faqs });
+}
+
+const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preload" href="/fonts/cormorant-garamond.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="/">KANDACE EMORY</a>
+        <a class="btn" href={SITE.booking}>Book a call</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <script is:inline>
+      /* Every act pins, on every screen size.
+
+         A sticky act taller than the viewport would normally hide
+         its own bottom: it locks at top:0 and the next act rises
+         over the part you never got to read. Sticking it to the
+         BOTTOM instead fixes that. It scrolls up normally until its
+         last line reaches the bottom of the screen, then it holds
+         there while the next act covers it. Nothing is unreachable
+         and the pinned rhythm survives on a phone.
+
+         The offset has to be measured, because a percentage in
+         `top` resolves against the parent, not the element. */
+      (function () {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        var acts = document.querySelectorAll('.act');
+
+        function fit() {
+          for (var i = 0; i < acts.length; i++) {
+            var a = acts[i];
+            a.style.top = '';
+            if (reduce.matches) continue;
+            var overshoot = a.offsetHeight - window.innerHeight;
+            a.style.top = overshoot > 0 ? (-overshoot) + 'px' : '0px';
+          }
+        }
+
+        fit();
+
+        /* An act's height is not fixed: the webfonts swap in, the pin
+           images decode, and opening an FAQ answer grows that section
+           after load. A stale measurement would push its bottom back
+           off the screen, so watch the acts themselves rather than
+           measuring once. */
+        if (window.ResizeObserver) {
+          var ro = new ResizeObserver(function () { fit(); });
+          for (var j = 0; j < acts.length; j++) ro.observe(acts[j]);
+        } else {
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+          window.addEventListener('load', fit);
+          document.addEventListener('toggle', fit, true);
+        }
+
+        var t;
+        window.addEventListener('resize', function () {
+          clearTimeout(t); t = setTimeout(fit, 150);
+        });
+        if (reduce.addEventListener) reduce.addEventListener('change', fit);
+      })();
+    </script>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p><strong>{SITE.name}</strong></p>
+        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a> &middot; <a href={SITE.facebook}>Facebook</a></p>
+        <p>Not affiliated with or endorsed by Pinterest. Results vary and are not guaranteed.</p>
+        <p>&copy; {new Date().getFullYear()} {SITE.name} &middot; Built with love by <a href="https://rootlineweb.co" rel="noopener">Rootline Web Co</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

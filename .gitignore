@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+
+# Working material, not part of the site.
+# reference/ holds the Canva brand-board pull, which includes inspo
+# images collected for mood and not licensed for publishing. The repo
+# is public, so these must not go up.
+reference/

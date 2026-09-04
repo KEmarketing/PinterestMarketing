@@ -1,0 +1,13 @@
+---
+const { data } = Astro.props;
+---
+<section class="act act--pin act--wash" id="who-its-for">
+  <div class="wrap act__inner">
+    <h2>{data.heading}</h2>
+    <p>{data.intro}</p>
+    <ul>
+      {data.items.map((item) => <li>{item}</li>)}
+    </ul>
+    {data.footnote && <p class="lede">{data.footnote}</p>}
+  </div>
+</section>

@@ -1,0 +1,17 @@
+---
+import { resolveUrl } from '../../utils.mjs';
+const { data } = Astro.props;
+---
+<section class="act act--pin" id="top">
+  <div class="wrap act__inner">
+    <h1>{data.heading}</h1>
+    <p class="lede">{data.subheading}</p>
+    <div class="actions">
+      <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
+      {data.secondaryCta && (
+        <a class="btn btn--ghost" href={resolveUrl(data.secondaryCta.url)}>{data.secondaryCta.label}</a>
+      )}
+    </div>
+    {data.image && <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" />}
+  </div>
+</section>

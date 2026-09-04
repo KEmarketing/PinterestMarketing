@@ -1,0 +1,483 @@
+/* ===============================================================
+   COMPONENT LAYER
+   Everything the sections actually use, expressed in the tokens
+   from tokens.css. Loaded after tokens.css.
+
+   Stage 1 deliberately stops short of the full design: her type,
+   her palette, her spacing, and nothing else. The lattice, the
+   colour blocking and the motion are stage 2 and 3, layered on
+   top of this without replacing it.
+   =============================================================== */
+
+/* --- Lists ---------------------------------------------------- */
+ul, ol { margin: 0 0 var(--sp-3); padding-left: 1.15rem; max-width: var(--measure); }
+li { margin-bottom: 0.45rem; }
+li::marker { color: var(--leaf); }
+
+/* --- Buttons -------------------------------------------------- */
+/* The sections use a bare .btn, so .btn is the primary button.
+   tokens.css supplies the shared shape. */
+.btn {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+.btn:hover { background: var(--navy-deep); border-color: var(--navy-deep); }
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+}
+
+/* --- Acts ----------------------------------------------------- */
+.act {
+  position: relative;
+  padding-block: var(--sp-6);
+  background: var(--paper);
+}
+.act--wash { background: var(--mint-pale); }
+
+/* EVERY act pins, top to bottom of the page. Tall ones get a
+   negative sticky `top` measured in Base.astro so they hold at the
+   BOTTOM of the screen instead of the top, which keeps their last
+   line reachable. The chapter breaks are not acts, so they stay in
+   normal flow and slide over whatever is holding. */
+.act {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* The outgoing act settles back as the next one rises.
+   Scroll-driven where supported, a no-op everywhere else. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .act > * {
+      animation: act-settle linear both;
+      animation-timeline: view();
+      animation-range: exit 10% exit 90%;
+    }
+    @keyframes act-settle {
+      to { transform: scale(.94) translateY(-2rem); opacity: .35; }
+    }
+  }
+}
+
+/* A tall act sizes to its content, not to the screen. */
+.act { height: auto; }
+
+/* --- Chapter breaks ------------------------------------------- */
+.chapter {
+  position: relative;
+  z-index: 1;
+  min-height: 55svh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  text-align: center;
+  padding: var(--sp-5) var(--gutter);
+  background: var(--navy);
+}
+.chapter__line {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--step-3);
+  line-height: 1.1;
+  color: #fff;
+  margin: 0;
+  max-width: 20ch;
+}
+.chapter__sub {
+  font-size: var(--step--1);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin: var(--sp-3) 0 0;
+  max-width: 34ch;
+}
+
+/* --- Package cards -------------------------------------------- */
+.stack { display: grid; gap: var(--sp-3); }
+@media (min-width: 52rem) {
+  .stack { grid-template-columns: repeat(2, 1fr); }
+}
+
+.block {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+}
+.block ul { flex: 1; }
+.block .btn { align-self: flex-start; }
+
+.block--featured {
+  border-color: var(--navy);
+  box-shadow: inset 0 3px 0 0 var(--navy);
+}
+
+.price {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--step-2);
+  color: var(--navy);
+  margin: 0 0 var(--sp-2);
+}
+.cadence {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* --- Grid ----------------------------------------------------- */
+.grid { display: grid; gap: var(--sp-4); grid-template-columns: 1fr; }
+@media (min-width: 40rem) {
+  .grid--2 { grid-template-columns: repeat(2, 1fr); }
+  .grid--4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* --- Testimonials --------------------------------------------- */
+blockquote {
+  margin: 0;
+  padding-left: var(--sp-3);
+  border-left: 2px solid var(--leaf);
+}
+blockquote p {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--ink);
+}
+cite {
+  font-style: normal;
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* --- Process -------------------------------------------------- */
+ol { counter-reset: step; list-style: none; padding-left: 0; }
+ol > li { counter-increment: step; padding-left: 3.25rem; position: relative; }
+ol > li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 300;
+  color: var(--amber);
+  line-height: 1;
+}
+
+/* --- FAQ ------------------------------------------------------ */
+details { border-bottom: 1px solid var(--rule); }
+details:first-of-type { border-top: 1px solid var(--rule); }
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding-block: var(--sp-2);
+  color: var(--navy);
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: '+';
+  margin-left: auto;
+  font-size: var(--step-1);
+  color: var(--amber);
+  line-height: 1;
+}
+details[open] summary::after { content: '\2013'; }
+details p { margin-top: 0; padding-bottom: var(--sp-3); }
+
+/* --- Pin strip ------------------------------------------------ */
+.strip {
+  display: flex;
+  gap: var(--sp-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: var(--sp-4) var(--gutter);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.strip::-webkit-scrollbar { display: none; }
+.strip img {
+  flex: 0 0 auto;
+  width: min(62vw, 260px);
+  height: auto;
+  border-radius: var(--radius);
+  scroll-snap-align: center;
+}
+.strip:focus-visible { outline: 2px solid var(--coral-ink); outline-offset: 2px; }
+.strip-hint {
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* --- Portraits ------------------------------------------------ */
+.headshot {
+  max-width: min(240px, 26svh);
+  margin-top: var(--sp-4);
+  border-radius: var(--radius);
+}
+
+/* --- Header --------------------------------------------------- */
+.site-header {
+  position: relative;
+  z-index: 10;
+  padding: var(--sp-3) 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--step-1);
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  color: var(--navy);
+  white-space: nowrap;
+}
+.site-header .btn {
+  min-height: 44px;
+  padding: 0.5em 1.2em;
+  font-size: var(--step--1);
+}
+
+/* --- Footer --------------------------------------------------- */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--sp-5);
+  background: var(--navy);
+  color: #D3E0E4;
+  font-size: var(--step--1);
+}
+.site-footer p { max-width: none; margin-bottom: var(--sp-1); }
+.site-footer a { color: #fff; }
+
+/* --- Contact -------------------------------------------------- */
+.contact-list { list-style: none; padding: 0; margin: var(--sp-4) 0 0; }
+.contact-list li { margin-bottom: var(--sp-1); }
+.contact-note {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  margin-top: var(--sp-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .act { position: static; min-height: 0; display: block; }
+  .strip { scroll-snap-type: none; }
+}
+
+/* --- Act interior --------------------------------------------- */
+/* Text acts sat in a 74rem wrap with a 34rem measure, which left a
+   wide empty band on desktop and read as unfinished rather than
+   restrained. Cap the interior instead. */
+.act__inner { max-width: 68rem; }
+
+/* tokens.css zeroes all heading margins. Sections need the space
+   back or the heading collides with the paragraph under it. */
+.act__inner > h1,
+.act__inner > h2 { margin-bottom: var(--sp-3); }
+
+/* Hero and About put their portrait beside the text on wider
+   screens rather than stranding it underneath. Uses the existing
+   markup, no component changes. */
+@media (min-width: 52rem) {
+  #top .act__inner:has(.headshot),
+  #about .act__inner:has(.headshot) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    column-gap: var(--sp-6);
+    align-items: center;
+  }
+  #top .act__inner:has(.headshot) > :not(.headshot),
+  #about .act__inner:has(.headshot) > :not(.headshot) { grid-column: 1; }
+
+  #top .headshot,
+  #about .headshot {
+    grid-column: 2;
+    grid-row: 1 / span 10;
+    align-self: center;
+    justify-self: center;
+    margin-top: 0;
+    max-width: 320px;
+  }
+}
+
+/* The lede is the second thing read on the page. It was sitting at
+   body size in grey and disappearing. */
+.lede { max-width: 32rem; margin-bottom: var(--sp-4); }
+#top .lede { font-size: var(--step-1); color: var(--ink); }
+
+/* The chapter kicker was floating a long way under its line. */
+.chapter__sub { margin-top: var(--sp-2); }
+
+/* With no portrait beside it, the hero is type-led. Hold the
+   headline to a readable line length so it reads as a deliberate
+   three-line statement rather than one very wide line. */
+#top .act__inner:not(:has(.headshot)) h1 { max-width: 15ch; }
+
+/* With a photo beside it the hero portrait carries more weight than
+   the small About one. */
+#top .headshot { max-width: 420px; }
+
+/* ===============================================================
+   COLOUR BLOCKING
+   Each section arrives as its own panel, so that when one slides
+   over another the seam is visible. Navy is the anchor: it holds
+   the three chapter breaks, the closing call and the footer, and
+   everything between them is a light tint.
+
+   Amber and coral are deliberately absent. Her navy sits at 3.2:1
+   on amber and 3.4:1 on coral, which is under AA for body text, so
+   those two stay as accents rather than panels.
+   =============================================================== */
+
+#top                  { background: var(--paper); }
+#why-pinterest        { background: var(--mint); }
+#how-pinterest-works  { background: var(--paper-warm); }
+#who-its-for          { background: var(--blush-pale); }
+#pin-examples         { background: var(--paper); }
+#testimonials         { background: var(--mint-pale); }
+#packages             { background: var(--paper-warm); }
+#about                { background: var(--gold-pale); }
+#how-it-works         { background: var(--paper); }
+#faq                  { background: var(--mint); }
+#contact              { background: var(--paper-warm); }
+#book                 { background: var(--navy); }
+
+/* Small grey text needs to darken on the tinted panels. */
+#why-pinterest, #who-its-for, #testimonials, #about, #faq {
+  --ink-soft: var(--ink-soft-tint);
+}
+
+/* The closing call sits on navy, so it inverts. */
+#book h2 { color: #fff; }
+#book p { color: #D3E0E4; }
+#book .btn { background: #fff; color: var(--navy); border-color: #fff; }
+#book .btn:hover { background: var(--mint); border-color: var(--mint); }
+
+/* The footer follows the closing panel, so it steps a shade darker
+   rather than merging into it. */
+.site-footer { background: var(--navy-deep); }
+
+/* Amber numerals were 2.1:1 on paper. Her deep gold passes. */
+ol > li::before { color: var(--gold-ink); }
+
+/* The FAQ marker sits on full-strength mint now, where amber
+   disappears. It carries open/closed state, so it has to be seen. */
+summary::after { color: var(--navy); opacity: 0.65; }
+
+/* Cards keep a white face so they lift off the warm panel. */
+.block { background: #fff; }
+
+/* ===============================================================
+   PACKAGES ON A PHONE
+   Four full cards stacked made this section 3500px tall and turned
+   the pinned hold into a very long one. On a phone they become a
+   swipe instead: no borders, no card faces, one package per screen
+   with the next one peeking so the gesture is obvious.
+   =============================================================== */
+
+@media (max-width: 51.999rem) {
+  #packages .stack {
+    display: flex;
+    gap: var(--sp-4);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 0 var(--gutter) var(--sp-3);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  #packages .stack::-webkit-scrollbar { display: none; }
+
+  #packages .block {
+    flex: 0 0 76vw;          /* the next card peeks, which is the hint */
+    scroll-snap-align: start;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+  #packages .block--featured { box-shadow: none; }
+}
+
+/* The swipe cue. Visible only where the strip exists. */
+.swipe-cue {
+  display: none;
+  align-items: center;
+  gap: 0.6em;
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 var(--sp-3);
+}
+@media (max-width: 51.999rem) {
+  .swipe-cue { display: flex; }
+}
+.swipe-cue__arrow {
+  display: inline-block;
+  font-size: 1.15em;
+  line-height: 1;
+  animation: swipe-nudge 1.9s var(--ease-soft) infinite;
+}
+@keyframes swipe-nudge {
+  0%, 60%, 100% { transform: translateX(0); }
+  30%           { transform: translateX(0.45em); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .swipe-cue__arrow { animation: none; }
+}
+
+/* --- Testimonial attribution ---------------------------------- */
+.quote-by {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+}
+.avatar {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* On a phone the hero photo lands under the buttons and only a
+   sliver of it is above the fold, which reads like a mistake. The
+   hero goes back to type only at that width. Her face still appears
+   further down in About. */
+@media (max-width: 51.999rem) {
+  #top .headshot { display: none; }
+}

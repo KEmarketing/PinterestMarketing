@@ -1,0 +1,191 @@
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: pages
+    label: Pages
+    type: collection
+    path: src/content/pages
+    filename: '{fields.urlPath}.md'
+    view:
+      fields: [title, urlPath, draft]
+    fields:
+      - { name: title, label: Page title (shows in Google), type: string }
+      - { name: metaDescription, label: Search description, type: text, description: "Around 150 characters. This is the grey text under your title in Google." }
+      - { name: urlPath, label: Web address, type: string, description: "Use 'index' for the main page. Anything else becomes yoursite.com/that-word." }
+      - { name: draft, label: Hide this page, type: boolean, default: false }
+
+      - name: hero
+        label: Top of the page
+        type: object
+        fields:
+          - { name: heading, label: Headline, type: string }
+          - { name: subheading, label: Supporting line, type: text }
+          - name: cta
+            label: Main button
+            type: object
+            fields:
+              - { name: label, label: Button text, type: string }
+              - { name: url, label: Button link, type: string, description: "Type BOOKING_URL to use your Acuity link." }
+          - name: secondaryCta
+            label: Second button (optional)
+            type: object
+            fields:
+              - { name: label, label: Button text, type: string }
+              - { name: url, label: Button link, type: string }
+          - { name: image, label: Photo, type: image }
+          - { name: imageAlt, label: Photo description, type: string }
+
+      - name: hook
+        label: The problem you solve
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Text, type: text }
+
+      - name: explainer
+        label: Why Pinterest
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Text, type: text }
+          - name: points
+            label: Points
+            type: object
+            list: true
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: body, label: Text, type: text }
+
+      - name: whoFor
+        label: Who this is for
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: intro, label: Intro line, type: text }
+          - { name: items, label: List, type: string, list: true }
+          - { name: footnote, label: Closing line, type: text }
+
+      - name: packages
+        label: Packages
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: intro, label: Intro line, type: text }
+          - { name: note, label: Note under the packages, type: text }
+          - name: items
+            label: Package
+            type: object
+            list: true
+            fields:
+              - { name: name, label: Package name, type: string }
+              - { name: price, label: Price, type: string }
+              - { name: cadence, label: "How often (e.g. one time, per month)", type: string }
+              - { name: summary, label: Who it suits, type: text }
+              - { name: features, label: What's included, type: string, list: true }
+              - { name: featured, label: Highlight this one, type: boolean, default: false }
+
+      - name: work
+        label: Pin examples
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: intro, label: Intro line, type: text }
+          - name: images
+            label: Pin image
+            type: object
+            list: true
+            fields:
+              - { name: src, label: Image, type: image }
+              - { name: alt, label: Image description, type: string }
+
+      - name: about
+        label: About you
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Text, type: text }
+          - { name: bullets, label: Background points, type: string, list: true }
+          - { name: image, label: Photo, type: image }
+          - { name: imageAlt, label: Photo description, type: string }
+
+      - name: testimonials
+        label: Testimonials
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - name: items
+            label: Testimonial
+            type: object
+            list: true
+            fields:
+              - { name: quote, label: What they said, type: text }
+              - { name: name, label: Their name, type: string }
+              - { name: role, label: Their business or role, type: string }
+              - { name: image, label: Their photo (optional), type: image }
+              - { name: imageAlt, label: Photo description, type: string }
+
+      - name: process
+        label: How it works
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - name: steps
+            label: Step
+            type: object
+            list: true
+            fields:
+              - { name: heading, label: Step title, type: string }
+              - { name: body, label: Step text, type: text }
+
+      - name: faq
+        label: Questions
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - name: items
+            label: Question
+            type: object
+            list: true
+            fields:
+              - { name: question, label: Question, type: string }
+              - { name: answer, label: Answer, type: text }
+
+      - name: chapters
+        label: Chapter breaks
+        type: object
+        list: true
+        description: "The short full-width moments between sections. Three of them."
+        fields:
+          - { name: line, label: Big line, type: string }
+          - { name: sub, label: Small line under it, type: string }
+
+      - name: contact
+        label: Contact
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Text, type: text }
+          - name: cta
+            label: Button
+            type: object
+            fields:
+              - { name: label, label: Button text, type: string }
+              - { name: url, label: Button link, type: string }
+          - { name: email, label: Email address, type: string }
+          - { name: facebook, label: Facebook page link, type: string }
+          - { name: responseNote, label: How fast you reply, type: string }
+
+      - name: closing
+        label: Bottom of the page
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Text, type: text }
+          - name: cta
+            label: Button
+            type: object
+            fields:
+              - { name: label, label: Button text, type: string }
+              - { name: url, label: Button link, type: string }

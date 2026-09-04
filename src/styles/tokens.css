@@ -1,0 +1,249 @@
+/* ===============================================================
+   Design tokens: Kandace Emory Pinterest Marketing
+   Colours sampled from her own brand portfolio.
+   Change a value here and it updates everywhere on the site.
+   =============================================================== */
+
+:root {
+  /* --- Colour ------------------------------------------------ */
+  /* Official hex values from Kandace's Canva brand board. */
+  --navy: #455F76;          /* grounding colour, her request */
+  --navy-deep: #33485B;     /* derived: darker navy for hover states */
+  --mint: #BEE2D0;
+  --mint-pale: #DCF0E6;     /* derived: mint lightened for section washes */
+  --leaf: #8EC07B;
+  --blush: #FFD1C1;
+  --coral: #FFA384;
+  --coral-ink: #D83600;     /* derived: coral darkened to pass AA on white */
+  --gold: #EDD776;
+  --gold-deep: #DDC24F;
+  --amber: #ECA453;
+  --gold-ink: #8A7318;      /* derived: gold darkened for small text */
+
+  /* Derived pale tints, for panels that carry a lot of reading.
+     Her full-strength gold, blush and mint are fine behind short
+     statements but heavy behind body copy. */
+  --blush-pale: #FFE7DE;
+  --gold-pale: #F7EDC6;
+
+  /* --ink-soft is 3.8:1 on her full-strength tints, which fails AA
+     for small text. This is the same grey darkened until it passes
+     on the worst of them (4.9:1 on gold). */
+  --ink-soft-tint: #4C5A66;
+
+  --paper: #FAFCFB;         /* cool near-white, not cream */
+  --paper-warm: #FDF7F4;
+  --ink: #22303C;
+  --ink-soft: #5C6B78;
+  --rule: #DFE8E4;
+
+  /* --- Type -------------------------------------------------- */
+  /* Chosen by Kandace: Cormorant Garamond (headings), Parisienne
+     (script accents), Montserrat (body, from her own brand kit).  */
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-script: 'Parisienne', 'Cormorant Garamond', cursive;
+  --font-body: 'Montserrat', system-ui, -apple-system, sans-serif;
+
+  /* Fluid type scale, mobile first */
+  --step--1: clamp(0.82rem, 0.79rem + 0.14vw, 0.9rem);
+  --step-0:  clamp(1rem, 0.96rem + 0.2vw, 1.08rem);
+  --step-1:  clamp(1.2rem, 1.12rem + 0.4vw, 1.4rem);
+  --step-2:  clamp(1.55rem, 1.4rem + 0.75vw, 2rem);
+  --step-3:  clamp(2rem, 1.7rem + 1.5vw, 3rem);
+  --step-4:  clamp(2.6rem, 2rem + 3vw, 4.5rem);
+
+  /* --- Space ------------------------------------------------- */
+  --sp-1: 0.5rem;
+  --sp-2: 0.875rem;
+  --sp-3: 1.5rem;
+  --sp-4: 2.25rem;
+  --sp-5: 3.5rem;
+  --sp-6: 5rem;
+  --sp-7: 7rem;
+
+  --measure: 34rem;
+  --wrap: 74rem;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+
+  --radius: 2px;            /* deliberately near-square; the softness
+                               comes from the lattice + fronds, not
+                               from rounding everything equally */
+
+  /* --- Motion ------------------------------------------------ */
+  --breeze-base: 14s;
+  --ease-soft: cubic-bezier(0.4, 0.02, 0.2, 1);
+}
+
+/* ---------------------------------------------------------------
+   Reset + base
+   --------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  margin: 0;
+  color: var(--navy);
+}
+
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-1); font-family: var(--font-body); font-weight: 600; line-height: 1.35; }
+
+p { margin: 0 0 var(--sp-3); max-width: var(--measure); }
+
+a { color: var(--navy); }
+
+:focus-visible {
+  outline: 2px solid var(--coral-ink);
+  outline-offset: 3px;
+  border-radius: var(--radius);
+}
+
+/* ---------------------------------------------------------------
+   Layout helpers
+   --------------------------------------------------------------- */
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--sp-6);
+}
+
+.section--tight { padding-block: var(--sp-5); }
+
+.section--mint { background: var(--mint-pale); }
+.section--navy { background: var(--navy); color: #EEF4F2; }
+.section--navy h2, .section--navy h3 { color: #FFFFFF; }
+.section--navy p { color: #D3E0E4; }
+
+/* Script accent: used once or twice per page, never as a label */
+.script {
+  font-family: var(--font-script);
+  color: var(--gold-ink);
+  font-size: 1.5em;
+  line-height: 1;
+  display: inline-block;
+}
+
+.lede {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  font-weight: 300;
+}
+
+/* ---------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 52px;              /* comfortable thumb target */
+  padding: 0.85em 1.9em;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 220ms var(--ease-soft),
+              color 220ms var(--ease-soft),
+              border-color 220ms var(--ease-soft);
+}
+
+.btn--primary {
+  background: var(--navy);
+  color: #fff;
+}
+.btn--primary:hover { background: var(--navy-deep); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--navy);
+  border-color: var(--navy);
+}
+.btn--ghost:hover { background: var(--navy); color: #fff; }
+
+.btn--light {
+  background: #fff;
+  color: var(--navy);
+}
+.btn--light:hover { background: var(--mint-pale); }
+
+/* ---------------------------------------------------------------
+   Lattice rule: the structural motif, borrowed from her brand
+   backdrops. Used as a section divider instead of a plain line.
+   --------------------------------------------------------------- */
+.lattice-rule {
+  height: 26px;
+  width: 100%;
+  background-repeat: repeat-x;
+  background-size: auto 26px;
+  opacity: 0.75;
+}
+
+/* ---------------------------------------------------------------
+   Reveal: one quiet reveal, not a fade-up on every element
+   --------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 700ms var(--ease-soft), transform 700ms var(--ease-soft);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute; left: 0; top: -100px;
+  background: var(--navy); color: #fff;
+  padding: 0.75rem 1.25rem; z-index: 200;
+  transition: top 160ms var(--ease-soft);
+}
+.skip-link:focus { top: 0; }
