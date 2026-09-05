@@ -1,7 +1,10 @@
 ---
+import Fronds from '../Fronds.astro';
 const { data } = Astro.props;
 ---
 <section class="act act--pin act--wash" id="who-its-for">
+  <Fronds corner="tr" scale={2.4} tone="deep" opacity={0.32} delay={1.4} />
+  <Fronds corner="br" scale={4.0} tone="deep" opacity={0.5} delay={2.6} />
   <div class="wrap act__inner">
     <h2>{data.heading}</h2>
     <p>{data.intro}</p>

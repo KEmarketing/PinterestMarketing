@@ -1,0 +1,46 @@
+---
+/* The KE monogram, drawn rather than placed as an image, so it inherits
+   currentColor, stays sharp at any size, and uses the site's own
+   Cormorant. The standalone file version lives at public/marks/ with the
+   letters outlined, for anywhere a font is not available. */
+const { size = 120, label = 'Kandace Emory', class: cls = '' } = Astro.props;
+const C = 2 * Math.PI * 72;
+const GAP = 96;
+const arcText = 'M 13.87,78.51 A 88,88 0 1 1 135.78,181.36';
+const burst = (cx, cy, R, r, w) => {
+  const pt = (a, rad) => [cx + rad * Math.cos(a * Math.PI / 180), cy - rad * Math.sin(a * Math.PI / 180)];
+  let d = '';
+  for (let k = 0; k < 8; k++) {
+    const [tx, ty] = pt(45 * k, k % 2 ? r : R);
+    const [nx, ny] = pt(45 * (k + 1), (k + 1) % 2 ? r : R);
+    const [cx2, cy2] = pt(45 * k + 22.5, w);
+    if (k === 0) d += `M ${tx.toFixed(2)},${ty.toFixed(2)} `;
+    d += `Q ${cx2.toFixed(2)},${cy2.toFixed(2)} ${nx.toFixed(2)},${ny.toFixed(2)} `;
+  }
+  return d + 'Z';
+};
+const bx = 100 + 72 * Math.cos(213 * Math.PI / 180);
+const by = 100 - 72 * Math.sin(213 * Math.PI / 180);
+---
+<svg class={cls} width={size} height={size} viewBox="0 0 200 200"
+     xmlns="http://www.w3.org/2000/svg" role="img" aria-label={label}>
+  <defs>
+    <path id="ke-arc" d={arcText} />
+    <radialGradient id="ke-glow">
+      <stop offset="0%" stop-color="currentColor" stop-opacity=".55" />
+      <stop offset="45%" stop-color="currentColor" stop-opacity=".12" />
+      <stop offset="100%" stop-color="currentColor" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="72" fill="none" stroke="currentColor" stroke-width="1.15"
+          stroke-dasharray={`${(C * (360 - GAP) / 360).toFixed(2)} ${(C * GAP / 360).toFixed(2)}`}
+          transform={`rotate(${-90 + GAP / 2} 100 100)`} />
+  <text font-family="Montserrat, sans-serif" font-size="11" letter-spacing="3.8"
+        fill="currentColor" text-anchor="middle">
+    <textPath href="#ke-arc" startOffset="50%">KANDACE EMORY</textPath>
+  </text>
+  <text x="100" y="121" text-anchor="middle" fill="currentColor"
+        font-family="'Cormorant Garamond', Georgia, serif" font-weight="300" font-size="62">KE</text>
+  <circle cx={bx.toFixed(2)} cy={by.toFixed(2)} r="17" fill="url(#ke-glow)" />
+  <path d={burst(bx, by, 23, 8.6, 1.2)} fill="currentColor" />
+</svg>

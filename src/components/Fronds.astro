@@ -30,17 +30,15 @@ const {
    alternating down both sides. Generated here at build time so the
    markup ships as plain static SVG with no runtime cost.        */
 
-const LEAFLETS = 15;
-const LEN = 300;      // stem length
-const ARC = 96;       // how much the stem curves
+const LEAFLETS = 13;
+const LEN = 390;      // rachis length
+const ARC = 96;       // how much the rachis curves
 
 function stemPoint(t) {
-  // quadratic bezier from root (0,0) to tip, bowing upward
-  const x = 2 * (1 - t) * t * (LEN * 0.45) + t * t * LEN;
-  const y = 2 * (1 - t) * t * -ARC + t * t * -ARC * 0.55;
+  const x = 2 * (1 - t) * t * (LEN * 0.42) + t * t * LEN;
+  const y = 2 * (1 - t) * t * -ARC + t * t * -ARC * 0.5;
   return [x, y];
 }
-
 function stemTangent(t) {
   const d = 0.001;
   const [x1, y1] = stemPoint(Math.max(0, t - d));
@@ -48,44 +46,129 @@ function stemTangent(t) {
   return Math.atan2(y2 - y1, x2 - x1);
 }
 
+/* One leaflet, built by walking a curved spine and giving it a width
+   profile: narrow where it joins the rachis, close to parallel sided
+   through the middle, then tapering to a fine point. That parallel
+   middle is what makes it read as a leaf. Even widening and narrowing
+   reads as an almond, and a straight line at a fixed angle reads as a
+   spine, which is what the first version looked like. */
+/* The cut where a leaflet meets the rachis runs ALONG the rachis, not
+   square across the blade. A square cut leaves a blunt edge crossing the
+   stem at an angle, which is what made the leaflets look laid on top of
+   it rather than grown out of it. The skew is only at the very base and
+   fades out over the first sixth of the blade, so the direction the leaf
+   points is unchanged. */
+function baseSkew(s, tx, ty, nx, ny, fx, fy) {
+  const k = Math.min(1, s / 0.16);
+  const damp = 1 - k * k * (3 - 2 * k);
+  if (damp <= 0) return 0;
+  const fN = fx * nx + fy * ny;
+  if (Math.abs(fN) < 1e-6) return 0;
+  const ratio = Math.max(-2.6, Math.min(2.6, (fx * tx + fy * ty) / fN));
+  return ratio * damp;
+}
+
+function blade(bx, by, dir, fwd, L, W, curve) {
+  const N = 16;
+  const [dx, dy] = dir, [fx, fy] = fwd;
+  const outer = [], inner = [];
+  for (let i = 0; i <= N; i++) {
+    const s = i / N;
+    const px = bx + dx * L * s + fx * curve * Math.pow(s, 1.7);
+    const py = by + dy * L * s + fy * curve * Math.pow(s, 1.7);
+    const e = 0.002, s2 = Math.min(1, s + e);
+    const qx = bx + dx * L * s2 + fx * curve * Math.pow(s2, 1.7);
+    const qy = by + dy * L * s2 + fy * curve * Math.pow(s2, 1.7);
+    const tl = Math.hypot(qx - px, qy - py) || 1;
+    const tx = (qx - px) / tl, ty = (qy - py) / tl;
+    const nx = -ty, ny = tx;
+    const w = W * Math.pow(1 - Math.pow(s, 2.6), 0.5) * (0.34 + 0.66 * Math.min(1, s / 0.16));
+    const sk = baseSkew(s, tx, ty, nx, ny, fx, fy) * w;
+    outer.push([px + nx * w + tx * sk, py + ny * w + ty * sk]);
+    inner.push([px - nx * w - tx * sk, py - ny * w - ty * sk]);
+  }
+  const pts = outer.concat(inner.reverse());
+  const outline = 'M ' + pts.map(([a, b]) => `${a.toFixed(1)} ${b.toFixed(1)}`).join(' L ') + ' Z';
+
+  /* Veins: a midrib plus two fine lines either side of it. Palm leaflets
+     are striped lengthwise, and without them the blades read as flat
+     paper cut-outs however well they are shaded. */
+  const line = (k) => {
+    const p = [];
+    for (let i = 0; i <= N; i++) {
+      const s = i / N;
+      const px = bx + dx * L * s + fx * curve * Math.pow(s, 1.7);
+      const py = by + dy * L * s + fy * curve * Math.pow(s, 1.7);
+      const e = 0.002, s2 = Math.min(1, s + e);
+      const qx = bx + dx * L * s2 + fx * curve * Math.pow(s2, 1.7);
+      const qy = by + dy * L * s2 + fy * curve * Math.pow(s2, 1.7);
+      const tl = Math.hypot(qx - px, qy - py) || 1;
+      const tx = (qx - px) / tl, ty = (qy - py) / tl;
+      const nx = -ty, ny = tx;
+      const w = W * Math.pow(1 - Math.pow(s, 2.6), 0.5) * (0.34 + 0.66 * Math.min(1, s / 0.16));
+      const sk = baseSkew(s, tx, ty, nx, ny, fx, fy) * w * k;
+      p.push([px + nx * w * k + tx * sk, py + ny * w * k + ty * sk]);
+    }
+    return 'M ' + p.map(([a, b]) => `${a.toFixed(1)} ${b.toFixed(1)}`).join(' L ');
+  };
+  return { outline, veins: [line(0), line(0.5), line(-0.5)].join(' ') };
+}
+
 const leaflets = [];
 for (let i = 0; i < LEAFLETS; i++) {
-  const t = 0.12 + (i / (LEAFLETS - 1)) * 0.86;
+  const t = 0.05 + (i / (LEAFLETS - 1)) * 0.94;
   const [x, y] = stemPoint(t);
   const ang = stemTangent(t);
 
-  // leaflets are longest in the middle of the frond, short at both ends
-  const bell = Math.sin(Math.PI * ((t - 0.08) / 0.94));
-  const bladeLen = 34 + bell * 74;
-  const bladeWide = 5 + bell * 9;
+  const u = Math.min(1, Math.max(0, (t - 0.03) / 0.97));
+  const bell = Math.sin(Math.PI * Math.pow(u, 0.85));
+  const bladeLen = 52 + bell * 168;
+  const bladeW   = 3.6 + bell * 6.4;
 
   for (const side of [-1, 1]) {
-    // sweep back toward the root a little, like a real frond
-    const spread = (0.95 - 0.28 * t) * side;
+    const spread = (1.16 - 0.34 * t) * side;
     const a = ang + spread;
-    const tipX = x + Math.cos(a) * bladeLen;
-    const tipY = y + Math.sin(a) * bladeLen;
-    const midX = x + Math.cos(a) * bladeLen * 0.5;
-    const midY = y + Math.sin(a) * bladeLen * 0.5;
-    const nx = Math.cos(a + Math.PI / 2) * bladeWide;
-    const ny = Math.sin(a + Math.PI / 2) * bladeWide;
-
-    leaflets.push({
-      d: `M ${x.toFixed(1)} ${y.toFixed(1)}
-          Q ${(midX + nx).toFixed(1)} ${(midY + ny).toFixed(1)} ${tipX.toFixed(1)} ${tipY.toFixed(1)}
-          Q ${(midX - nx * 0.55).toFixed(1)} ${(midY - ny * 0.55).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)} Z`,
-      i,
-      side,
-    });
+    const shape = blade(x, y, [Math.cos(a), Math.sin(a)], [Math.cos(ang), Math.sin(ang)],
+                        bladeLen, bladeW, bladeLen * (0.10 + 0.10 * t));
+    leaflets.push({ d: shape.outline, veins: shape.veins, i, side, ax: x, ay: y });
   }
 }
 
-const stemPath = `M 0 0 Q ${(LEN * 0.45).toFixed(1)} ${(-ARC).toFixed(1)} ${LEN} ${(-ARC * 0.55).toFixed(1)}`;
+const BANDS = 3;
+const bands = [];
+for (let bnd = 0; bnd < BANDS; bnd++) {
+  const from = Math.floor((bnd * LEAFLETS) / BANDS);
+  const [ox, oy] = stemPoint(0.05 + (from / (LEAFLETS - 1)) * 0.94);
+  bands.push({ ox, oy, leaves: leaflets.filter(l => Math.floor((l.i * BANDS) / LEAFLETS) === bnd) });
+}
 
+/* The rachis is drawn in three pieces, one inside each joint, so the
+   stem bends with its leaves instead of staying rigid while they move. */
+function stemSegment(t0, t1) {
+  const pts = [];
+  for (let i = 0; i <= 12; i++) {
+    const [px, py] = stemPoint(t0 + (t1 - t0) * (i / 12));
+    pts.push(`${px.toFixed(1)} ${py.toFixed(1)}`);
+  }
+  return 'M ' + pts.join(' L ');
+}
+const bandT = [0, 1 / 3, 2 / 3, 1].map((f) => 0.05 + f * 0.94);
+bands.forEach((b, i) => { b.stem = stemSegment(i === 0 ? 0 : bandT[i], bandT[i + 1]); });
+
+/* The cast shadow draws each section's leaves as one merged silhouette
+   rather than as separate shapes. Overlaps resolve under the nonzero
+   fill rule, so nothing double-darkens, and it takes three paths per
+   frond instead of twenty-six, which is what buys the frame rate back. */
+bands.forEach((b) => { b.silhouette = b.leaves.map((l) => l.d).join(' '); });
+
+/* Each tone carries four values, because a flat silhouette reads as a
+   sticker. The blades get a gradient from base to tip, the two sides of
+   the rachis differ slightly so one reads as turned away from the light,
+   and a darker offset copy sits behind the whole frond as its shadow. */
 const tones = {
-  mint:  { fill: '#B8E0D0', stem: '#8FC7B2' },
-  deep:  { fill: '#8FC7B2', stem: '#6FAE97' },
-  pale:  { fill: '#D8F0E8', stem: '#B8E0D0' },
+  mint:  { fill: '#B8E0D0', lit: '#D6EFE4', dark: '#8FC7B2', stem: '#8FC7B2', shade: '#5E9A83' },
+  deep:  { fill: '#8FC7B2', lit: '#B4DCC9', dark: '#6FAE97', stem: '#6FAE97', shade: '#4A8770' },
+  pale:  { fill: '#D8F0E8', lit: '#EEFBF6', dark: '#B8E0D0', stem: '#B8E0D0', shade: '#8FC7B2' },
 };
 const c = tones[tone] || tones.mint;
 const uid = 'f' + Math.random().toString(36).slice(2, 8);
@@ -93,20 +176,64 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
 
 <div
   class:list={['frond', `frond--${corner}`]}
-  style={`--frond-scale:${scale}; --frond-delay:${delay}s; --frond-blur:${blur}px; --frond-opacity:${opacity};`}
+  style={`--frond-scale:${scale}; --frond-delay:${delay}s; --frond-blur:${blur}px; --frond-opacity:${opacity}; --frond-shade:${c.shade}55;`}
   aria-hidden="true"
 >
-  <svg viewBox="-40 -220 420 260" class="frond__svg" role="presentation" focusable="false">
+  <svg viewBox="-60 -380 560 440" class="frond__svg" role="presentation" focusable="false">
+    <defs>
+      <linearGradient id={`${uid}-a`} x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0%" stop-color={c.dark} />
+        <stop offset="55%" stop-color={c.fill} />
+        <stop offset="100%" stop-color={c.lit} />
+      </linearGradient>
+      <linearGradient id={`${uid}-b`} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color={c.shade} />
+        <stop offset="60%" stop-color={c.dark} />
+        <stop offset="100%" stop-color={c.fill} />
+      </linearGradient>
+    </defs>
     <g class="frond__pivot">
-      <path d={stemPath} fill="none" stroke={c.stem} stroke-width="3.5" stroke-linecap="round" />
-      {leaflets.map((l) => (
-        <path
-          d={l.d}
-          fill={c.fill}
-          class="frond__leaf"
-          style={`--leaf-i:${l.i}; --leaf-side:${l.side};`}
-        />
-      ))}
+      {/* The frond bends in three nested sections, so the tip travels
+          further than the base, and the stem is drawn in matching pieces
+          inside those sections, which keeps the leaves welded to it.
+          Each section's shadow sits inside its own joint, so it is under
+          the exact same transform as the leaves it belongs to and cannot
+          be left behind. Every shadow is drawn before every leaf, which
+          is why the child joint comes between them: without that, a
+          section's shadow painted over the section below it. */}
+        <g class="frond__joint" style={`transform-origin:${bands[0].ox.toFixed(1)}px ${bands[0].oy.toFixed(1)}px;`}>
+          <g class="frond__cast" transform="translate(6 10)">
+            <path d={bands[0].stem} fill="none" stroke={c.shade} stroke-width="2.4" stroke-linecap="round" stroke-opacity="0.26" />
+            <path d={bands[0].silhouette} fill={c.shade} fill-opacity="0.26" />
+          </g>
+          <g class="frond__joint" style={`transform-origin:${bands[1].ox.toFixed(1)}px ${bands[1].oy.toFixed(1)}px;`}>
+            <g class="frond__cast" transform="translate(6 10)">
+              <path d={bands[1].stem} fill="none" stroke={c.shade} stroke-width="2.1" stroke-linecap="round" stroke-opacity="0.26" />
+              <path d={bands[1].silhouette} fill={c.shade} fill-opacity="0.26" />
+            </g>
+            <g class="frond__joint" style={`transform-origin:${bands[2].ox.toFixed(1)}px ${bands[2].oy.toFixed(1)}px;`}>
+              <g class="frond__cast" transform="translate(6 10)">
+                <path d={bands[2].stem} fill="none" stroke={c.shade} stroke-width="1.7" stroke-linecap="round" stroke-opacity="0.26" />
+                <path d={bands[2].silhouette} fill={c.shade} fill-opacity="0.26" />
+              </g>
+              <path d={bands[2].stem} fill="none" stroke={c.stem} stroke-width="1.7" stroke-linecap="round" />
+              {bands[2].leaves.map((l) => (
+                <g><path d={l.d} fill={`url(#${uid}-${l.side === 1 ? 'b' : 'a'})`} />
+                   <path d={l.veins} fill="none" stroke={c.shade} stroke-width="0.7" opacity="0.30" stroke-linecap="round" /></g>
+              ))}
+            </g>
+            <path d={bands[1].stem} fill="none" stroke={c.stem} stroke-width="2.1" stroke-linecap="round" />
+            {bands[1].leaves.map((l) => (
+              <g><path d={l.d} fill={`url(#${uid}-${l.side === 1 ? 'b' : 'a'})`} />
+                 <path d={l.veins} fill="none" stroke={c.shade} stroke-width="0.7" opacity="0.30" stroke-linecap="round" /></g>
+            ))}
+          </g>
+          <path d={bands[0].stem} fill="none" stroke={c.stem} stroke-width="2.4" stroke-linecap="round" />
+          {bands[0].leaves.map((l) => (
+            <g><path d={l.d} fill={`url(#${uid}-${l.side === 1 ? 'b' : 'a'})`} />
+               <path d={l.veins} fill="none" stroke={c.shade} stroke-width="0.7" opacity="0.30" stroke-linecap="round" /></g>
+          ))}
+        </g>
     </g>
   </svg>
 </div>
@@ -124,10 +251,12 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
   .frond__svg { width: 100%; height: auto; overflow: visible; }
 
   /* Root each frond just past the edge so no cut stem is visible */
-  .frond--tl { top: -3%;    left: -9%;  transform: rotate(8deg); }
-  .frond--tr { top: -3%;    right: -9%; transform: scaleX(-1) rotate(8deg); }
-  .frond--bl { bottom: -6%; left: -9%;  transform: scaleY(-1) rotate(8deg); }
-  .frond--br { bottom: -6%; right: -9%; transform: scale(-1, -1) rotate(8deg); }
+  /* Rooted well outside the panel so the edge crops the frond, which is
+     what makes it read as one big leaf rather than a whole small one. */
+  .frond--tl { top: -34%;    left: -30%;  transform: rotate(12deg); }
+  .frond--tr { top: -34%;    right: -30%; transform: scaleX(-1) rotate(12deg); }
+  .frond--bl { bottom: -34%; left: -30%;  transform: scaleY(-1) rotate(12deg); }
+  .frond--br { bottom: -34%; right: -30%; transform: scale(-1, -1) rotate(12deg); }
 
   /* --- the breeze ------------------------------------------- */
   .frond__pivot {
@@ -145,27 +274,40 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
 
   /* Leaflets flutter a touch out of phase with the stem, which is
      what stops it reading as one flat shape rotating. */
-  .frond__leaf {
-    transform-origin: 0px 0px;
+  /* Each section of the frond pivots on its own joint on the rachis, and
+     because they nest, the motion compounds toward the tip. Rotating
+     every leaflet about the frond's root was what made the leaves slide
+     off the stem, and animating them individually was what cost 38fps. */
+  .frond__joint {
     transform-box: view-box;
-    animation: flutter calc(var(--breeze-base) * 0.42) ease-in-out infinite;
-    animation-delay: calc(var(--frond-delay) + var(--leaf-i) * 0.11s);
+    /* Same duration as the stem sway. Running the joints on their own
+       clock made the leaves drift in and out of step with the stem. The
+       whip comes from the amplitudes compounding, not from a different
+       tempo. */
+    animation: joint var(--breeze-base) ease-in-out infinite;
+    animation-delay: var(--frond-delay);
   }
 
-  @keyframes flutter {
-    0%, 100% { transform: rotate(calc(-0.7deg * var(--leaf-side) * var(--gust-mult, 1))); }
-    50%      { transform: rotate(calc(0.9deg  * var(--leaf-side) * var(--gust-mult, 1))); }
+  /* The shadow is a duplicate of the frond's own joint chain, offset and
+     drawn underneath, running the same animation with the same delay, so
+     it moves in lockstep. A CSS drop-shadow filter tracked too, but cost
+     33fps: a filter on an animating group is re-rasterised every frame.
+     Freezing the shadow's joints was cheaper still and visibly wrong. */
+
+  @keyframes joint {
+    0%, 100% { transform: rotate(calc(-0.55deg * var(--gust-mult, 1))); }
+    50%      { transform: rotate(calc(0.75deg * var(--gust-mult, 1))); }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .frond__pivot, .frond__leaf { animation: none; }
+    .frond__pivot, .frond__joint { animation: none; }
   }
 
   /* Smaller phones: pull the fronds further off-edge so they frame
      rather than crowd the copy. */
   @media (max-width: 600px) {
-    .frond { width: calc(210px * var(--frond-scale)); }
-    .frond--tl, .frond--bl { left: -16%; }
-    .frond--tr, .frond--br { right: -16%; }
+    .frond { width: calc(240px * var(--frond-scale)); }
+    .frond--tl, .frond--bl { left: -46%; }
+    .frond--tr, .frond--br { right: -46%; }
   }
 </style>

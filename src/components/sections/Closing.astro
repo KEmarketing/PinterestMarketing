@@ -1,8 +1,11 @@
 ---
+import Fronds from '../Fronds.astro';
 import { resolveUrl } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
 <section class="act" id="book">
+  <Fronds corner="tr" scale={2.4} tone="mint" opacity={0.34} delay={0.5} />
+  <Fronds corner="bl" scale={4.3} tone="mint" opacity={0.55} delay={2.9} />
   <div class="wrap act__inner">
     <h2>{data.heading}</h2>
     <p>{data.body}</p>
