@@ -32,7 +32,7 @@ const {
 
 /* A fraction of the plant's OWN width. A percentage in the offset would
    resolve against the section instead and throw it off the page. */
-const inset = { peek: -0.62, half: -0.34, full: -0.06 }[show] ?? -0.62;
+const inset = { peek: -0.46, half: -0.24, full: -0.04 }[show] ?? -0.46;
 ---
 
 <div
@@ -45,7 +45,10 @@ const inset = { peek: -0.62, half: -0.34, full: -0.06 }[show] ?? -0.62;
 
 <style>
   .bot {
-    --bot-w: calc(200px * var(--bot-scale));
+    /* Sized against the viewport, not in fixed pixels. At 200px flat
+       these vanished on a wide screen: a 300px plant on a 2000px page
+       is a speck. */
+    --bot-w: calc(clamp(190px, 21vw, 460px) * var(--bot-scale));
     position: absolute;
     width: var(--bot-w);
     pointer-events: none;
@@ -60,5 +63,7 @@ const inset = { peek: -0.62, half: -0.34, full: -0.06 }[show] ?? -0.62;
   .bot--tl, .bot--bl { left:   calc(var(--bot-w) * var(--bot-inset)); }
   .bot--tr, .bot--br { right:  calc(var(--bot-w) * var(--bot-inset)); }
 
-  @media (max-width: 40rem) { .bot { --bot-w: calc(150px * var(--bot-scale)); } }
+  @media (max-width: 40rem) {
+    .bot { --bot-w: calc(clamp(150px, 46vw, 260px) * var(--bot-scale)); }
+  }
 </style>
