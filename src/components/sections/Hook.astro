@@ -1,12 +1,17 @@
 ---
 import Fronds from '../Fronds.astro';
+import Botanical from '../Botanical.astro';
 const { data } = Astro.props;
 ---
-<section class="act act--pin act--wash" id="why-pinterest">
-  <Fronds corner="tl" scale={2.1} tone="deep" opacity={0.3} delay={2.0} />
-  <Fronds corner="bl" scale={4.2} tone="deep" opacity={0.48} delay={0.6} />
+{/* No body content of its own, so this act goes the other way: one
+    oversized statement holding the whole panel. It is the beat that
+    stops the page reading as a stack of identical text blocks. */}
+<section class="act act--pin act--wash act--statement act--lat-inverse" id="why-pinterest">
+  <Fronds corner="tr" scale={2.1} tone="deep" opacity={0.3} delay={2.0} />
+  <Fronds corner="br" scale={4.2} tone="deep" opacity={0.48} delay={0.6} />
+  <Botanical corner="br" tone="blush" scale={1.85} opacity={0.36} rotate={16}  show="half" delay={1.2} />
   <div class="wrap act__inner">
-    <h2>{data.heading}</h2>
-    <p>{data.body}</p>
+    <h2 class="statement">{data.heading}</h2>
+    <p class="statement__body">{data.body}</p>
   </div>
 </section>

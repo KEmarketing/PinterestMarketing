@@ -1,13 +1,17 @@
 ---
 import Fronds from '../Fronds.astro';
+import Botanical from '../Botanical.astro';
 const { data } = Astro.props;
 ---
-<section class="act act--wash" id="faq">
+<section class="act act--wash act--split act--lat-inverse" id="faq">
   <Fronds corner="tl" scale={2.3} tone="deep" opacity={0.3} delay={2.8} />
-  <Fronds corner="br" scale={4.1} tone="deep" opacity={0.46} delay={1.5} />
+  <Fronds corner="bl" scale={4.1} tone="deep" opacity={0.46} delay={1.5} />
+  <Botanical corner="br" tone="sage"  scale={1.45} opacity={0.30} rotate={-10} show="peek" delay={0.6} />
   <div class="wrap act__inner">
-    <h2>{data.heading}</h2>
-    <div style="margin-top:1.5rem">
+    <div class="act__lead">
+      <h2>{data.heading}</h2>
+    </div>
+    <div class="act__body">
       {data.items.map((f) => (
         <details>
           <summary>{f.question}</summary>

@@ -1,16 +1,22 @@
 ---
+import Botanical from '../Botanical.astro';
 const { data } = Astro.props;
 ---
-<section class="act" id="how-it-works">
+<section class="act act--split act--flip act--lat-edge-right" id="how-it-works">
+  <Botanical corner="bl" tone="blush" scale={1.35} opacity={0.34} rotate={12}  show="peek" delay={1.1} />
   <div class="wrap act__inner">
-    <h2>{data.heading}</h2>
-    <ol style="margin-top:1.5rem">
-      {data.steps.map((s) => (
-        <li style="margin-bottom:1rem">
-          <h3>{s.heading}</h3>
-          <p>{s.body}</p>
-        </li>
-      ))}
-    </ol>
+    <div class="act__lead">
+      <h2>{data.heading}</h2>
+    </div>
+    <div class="act__body">
+      <ol class="steps">
+        {data.steps.map((s) => (
+          <li>
+            <h3>{s.heading}</h3>
+            <p>{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>

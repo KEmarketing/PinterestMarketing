@@ -306,31 +306,6 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
 .act__inner > h1,
 .act__inner > h2 { margin-bottom: var(--sp-3); }
 
-/* Hero and About put their portrait beside the text on wider
-   screens rather than stranding it underneath. Uses the existing
-   markup, no component changes. */
-@media (min-width: 52rem) {
-  #top .act__inner:has(.headshot),
-  #about .act__inner:has(.headshot) {
-    display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
-    column-gap: var(--sp-6);
-    align-items: center;
-  }
-  #top .act__inner:has(.headshot) > :not(.headshot),
-  #about .act__inner:has(.headshot) > :not(.headshot) { grid-column: 1; }
-
-  #top .headshot,
-  #about .headshot {
-    grid-column: 2;
-    grid-row: 1 / span 10;
-    align-self: center;
-    justify-self: center;
-    margin-top: 0;
-    max-width: 320px;
-  }
-}
-
 /* The lede is the second thing read on the page. It was sitting at
    body size in grey and disappearing. */
 .lede { max-width: 32rem; margin-bottom: var(--sp-4); }
@@ -338,15 +313,6 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
 
 /* The chapter kicker was floating a long way under its line. */
 .chapter__sub { margin-top: var(--sp-2); }
-
-/* With no portrait beside it, the hero is type-led. Hold the
-   headline to a readable line length so it reads as a deliberate
-   three-line statement rather than one very wide line. */
-#top .act__inner:not(:has(.headshot)) h1 { max-width: 15ch; }
-
-/* With a photo beside it the hero portrait carries more weight than
-   the small About one. */
-#top .headshot { max-width: 420px; }
 
 /* ===============================================================
    COLOUR BLOCKING
@@ -505,3 +471,353 @@ summary::after { color: var(--navy); opacity: 0.65; }
 @media (max-width: 40rem) {
   .chapter::before { background-size: 128px 128px; }
 }
+
+/* ===============================================================
+   COMPOSITION
+   Every act used to be built the same way: heading top left,
+   paragraph under it, content under that, twelve times, with the
+   right half of the screen holding nothing. That sameness, not any
+   missing ornament, is what made the page read as unfinished.
+
+   Acts now come in four shapes and alternate between them, and the
+   second column is filled with the section's own content rather
+   than decoration. Nothing new is invented to fill space.
+     .act--split      lead column and body column
+     .act--flip       the same, mirrored, so no two neighbours match
+     .act--statement  one oversized line holding the panel
+     .act--showcase   full bleed, for the pin designs
+   =============================================================== */
+
+.act__inner  { max-width: 68rem; width: 100%; }
+.act--wide .act__inner { max-width: 76rem; }
+
+/* A heading size of its own. h2 at --step-3 was sized for a document,
+   not for a panel that owns the whole screen. */
+.act h2 { font-size: clamp(2.15rem, 1.7rem + 2vw, 3.4rem); line-height: 1.06; }
+
+@media (min-width: 64rem) {
+  .act--split .act__inner,
+  .act--hero .act__inner,
+  .act--portrait .act__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 4.6fr) minmax(0, 6.4fr);
+    column-gap: clamp(2.5rem, 5.5vw, 6rem);
+    align-items: start;
+  }
+  /* The hero leads with words, so it takes the wider column. */
+  .act--hero .act__inner { grid-template-columns: minmax(0, 6.6fr) minmax(0, 4.4fr); align-items: center; }
+  .act--portrait .act__inner { grid-template-columns: minmax(0, 4.2fr) minmax(0, 6.8fr); align-items: center; }
+
+  /* Mirrored. Source order stays lead-then-body, so the reading
+     order on a phone and for a screen reader is unchanged. */
+  .act--flip .act__inner { grid-template-columns: minmax(0, 6.4fr) minmax(0, 4.6fr); }
+  .act--flip .act__lead { grid-column: 2; grid-row: 1; }
+  .act--flip .act__body { grid-column: 1; grid-row: 1; }
+
+  .act__lead p { max-width: 30rem; }
+}
+
+.act__lead > :last-child,
+.act__body > :last-child { margin-bottom: 0; }
+
+@media (max-width: 63.999rem) {
+  .act__body { margin-top: var(--sp-4); }
+}
+
+.act__aside-note {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  border-left: 2px solid var(--leaf);
+  padding-left: var(--sp-2);
+  margin-top: var(--sp-4);
+}
+
+/* --- Statement acts ------------------------------------------- */
+.act--statement .statement {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.6rem, 1.9rem + 4.2vw, 5.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  max-width: 16ch;
+  margin-bottom: var(--sp-4);
+}
+.act--statement .statement__body {
+  font-size: var(--step-1);
+  max-width: 40ch;
+  color: var(--ink);
+}
+.act--centred .act__inner { display: grid; justify-items: center; text-align: center; }
+.act--centred .statement { max-width: 18ch; }
+.act--centred .statement__body { max-width: 46ch; }
+
+/* --- Explainer notes ------------------------------------------ */
+.notes { display: grid; gap: var(--sp-4); }
+@media (min-width: 40rem) { .notes { grid-template-columns: repeat(2, 1fr); } }
+.note {
+  padding: var(--sp-4);
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius);
+  border-top: 2px solid var(--leaf);
+}
+.note h3 { margin-bottom: var(--sp-2); }
+.note p { margin-bottom: 0; max-width: none; }
+
+/* --- Tick lists ----------------------------------------------- */
+.ticks { list-style: none; padding-left: 0; max-width: none; }
+.ticks li {
+  position: relative;
+  padding: var(--sp-2) 0 var(--sp-2) 2rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 0;
+}
+.ticks li:first-child { border-top: 1px solid var(--rule); }
+.ticks li::before {
+  content: '';
+  position: absolute;
+  left: 0.15rem;
+  top: 1.45em;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-left: 2px solid var(--leaf);
+  border-bottom: 2px solid var(--leaf);
+  transform: rotate(-45deg) translateY(-0.2rem);
+}
+
+/* --- Quotes --------------------------------------------------- */
+.quotes { display: grid; gap: var(--sp-5); }
+@media (min-width: 48rem) {
+  .quotes { grid-template-columns: repeat(2, 1fr); align-items: start; }
+  /* the second quote drops, so the pair is not a matched set of boxes */
+  .quotes > blockquote:nth-child(even) { margin-top: var(--sp-5); }
+}
+
+/* --- Process steps -------------------------------------------- */
+.steps { max-width: none; }
+.steps > li { padding-left: 4rem; margin-bottom: var(--sp-4); }
+.steps > li::before { font-size: var(--step-3); opacity: 0.55; }
+.steps h3 { margin-bottom: var(--sp-1); }
+.steps p { margin-bottom: 0; }
+
+/* --- Contact -------------------------------------------------- */
+.reach {
+  padding: var(--sp-4);
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius);
+}
+.reach .actions { margin-top: 0; }
+
+/* --- Packages ------------------------------------------------- */
+.act__lead--row { margin-bottom: var(--sp-5); }
+@media (min-width: 64rem) {
+  .act__lead--row { display: grid; grid-template-columns: minmax(0, 4.6fr) minmax(0, 6.4fr);
+                    column-gap: clamp(2.5rem, 5.5vw, 6rem); align-items: end; }
+  .act__lead--row h2, .act__lead--row .lede { margin-bottom: 0; }
+  #packages .stack { grid-template-columns: repeat(4, 1fr); gap: var(--sp-3); }
+  #packages .block { padding: var(--sp-3); }
+  #packages .block h3 { font-size: var(--step-0); letter-spacing: 0.06em; text-transform: uppercase; }
+  #packages .block ul { font-size: var(--step--1); }
+}
+.packages__note {
+  margin-top: var(--sp-4);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  max-width: 52rem;
+}
+
+/* --- Pin showcase --------------------------------------------- */
+/* These are the only proof she has, so they get the room. */
+.act--showcase .act__inner { margin-bottom: var(--sp-2); }
+.pin { margin: 0; flex: 0 0 auto; scroll-snap-align: center; }
+.pin img {
+  display: block;
+  width: min(66vw, 300px);
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 22px 45px -28px rgba(30, 44, 58, 0.55);
+}
+.strip { align-items: center; padding-block: var(--sp-5); }
+@media (min-width: 64rem) {
+  .strip { justify-content: center; gap: var(--sp-4); overflow-x: visible; }
+  .pin img { width: 268px; }
+  .pin:nth-child(odd)  { transform: translateY(-1.6rem) rotate(-1.4deg); }
+  .pin:nth-child(even) { transform: translateY(1.6rem) rotate(1.2deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pin { transform: none !important; }
+}
+
+/* --- Portraits ------------------------------------------------ */
+.act__figure { display: flex; justify-content: center; }
+.act__figure .headshot { margin-top: 0; max-width: 100%; width: min(100%, 420px); }
+@media (max-width: 63.999rem) {
+  .act--hero .act__figure { display: none; }
+  .act--portrait .act__figure { margin-bottom: var(--sp-4); }
+  .act--portrait .act__figure .headshot { width: min(100%, 260px); }
+}
+
+/* ===============================================================
+   LATTICE AND EDGES
+   Her Moroccan motif reached only the three navy chapter breaks.
+   It now sits behind every panel at a strength you feel rather than
+   read, and each act carries a hairline top edge so the colour
+   fields meet as panels instead of blending into one wash.
+   =============================================================== */
+
+.act { isolation: isolate; }
+.act::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--panel-lattice, none);
+  background-size: var(--panel-lattice-size, 200px 200px);
+  opacity: var(--panel-lattice-opacity, 0.05);
+  pointer-events: none;
+  z-index: -1;
+}
+.act > .wrap { position: relative; }
+
+#top, #how-pinterest-works, #pin-examples, #packages, #how-it-works, #contact,
+#why-pinterest, #who-its-for, #testimonials, #about, #faq {
+  --panel-lattice: url('/marks/lattice-navy.svg');
+}
+#book {
+  --panel-lattice: url('/marks/lattice-mint.svg');
+  --panel-lattice-opacity: 0.12;
+}
+
+@media (max-width: 40rem) {
+  .act::after { --panel-lattice-size: 148px 148px; }
+}
+
+/* A split act has content on both sides, so the big corner fronds can
+   no longer sweep across the middle at full strength: they were sitting
+   directly behind headings. In split acts they pull back to being an
+   edge treatment. The statement acts, which have a genuinely empty
+   half, keep them at full size. */
+@media (min-width: 64rem) {
+  .act--split .frond,
+  .act--portrait .frond { opacity: calc(var(--frond-opacity) * 0.5); }
+  .act--split .frond--bl, .act--split .frond--br,
+  .act--portrait .frond--bl, .act--portrait .frond--br {
+    width: calc(210px * var(--frond-scale));
+  }
+}
+
+/* --- Explainer notes, revised --------------------------------- */
+/* Three points in a two-column grid left a hole. They read better as
+   a stacked list with the label beside the text. */
+.notes { grid-template-columns: 1fr !important; gap: 0; }
+.note {
+  display: grid;
+  gap: var(--sp-1) var(--sp-4);
+  padding: var(--sp-3) 0;
+  background: none;
+  border-top: 1px solid var(--rule);
+  border-radius: 0;
+}
+.note:last-child { border-bottom: 1px solid var(--rule); }
+@media (min-width: 34rem) {
+  .note { grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr); align-items: baseline; }
+}
+.note h3 { margin-bottom: 0; color: var(--navy); }
+
+/* --- Quotes, revised ------------------------------------------ */
+/* Side by side inside an already narrow body column gave each quote
+   about eighteen characters a line. They stack instead. */
+.quotes { grid-template-columns: 1fr !important; gap: var(--sp-4); }
+.quotes > blockquote:nth-child(even) { margin-top: 0; margin-left: var(--sp-5); }
+.quotes blockquote p { max-width: 44ch; }
+
+/* The lede needs air under a display heading. */
+.act__lead h1 + .lede,
+.act__lead h2 + .lede { margin-top: var(--sp-3); }
+
+/* In a mirrored act the heading sits in the right-hand column. Left
+   aligned it stranded itself against a gap; ranged right it closes on
+   the content it belongs to and the mirroring reads as deliberate. */
+@media (min-width: 64rem) {
+  .act--flip .act__lead { text-align: right; }
+  .act--flip .act__lead p { margin-left: auto; }
+  .act--flip .act__aside-note {
+    border-left: 0;
+    border-right: 2px solid var(--leaf);
+    padding-left: 0;
+    padding-right: var(--sp-2);
+  }
+  .act--flip .actions { justify-content: flex-end; }
+}
+
+/* The closing panel is the last thing read and its fronds were
+   crossing the copy. */
+#book .frond { opacity: calc(var(--frond-opacity) * 0.62); }
+
+/* The contact card belongs against the copy it answers to. */
+@media (min-width: 64rem) {
+  .reach--end { max-width: 26rem; margin-left: auto; }
+  .act--flip .reach .actions { justify-content: flex-start; }
+  .act--flip .reach { text-align: left; }
+}
+
+/* Measured, not guessed: at half strength the fronds still put the FAQ
+   questions at 1.86:1 and the testimonial credits at 3.8:1. In a split
+   act they drop to a quarter and pull further off the edge, which keeps
+   them as an edge treatment rather than a backdrop for body copy. */
+@media (min-width: 64rem) {
+  .act--split .frond,
+  .act--portrait .frond { opacity: calc(var(--frond-opacity) * 0.26); }
+  .act--split .frond--tl, .act--split .frond--bl,
+  .act--portrait .frond--tl, .act--portrait .frond--bl { left: -42%; }
+  .act--split .frond--tr, .act--split .frond--br,
+  .act--portrait .frond--tr, .act--portrait .frond--br { right: -42%; }
+}
+@media (max-width: 63.999rem) {
+  .act--split .frond, .act--portrait .frond { opacity: calc(var(--frond-opacity) * 0.3); }
+}
+
+/* The chapter kicker was mint on navy at 0.9rem: 3.7:1, under AA for
+   text that small. */
+.chapter__sub { color: #DCEFE7; }
+
+/* The closing line sits over a frond on navy. */
+#book .frond { opacity: calc(var(--frond-opacity) * 0.34); }
+#book .statement__body { color: #EAF2F4; }
+
+/* ===============================================================
+   LATTICE, VARIED
+   Two motifs off her brand board, applied four different ways, so no
+   two neighbouring panels wear the pattern the same. Full bleed on
+   some, a band along one edge on others, a strip down one side, and
+   an inverse where the motif goes light over the tint instead of dark.
+   =============================================================== */
+
+.act--lat-band-top::after    { -webkit-mask-image: linear-gradient(to bottom, #000 0 22%, transparent 42%);
+                                       mask-image: linear-gradient(to bottom, #000 0 22%, transparent 42%); }
+.act--lat-band-bottom::after { -webkit-mask-image: linear-gradient(to top, #000 0 22%, transparent 42%);
+                                       mask-image: linear-gradient(to top, #000 0 22%, transparent 42%); }
+.act--lat-edge-left::after   { -webkit-mask-image: linear-gradient(to right, #000 0 16%, transparent 34%);
+                                       mask-image: linear-gradient(to right, #000 0 16%, transparent 34%); }
+.act--lat-edge-right::after  { -webkit-mask-image: linear-gradient(to left, #000 0 16%, transparent 34%);
+                                       mask-image: linear-gradient(to left, #000 0 16%, transparent 34%); }
+/* Banded and edged panels carry the motif harder, because it covers
+   less ground and has to register at all. */
+.act--lat-band-top, .act--lat-band-bottom,
+.act--lat-edge-left, .act--lat-edge-right { --panel-lattice-opacity: 0.13; }
+
+/* The inverse: the motif in white over the tint rather than in navy,
+   so the pattern reads as light cut into the colour. */
+.act--lat-inverse { --panel-lattice-opacity: 0.5; }
+
+#top                 { --panel-lattice: url('/marks/fret-navy.svg');    --panel-lattice-size: 220px 220px; }
+#why-pinterest       { --panel-lattice: url('/marks/lattice-white.svg'); --panel-lattice-size: 168px 168px; }
+#how-pinterest-works { --panel-lattice: url('/marks/fret-navy.svg');    --panel-lattice-size: 200px 200px; }
+#who-its-for         { --panel-lattice: url('/marks/lattice-navy.svg'); --panel-lattice-size: 168px 168px; }
+#pin-examples        { --panel-lattice: url('/marks/fret-navy.svg');    --panel-lattice-size: 240px 240px; }
+#testimonials        { --panel-lattice: url('/marks/lattice-navy.svg'); --panel-lattice-size: 150px 150px; }
+#packages            { --panel-lattice: url('/marks/fret-navy.svg');    --panel-lattice-size: 200px 200px; }
+#about               { --panel-lattice: url('/marks/lattice-navy.svg'); --panel-lattice-size: 180px 180px; }
+#how-it-works        { --panel-lattice: url('/marks/fret-navy.svg');    --panel-lattice-size: 210px 210px; }
+#faq                 { --panel-lattice: url('/marks/lattice-white.svg'); --panel-lattice-size: 168px 168px; }
+#contact             { --panel-lattice: url('/marks/fret-navy.svg');    --panel-lattice-size: 190px 190px; }
+#book                { --panel-lattice: url('/marks/lattice-mint.svg'); --panel-lattice-size: 168px 168px;
+                       --panel-lattice-opacity: 0.12; }

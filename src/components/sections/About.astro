@@ -1,18 +1,26 @@
 ---
 import Fronds from '../Fronds.astro';
+import Botanical from '../Botanical.astro';
 const { data } = Astro.props;
 ---
-<section class="act" id="about">
-  <Fronds corner="tr" scale={2.2} tone="deep" opacity={0.3} delay={1.7} />
+{/* Portrait leads on the left, words to its right, so About does not
+    repeat the hero's arrangement. */}
+<section class="act act--split act--portrait act--lat-band-bottom" id="about">
+  <Fronds corner="tl" scale={2.2} tone="deep" opacity={0.3} delay={1.7} />
   <Fronds corner="bl" scale={3.9} tone="deep" opacity={0.4} delay={0.3} />
+  <Botanical corner="br" tone="plum"  scale={1.45} opacity={0.32} rotate={-16} show="peek" delay={1.9} />
   <div class="wrap act__inner">
-    <h2>{data.heading}</h2>
-    {data.image && <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" loading="lazy" />}
-    <p>{data.body}</p>
-    {data.bullets.length > 0 && (
-      <ul>
-        {data.bullets.map((b) => <li>{b}</li>)}
-      </ul>
-    )}
+    <div class="act__figure">
+      {data.image && <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" loading="lazy" />}
+    </div>
+    <div class="act__body">
+      <h2>{data.heading}</h2>
+      <p class="lede">{data.body}</p>
+      {data.bullets.length > 0 && (
+        <ul class="ticks">
+          {data.bullets.map((b) => <li>{b}</li>)}
+        </ul>
+      )}
+    </div>
   </div>
 </section>

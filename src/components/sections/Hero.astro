@@ -1,20 +1,28 @@
 ---
 import Fronds from '../Fronds.astro';
+import Botanical from '../Botanical.astro';
 import { resolveUrl } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
-<section class="act act--pin" id="top">
+<section class="act act--pin act--hero act--lat-edge-right" id="top">
   <Fronds corner="tr" scale={2.3} tone="deep" opacity={0.34} delay={0.0} />
   <Fronds corner="br" scale={4.0} tone="deep" opacity={0.55} delay={1.1} />
+  <Botanical corner="br" tone="deep"  scale={1.50} opacity={0.34} rotate={-12} show="peek" delay={0.4} />
   <div class="wrap act__inner">
-    <h1>{data.heading}</h1>
-    <p class="lede">{data.subheading}</p>
-    <div class="actions">
-      <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
-      {data.secondaryCta && (
-        <a class="btn btn--ghost" href={resolveUrl(data.secondaryCta.url)}>{data.secondaryCta.label}</a>
-      )}
+    <div class="act__lead">
+      <h1>{data.heading}</h1>
+      <p class="lede">{data.subheading}</p>
+      <div class="actions">
+        <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
+        {data.secondaryCta && (
+          <a class="btn btn--ghost" href={resolveUrl(data.secondaryCta.url)}>{data.secondaryCta.label}</a>
+        )}
+      </div>
     </div>
-    {data.image && <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" />}
+    {data.image && (
+      <div class="act__figure">
+        <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" />
+      </div>
+    )}
   </div>
 </section>

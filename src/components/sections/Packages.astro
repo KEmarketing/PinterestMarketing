@@ -1,18 +1,22 @@
 ---
+import Botanical from '../Botanical.astro';
 import { resolveUrl } from '../../utils.mjs';
 const { data, bookingLabel } = Astro.props;
 ---
-<section class="act" id="packages">
+<section class="act act--wide" id="packages">
+  <Botanical corner="tl" tone="deep"  scale={1.25} opacity={0.34} rotate={18}  show="peek" delay={0.2} />
   <div class="wrap act__inner">
-    <h2>{data.heading}</h2>
-    {data.intro && <p>{data.intro}</p>}
+    <div class="act__lead act__lead--row">
+      <h2>{data.heading}</h2>
+      {data.intro && <p class="lede">{data.intro}</p>}
+    </div>
 
     <p class="swipe-cue">
       <span>Swipe for all four</span>
       <span class="swipe-cue__arrow" aria-hidden="true">&rarr;</span>
     </p>
 
-    <div class="stack" style="margin-top:1.5rem">
+    <div class="stack">
       {data.items.map((p) => (
         <article class:list={['block', p.featured && 'block--featured']}>
           <h3>{p.name}</h3>
@@ -31,6 +35,6 @@ const { data, bookingLabel } = Astro.props;
       ))}
     </div>
 
-    {data.note && <p class="lede" style="margin-top:1.5rem">{data.note}</p>}
+    {data.note && <p class="packages__note">{data.note}</p>}
   </div>
 </section>

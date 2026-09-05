@@ -1,19 +1,25 @@
 ---
+import Botanical from '../Botanical.astro';
 const { data } = Astro.props;
 ---
-<section class="act act--pin" id="how-pinterest-works">
+<section class="act act--pin act--split act--lat-band-bottom" id="how-pinterest-works">
+  <Botanical corner="tr" tone="sage"  scale={1.35} opacity={0.36} rotate={24}  show="peek" delay={2.1} />
   <div class="wrap act__inner">
-    <h2>{data.heading}</h2>
-    <p>{data.body}</p>
-    {data.points.length > 0 && (
-      <div class="grid grid--2" style="margin-top:1.5rem">
-        {data.points.map((p) => (
-          <div>
-            <h3>{p.heading}</h3>
-            <p>{p.body}</p>
-          </div>
-        ))}
-      </div>
-    )}
+    <div class="act__lead">
+      <h2>{data.heading}</h2>
+      <p class="lede">{data.body}</p>
+    </div>
+    <div class="act__body">
+      {data.points.length > 0 && (
+        <div class="notes">
+          {data.points.map((p) => (
+            <div class="note">
+              <h3>{p.heading}</h3>
+              <p>{p.body}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   </div>
 </section>

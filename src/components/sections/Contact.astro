@@ -1,25 +1,30 @@
 ---
+import Botanical from '../Botanical.astro';
 import { resolveUrl } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
-<section class="act act--wash" id="contact">
+<section class="act act--wash act--split act--flip act--lat-band-top" id="contact">
+  <Botanical corner="tr" tone="deep"  scale={1.30} opacity={0.34} rotate={22}  show="peek" delay={2.7} />
   <div class="wrap act__inner">
-    <h2>{data.heading}</h2>
-    <p class="lede">{data.body}</p>
-
-    <div class="actions">
-      <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
+    <div class="act__lead">
+      <h2>{data.heading}</h2>
+      <p class="lede">{data.body}</p>
     </div>
-
-    <ul class="contact-list">
-      {data.email && (
-        <li><a href={`mailto:${data.email}`}>{data.email}</a></li>
-      )}
-      {data.facebook && (
-        <li><a href={data.facebook}>Message on Facebook</a></li>
-      )}
-    </ul>
-
-    {data.responseNote && <p class="contact-note">{data.responseNote}</p>}
+    <div class="act__body">
+      <div class="reach reach--end">
+        <div class="actions">
+          <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
+        </div>
+        <ul class="contact-list">
+          {data.email && (
+            <li><a href={`mailto:${data.email}`}>{data.email}</a></li>
+          )}
+          {data.facebook && (
+            <li><a href={data.facebook}>Message on Facebook</a></li>
+          )}
+        </ul>
+        {data.responseNote && <p class="contact-note">{data.responseNote}</p>}
+      </div>
+    </div>
   </div>
 </section>

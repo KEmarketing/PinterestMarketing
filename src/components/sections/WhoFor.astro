@@ -1,16 +1,24 @@
 ---
 import Fronds from '../Fronds.astro';
+import Botanical from '../Botanical.astro';
 const { data } = Astro.props;
 ---
-<section class="act act--pin act--wash" id="who-its-for">
+{/* Flipped: the lead sits on the right here so two neighbouring acts
+    are never built the same way round. */}
+<section class="act act--pin act--wash act--split act--flip" id="who-its-for">
   <Fronds corner="tr" scale={2.4} tone="deep" opacity={0.32} delay={1.4} />
   <Fronds corner="br" scale={4.0} tone="deep" opacity={0.5} delay={2.6} />
+  <Botanical corner="bl" tone="deep"  scale={1.45} opacity={0.30} rotate={-20} show="peek" delay={0.8} />
   <div class="wrap act__inner">
-    <h2>{data.heading}</h2>
-    <p>{data.intro}</p>
-    <ul>
-      {data.items.map((item) => <li>{item}</li>)}
-    </ul>
-    {data.footnote && <p class="lede">{data.footnote}</p>}
+    <div class="act__lead">
+      <h2>{data.heading}</h2>
+      <p class="lede">{data.intro}</p>
+      {data.footnote && <p class="act__aside-note">{data.footnote}</p>}
+    </div>
+    <div class="act__body">
+      <ul class="ticks">
+        {data.items.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
   </div>
 </section>

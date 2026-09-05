@@ -1,17 +1,21 @@
 ---
-/* Horizontal swipe strip rather than a grid: Pinterest is a
-   horizontal-browsing platform, so it matches the subject, and on a
-   phone it is the most natural gesture on the page. */
+import Botanical from '../Botanical.astro';
+/* Her pin designs are the only proof she has, so this act is the one
+   that owns its whole screen. Full bleed, staggered, and big: on a
+   phone it is a swipe, which is also how Pinterest itself is read. */
 const { data } = Astro.props;
 ---
-<section class="act" id="pin-examples">
+<section class="act act--showcase act--lat-band-top" id="pin-examples">
+  <Botanical corner="tl" tone="blush" scale={1.30} opacity={0.34} rotate={8}   show="peek" delay={1.6} />
   <div class="wrap act__inner">
     <h2>{data.heading}</h2>
     {data.intro && <p class="lede">{data.intro}</p>}
   </div>
   <div class="strip" role="region" aria-label="Pin design examples" tabindex="0">
-    {data.images.map((img) => (
-      <img src={img.src} alt={img.alt} width="400" height="600" loading="lazy" />
+    {data.images.map((img, i) => (
+      <figure class="pin" style={`--i:${i}`}>
+        <img src={img.src} alt={img.alt} width="400" height="600" loading="lazy" />
+      </figure>
     ))}
   </div>
   <div class="wrap">
