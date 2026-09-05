@@ -175,6 +175,32 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
         });
         if (reduce.addEventListener) reduce.addEventListener('change', fit);
       })();
+
+      /* Park the fronds that are off screen.
+
+         Every frond animates four nested groups, and each running
+         animation is its own compositing layer for as long as it runs,
+         whether or not it is anywhere near the viewport. Fourteen
+         fronds plus twelve pinned acts put the layer tree past what the
+         compositor will hold, so it dropped tiles and re-rastered them
+         when they were scrolled to: the lower half of the page arriving
+         blank and filling in.
+
+         The margin is deliberately wide. A frond restarts in motion
+         rather than from a standstill, so the switch happens well
+         outside anything that is on screen. */
+      (function () {
+        if (!('IntersectionObserver' in window)) return;
+        var fronds = document.querySelectorAll('.frond');
+        if (!fronds.length) return;
+        for (var i = 0; i < fronds.length; i++) fronds[i].classList.add('frond--still');
+        var io = new IntersectionObserver(function (entries) {
+          for (var k = 0; k < entries.length; k++) {
+            entries[k].target.classList.toggle('frond--still', !entries[k].isIntersecting);
+          }
+        }, { rootMargin: '400px 400px 400px 400px' });
+        for (var j = 0; j < fronds.length; j++) io.observe(fronds[j]);
+      })();
     </script>
 
     <footer class="site-footer">

@@ -281,8 +281,7 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
     transform-origin: 0px 0px;   /* pivot at the root, like a real stem */
     transform-box: view-box;
     animation: sway var(--breeze-base) ease-in-out infinite;
-    animation-delay: var(--frond-delay);
-    will-change: transform;
+    animation-delay: calc(-1 * var(--frond-delay));
   }
 
   @keyframes sway {
@@ -303,7 +302,7 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
        whip comes from the amplitudes compounding, not from a different
        tempo. */
     animation: joint var(--breeze-base) ease-in-out infinite;
-    animation-delay: var(--frond-delay);
+    animation-delay: calc(-1 * var(--frond-delay));
   }
 
   /* The shadow is a duplicate of the frond's own joint chain, offset and
@@ -311,6 +310,16 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
      it moves in lockstep. A CSS drop-shadow filter tracked too, but cost
      33fps: a filter on an animating group is re-rasterised every frame.
      Freezing the shadow's joints was cheaper still and visibly wrong. */
+
+  /* A frond that is nowhere near the screen still cost a compositing
+     layer per animated group: 14 fronds x 4 groups, live for the whole
+     page, on top of 12 pinned acts. That is what left the lower half
+     blank and filling in slowly, because the compositor ran out of room
+     for tiles and had to re-raster them on demand. Stopping the
+     animation outright releases the layer; animation-play-state: paused
+     does NOT, it keeps the layer and only freezes it. */
+  .frond--still .frond__pivot,
+  .frond--still .frond__joint { animation: none; }
 
   @keyframes joint {
     0%, 100% { transform: rotate(calc(-0.55deg * var(--gust-mult, 1))); }

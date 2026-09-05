@@ -99,13 +99,13 @@ work:
   heading: "Pin examples"
   intro: "A few templates I've designed. Every set is built for the brand it belongs to, so yours wouldn't look like these."
   images:
-    - src: "/images/pin-1.png"
+    - src: "/images/pin-1.webp"
       alt: "Pin design example"
-    - src: "/images/pin-2.png"
+    - src: "/images/pin-2.webp"
       alt: "Pin design example"
-    - src: "/images/pin-3.png"
+    - src: "/images/pin-3.webp"
       alt: "Pin design example"
-    - src: "/images/pin-4.png"
+    - src: "/images/pin-4.webp"
       alt: "Pin design example"
 
 about:
