@@ -193,6 +193,19 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
       </linearGradient>
     </defs>
     <g class="frond__pivot">
+      {/* The frond is translucent, so the lattice behind the panel read
+          straight through it. This is the same shape painted solid in
+          the panel's own colour first, which blocks it. It sits inside
+          the pivot so it sways with everything else. */}
+      <g class="frond__back">
+        {bands.map((band, i) => (
+          <g>
+            <path d={band.silhouette} />
+            <path d={band.stem} fill="none" stroke-width={[3.2, 2.9, 2.5][i]} stroke-linecap="round" />
+          </g>
+        ))}
+      </g>
+      <g class="frond__art">
       {/* The frond bends in three nested sections, so the tip travels
           further than the base, and the stem is drawn in matching pieces
           inside those sections, which keeps the leaves welded to it.
@@ -243,12 +256,17 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
     position: absolute;
     width: calc(300px * var(--frond-scale));
     pointer-events: none;
-    opacity: var(--frond-opacity);
     filter: blur(var(--frond-blur));
     z-index: 0;
   }
 
   .frond__svg { width: 100%; height: auto; overflow: visible; }
+
+  /* The opaque backing takes the panel colour; only the artwork above it
+     is translucent, so the frond fades into the panel and not into
+     whatever is painted on the panel. */
+  .frond__back path { fill: var(--panel-bg, transparent); stroke: var(--panel-bg, transparent); }
+  .frond__art { opacity: var(--frond-alpha, var(--frond-opacity)); }
 
   /* Root each frond just past the edge so no cut stem is visible */
   /* Rooted well outside the panel so the edge crops the frond, which is
@@ -306,7 +324,7 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
   /* Smaller phones: pull the fronds further off-edge so they frame
      rather than crowd the copy. */
   @media (max-width: 600px) {
-    .frond { width: calc(240px * var(--frond-scale)); }
+    .frond { width: calc(170px * var(--frond-scale)); }
     .frond--tl, .frond--bl { left: -46%; }
     .frond--tr, .frond--br { right: -46%; }
   }

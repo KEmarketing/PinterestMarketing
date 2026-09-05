@@ -1,13 +1,11 @@
 ---
 import Fronds from '../Fronds.astro';
-import Botanical from '../Botanical.astro';
 import { resolveUrl } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
 <section class="act act--statement act--centred" id="book">
   <Fronds corner="tr" scale={2.4} tone="mint" opacity={0.34} delay={0.5} />
   <Fronds corner="bl" scale={4.3} tone="mint" opacity={0.55} delay={2.9} />
-  <Botanical corner="br" tone="pale"  scale={1.90} opacity={0.34} rotate={-14} show="half" delay={1.4} />
   <div class="wrap act__inner">
     <h2 class="statement">{data.heading}</h2>
     <p class="statement__body">{data.body}</p>

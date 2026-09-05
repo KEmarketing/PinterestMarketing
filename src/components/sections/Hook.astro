@@ -1,6 +1,5 @@
 ---
 import Fronds from '../Fronds.astro';
-import Botanical from '../Botanical.astro';
 const { data } = Astro.props;
 ---
 {/* No body content of its own, so this act goes the other way: one
@@ -9,7 +8,6 @@ const { data } = Astro.props;
 <section class="act act--pin act--wash act--statement act--lat-inverse" id="why-pinterest">
   <Fronds corner="tr" scale={2.1} tone="deep" opacity={0.3} delay={2.0} />
   <Fronds corner="br" scale={4.2} tone="deep" opacity={0.48} delay={0.6} />
-  <Botanical corner="bl" tone="blush" scale={1.85} opacity={0.36} rotate={16}  show="half" delay={1.2} />
   <div class="wrap act__inner">
     <h2 class="statement">{data.heading}</h2>
     <p class="statement__body">{data.body}</p>

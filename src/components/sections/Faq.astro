@@ -1,12 +1,10 @@
 ---
 import Fronds from '../Fronds.astro';
-import Botanical from '../Botanical.astro';
 const { data } = Astro.props;
 ---
 <section class="act act--wash act--split act--lat-inverse" id="faq">
   <Fronds corner="tl" scale={2.3} tone="deep" opacity={0.3} delay={2.8} />
   <Fronds corner="bl" scale={4.1} tone="deep" opacity={0.46} delay={1.5} />
-  <Botanical corner="br" tone="sage"  scale={1.45} opacity={0.30} rotate={-10} show="peek" delay={0.6} />
   <div class="wrap act__inner">
     <div class="act__lead">
       <h2>{data.heading}</h2>

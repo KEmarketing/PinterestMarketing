@@ -1,10 +1,8 @@
 ---
-import Botanical from '../Botanical.astro';
 import { resolveUrl } from '../../utils.mjs';
 const { data, bookingLabel } = Astro.props;
 ---
 <section class="act act--wide" id="packages">
-  <Botanical corner="tl" tone="deep"  scale={1.25} opacity={0.34} rotate={18}  show="peek" delay={0.2} />
   <div class="wrap act__inner">
     <div class="act__lead act__lead--row">
       <h2>{data.heading}</h2>

@@ -1,12 +1,10 @@
 ---
-import Botanical from '../Botanical.astro';
 /* Her pin designs are the only proof she has, so this act is the one
    that owns its whole screen. Full bleed, staggered, and big: on a
    phone it is a swipe, which is also how Pinterest itself is read. */
 const { data } = Astro.props;
 ---
 <section class="act act--showcase act--lat-band-top" id="pin-examples">
-  <Botanical corner="tl" tone="blush" scale={1.30} opacity={0.34} rotate={8}   show="peek" delay={1.6} />
   <div class="wrap act__inner">
     <h2>{data.heading}</h2>
     {data.intro && <p class="lede">{data.intro}</p>}

@@ -326,18 +326,22 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
    those two stay as accents rather than panels.
    =============================================================== */
 
-#top                  { background: var(--paper); }
-#why-pinterest        { background: var(--mint); }
-#how-pinterest-works  { background: var(--paper-warm); }
-#who-its-for          { background: var(--blush-pale); }
-#pin-examples         { background: var(--paper); }
-#testimonials         { background: var(--mint-pale); }
-#packages             { background: var(--paper-warm); }
-#about                { background: var(--gold-pale); }
-#how-it-works         { background: var(--paper); }
-#faq                  { background: var(--mint); }
-#contact              { background: var(--paper-warm); }
-#book                 { background: var(--navy); }
+/* --panel-bg carries the same colour to the fronds, which paint an
+   opaque silhouette of themselves in it before they draw. Without that
+   the lattice reads straight through them, because a frond is
+   translucent. */
+#top                  { --panel-bg: var(--paper);       background: var(--panel-bg); }
+#why-pinterest        { --panel-bg: var(--mint);        background: var(--panel-bg); }
+#how-pinterest-works  { --panel-bg: var(--paper-warm);  background: var(--panel-bg); }
+#who-its-for          { --panel-bg: var(--blush-pale);  background: var(--panel-bg); }
+#pin-examples         { --panel-bg: var(--paper);       background: var(--panel-bg); }
+#testimonials         { --panel-bg: var(--mint-pale);   background: var(--panel-bg); }
+#packages             { --panel-bg: var(--paper-warm);  background: var(--panel-bg); }
+#about                { --panel-bg: var(--gold-pale);   background: var(--panel-bg); }
+#how-it-works         { --panel-bg: var(--paper);       background: var(--panel-bg); }
+#faq                  { --panel-bg: var(--mint);        background: var(--panel-bg); }
+#contact              { --panel-bg: var(--paper-warm);  background: var(--panel-bg); }
+#book                 { --panel-bg: var(--navy);        background: var(--panel-bg); }
 
 /* Small grey text needs to darken on the tinted panels. */
 #why-pinterest, #who-its-for, #testimonials, #about, #faq {
@@ -696,8 +700,6 @@ summary::after { color: var(--navy); opacity: 0.65; }
    edge treatment. The statement acts, which have a genuinely empty
    half, keep them at full size. */
 @media (min-width: 64rem) {
-  .act--split .frond,
-  .act--portrait .frond { opacity: calc(var(--frond-opacity) * 0.5); }
   .act--split .frond--bl, .act--split .frond--br,
   .act--portrait .frond--bl, .act--portrait .frond--br {
     width: calc(210px * var(--frond-scale));
@@ -748,10 +750,6 @@ summary::after { color: var(--navy); opacity: 0.65; }
   .act--flip .actions { justify-content: flex-end; }
 }
 
-/* The closing panel is the last thing read and its fronds were
-   crossing the copy. */
-#book .frond { opacity: calc(var(--frond-opacity) * 0.62); }
-
 /* The contact card belongs against the copy it answers to. */
 @media (min-width: 64rem) {
   .reach--end { max-width: 26rem; margin-left: auto; }
@@ -765,14 +763,14 @@ summary::after { color: var(--navy); opacity: 0.65; }
    them as an edge treatment rather than a backdrop for body copy. */
 @media (min-width: 64rem) {
   .act--split .frond,
-  .act--portrait .frond { opacity: calc(var(--frond-opacity) * 0.26); }
+  .act--portrait .frond { --frond-alpha: calc(var(--frond-opacity) * 0.5); }
   .act--split .frond--tl, .act--split .frond--bl,
   .act--portrait .frond--tl, .act--portrait .frond--bl { left: -42%; }
   .act--split .frond--tr, .act--split .frond--br,
   .act--portrait .frond--tr, .act--portrait .frond--br { right: -42%; }
 }
 @media (max-width: 63.999rem) {
-  .act--split .frond, .act--portrait .frond { opacity: calc(var(--frond-opacity) * 0.3); }
+  .act--split .frond, .act--portrait .frond { --frond-alpha: calc(var(--frond-opacity) * 0.55); }
 }
 
 /* The chapter kicker was mint on navy at 0.9rem: 3.7:1, under AA for
@@ -780,7 +778,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .chapter__sub { color: #DCEFE7; }
 
 /* The closing line sits over a frond on navy. */
-#book .frond { opacity: calc(var(--frond-opacity) * 0.34); }
+#book .frond { --frond-alpha: calc(var(--frond-opacity) * 0.62); }
 #book .statement__body { color: #EAF2F4; }
 
 /* ===============================================================
@@ -808,6 +806,8 @@ summary::after { color: var(--navy); opacity: 0.65; }
    so the pattern reads as light cut into the colour. */
 .act--lat-inverse { --panel-lattice-opacity: 0.5; }
 
+/* The hero's fronds are both on the right, so its lattice band sits on
+   the left rather than stacking underneath them. */
 #top                 { --panel-lattice: url('/marks/fret-navy.svg');    --panel-lattice-size: 220px 220px; }
 #why-pinterest       { --panel-lattice: url('/marks/lattice-white.svg'); --panel-lattice-size: 168px 168px; }
 #how-pinterest-works { --panel-lattice: url('/marks/fret-navy.svg');    --panel-lattice-size: 200px 200px; }
@@ -821,3 +821,16 @@ summary::after { color: var(--navy); opacity: 0.65; }
 #contact             { --panel-lattice: url('/marks/fret-navy.svg');    --panel-lattice-size: 190px 190px; }
 #book                { --panel-lattice: url('/marks/lattice-mint.svg'); --panel-lattice-size: 168px 168px;
                        --panel-lattice-opacity: 0.12; }
+
+
+/* ===============================================================
+   PHONE: ONE FROND PER ACT
+   Two fronds in a 390px panel crowd each other and crowd the copy.
+   On a phone each act keeps only its big corner frond; the small edge
+   one is always the first child.
+   =============================================================== */
+
+@media (max-width: 51.999rem) {
+  .act > .frond:first-of-type { display: none; }
+  .frond { width: calc(170px * var(--frond-scale)); }
+}
