@@ -11,6 +11,7 @@ import Testimonials from '../components/sections/Testimonials.astro';
 import Packages from '../components/sections/Packages.astro';
 import About from '../components/sections/About.astro';
 import Process from '../components/sections/Process.astro';
+import Stats from '../components/sections/Stats.astro';
 import Faq from '../components/sections/Faq.astro';
 import Contact from '../components/sections/Contact.astro';
 import Closing from '../components/sections/Closing.astro';
@@ -31,8 +32,9 @@ const d = entry.data;
 const slug = d.urlPath ?? entry.slug;
 const path = slug === 'index' ? '/' : `/${slug}/`;
 
-/* Three chapter breaks split the page into four acts. Remove one in
-   the CMS and the page still renders, just without that break. */
+/* Three chapter breaks split the page. Remove one in the CMS and the
+   page still renders, just without that break. Order follows her copy
+   doc: the three steps now come before the pricing rather than after. */
 const chapter = (i) => d.chapters?.[i];
 ---
 
@@ -47,19 +49,22 @@ const chapter = (i) => d.chapters?.[i];
 
   {/* ACT TWO: is this you */}
   <WhoFor data={d.whoFor} />
-  <Work data={d.work} />
 
   {chapter(1) && <Chapter data={chapter(1)} />}
 
-  {/* ACT THREE: proof and price */}
-  <Testimonials data={d.testimonials} />
-  <Packages data={d.packages} bookingLabel={d.hero.cta.label} />
-  <About data={d.about} />
+  {/* ACT THREE: how we start, then what it costs */}
+  <Process data={d.process} />
 
   {chapter(2) && <Chapter data={chapter(2)} />}
 
-  {/* ACT FOUR: how we start */}
-  <Process data={d.process} />
+  <Packages data={d.packages} bookingLabel={d.hero.cta.label} />
+
+  {/* ACT FOUR: proof */}
+  <Testimonials data={d.testimonials} />
+  <Work data={d.work} />
+  {d.stats && <Stats data={d.stats} />}
+  <About data={d.about} />
+
   <Faq data={d.faq} />
   <Contact data={d.contact} />
   <Closing data={d.closing} />

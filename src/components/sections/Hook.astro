@@ -1,15 +1,21 @@
 ---
 import Fronds from '../Fronds.astro';
+import { emphasise } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
 {/* No body content of its own, so this act goes the other way: one
     oversized statement holding the whole panel. It is the beat that
     stops the page reading as a stack of identical text blocks. */}
 <section class="act act--pin act--wash act--statement act--lat-inverse" id="why-pinterest">
-  <Fronds corner="tr" scale={2.1} tone="deep" opacity={0.3} delay={2.0} />
-  <Fronds corner="br" scale={4.2} tone="deep" opacity={0.48} delay={0.6} />
+  <Fronds corner="tl" scale={2.1} tone="deep" opacity={0.3} delay={2.0} />
+  <Fronds corner="bl" scale={4.2} tone="deep" opacity={0.48} delay={0.6} />
   <div class="wrap act__inner">
-    <h2 class="statement">{data.heading}</h2>
+    <h2 class="statement" set:html={emphasise(data.heading)} />
     <p class="statement__body">{data.body}</p>
+    {data.bullets.length > 0 && (
+      <ul class="statement__list">
+        {data.bullets.map((b) => <li>{b}</li>)}
+      </ul>
+    )}
   </div>
 </section>

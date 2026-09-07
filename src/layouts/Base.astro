@@ -117,8 +117,20 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
 
     <header class="site-header">
       <div class="wrap">
-        <a class="wordmark" href="/">KANDACE EMORY</a>
-        <a class="btn" href={SITE.booking}>Book a call</a>
+        {/* Her actual logo, lifted off its white background so the paper
+            shows through. It already contains her name, so there is no
+            wordmark set beside it: the accessible name carries it instead. */}
+        <a class="wordmark" href="/" aria-label={`${SITE.name}, back to top`}>
+          <img class="wordmark__mark" src="/marks/logo-ke.webp" alt={SITE.name} width="256" height="256" />
+        </a>
+
+        <nav class="site-nav" aria-label="Sections of this page">
+          <a href="#how-pinterest-works">Why Pinterest</a>
+          <a href="#packages">Services</a>
+          <a href="#pin-examples">Portfolio</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
       </div>
     </header>
 

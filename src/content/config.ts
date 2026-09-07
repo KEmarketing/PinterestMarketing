@@ -31,6 +31,7 @@ const pages = defineCollection({
     hook: z.object({
       heading: z.string(),
       body: z.string(),
+      bullets: z.array(z.string()).default([]),
     }),
 
     /* --- what Pinterest actually is --- */
@@ -43,8 +44,11 @@ const pages = defineCollection({
     /* --- who this is for (the qualification gate) --- */
     whoFor: z.object({
       heading: z.string(),
-      intro: z.string(),
+      intro: z.string().optional(),
       items: z.array(z.string()).default([]),
+      /* second column: what a business needs in place already */
+      needsHeading: z.string().optional(),
+      needs: z.array(z.string()).default([]),
       footnote: z.string().optional(),
     }),
 
@@ -60,6 +64,8 @@ const pages = defineCollection({
         summary: z.string().optional(),
         features: z.array(z.string()).default([]),
         featured: z.boolean().default(false),
+        /* optional tab above the card, e.g. "New to Pinterest" */
+        tab: z.string().optional(),
         cta: linkGroup.optional(),
       })).default([]),
     }),
@@ -95,8 +101,16 @@ const pages = defineCollection({
     /* --- process --- */
     process: z.object({
       heading: z.string(),
+      aside: z.string().optional(),
       steps: z.array(z.object({ heading: z.string(), body: z.string() })).default([]),
     }),
+
+    /* --- pinterest stats --- */
+    stats: z.object({
+      heading: z.string(),
+      items: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
+      body: z.string().optional(),
+    }).optional(),
 
     /* --- faq --- */
     faq: z.object({

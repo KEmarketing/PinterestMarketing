@@ -2,9 +2,10 @@
 /* A short full-bleed beat between acts. Deliberately holds almost
    nothing: it exists to give the eye a break so the page reads as
    chapters rather than one long scroll. */
+import { emphasise } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
 <div class="chapter">
-  <p class="chapter__line">{data.line}</p>
-  {data.sub && <p class="chapter__sub">{data.sub}</p>}
+  <p class="chapter__line" set:html={emphasise(data.line)} />
+  {data.sub && <p class="chapter__sub" set:html={emphasise(data.sub)} />}
 </div>

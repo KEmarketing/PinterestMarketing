@@ -1,15 +1,18 @@
 ---
 import Fronds from '../Fronds.astro';
-import { resolveUrl } from '../../utils.mjs';
+import { resolveUrl, emphasise } from '../../utils.mjs';
 const { data } = Astro.props;
+/* One CMS textarea, blank line between paragraphs. Keeps the editing
+   experience to a single field instead of subheadingA / subheadingB. */
+const lede = String(data.subheading ?? '').split(/\n\s*\n/).filter(Boolean);
 ---
 <section class="act act--pin act--hero act--lat-edge-left" id="top">
   <Fronds corner="tr" scale={2.3} tone="deep" opacity={0.34} delay={0.0} />
   <Fronds corner="br" scale={4.0} tone="deep" opacity={0.55} delay={1.1} />
   <div class="wrap act__inner">
     <div class="act__lead">
-      <h1>{data.heading}</h1>
-      <p class="lede">{data.subheading}</p>
+      <h1 set:html={emphasise(data.heading)} />
+      {lede.map((para) => <p class="lede">{para}</p>)}
       <div class="actions">
         <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
         {data.secondaryCta && (

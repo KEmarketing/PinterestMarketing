@@ -255,19 +255,52 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
   gap: var(--sp-3);
 }
 .wordmark {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: var(--step-1);
-  letter-spacing: 0.14em;
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   color: var(--navy);
-  white-space: nowrap;
+  flex: none;
 }
-.site-header .btn {
-  min-height: 44px;
-  padding: 0.5em 1.2em;
+.wordmark__mark {
+  display: block;
+  width: 56px;
+  height: 56px;
+}
+
+/* Section links. They scroll rather than navigate, so they are set quietly:
+   the logo should still be the loudest thing in the header. */
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: clamp(0.9rem, 2.2vw, 2rem);
+}
+.site-nav a {
   font-size: var(--step--1);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  white-space: nowrap;
+  padding: 0.35em 0;
+  border-bottom: 1px solid transparent;
 }
+.site-nav a:hover,
+.site-nav a:focus-visible { border-bottom-color: var(--navy); color: var(--navy); }
+
+@media (max-width: 40rem) {
+  .site-header .wrap { flex-wrap: wrap; justify-content: center; gap: var(--sp-2); }
+  .wordmark__mark { width: 48px; height: 48px; }
+  .site-nav { justify-content: center; gap: 0.75rem 1.1rem; }
+  .site-nav a { font-size: 0.72rem; letter-spacing: 0.04em; }
+}
+
+/* An anchor lands under the header without this, because the header sits
+   above the acts and the acts pin at the top of the screen. */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.act, .chapter { scroll-margin-top: 0; }
 
 /* --- Footer --------------------------------------------------- */
 .site-footer {
@@ -337,6 +370,7 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
 #pin-examples         { --panel-bg: var(--paper);       background: var(--panel-bg); }
 #testimonials         { --panel-bg: var(--mint-pale);   background: var(--panel-bg); }
 #packages             { --panel-bg: var(--paper-warm);  background: var(--panel-bg); }
+#pinterest-stats      { --panel-bg: var(--blush-pale);  background: var(--panel-bg); }
 #about                { --panel-bg: var(--gold-pale);   background: var(--panel-bg); }
 #how-it-works         { --panel-bg: var(--paper);       background: var(--panel-bg); }
 #faq                  { --panel-bg: var(--mint);        background: var(--panel-bg); }
@@ -344,7 +378,7 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
 #book                 { --panel-bg: var(--navy);        background: var(--panel-bg); }
 
 /* Small grey text needs to darken on the tinted panels. */
-#why-pinterest, #who-its-for, #testimonials, #about, #faq {
+#why-pinterest, #who-its-for, #testimonials, #about, #faq, #pinterest-stats {
   --ink-soft: var(--ink-soft-tint);
 }
 
@@ -682,7 +716,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .act > .wrap { position: relative; }
 
 #top, #how-pinterest-works, #pin-examples, #packages, #how-it-works, #contact,
-#why-pinterest, #who-its-for, #testimonials, #about, #faq {
+#why-pinterest, #who-its-for, #testimonials, #about, #faq, #pinterest-stats {
   --panel-lattice: url('/marks/lattice-navy.svg');
 }
 #book {
@@ -725,10 +759,13 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .note h3 { margin-bottom: 0; color: var(--navy); }
 
 /* --- Quotes, revised ------------------------------------------ */
-/* Side by side inside an already narrow body column gave each quote
-   about eighteen characters a line. They stack instead. */
-.quotes { grid-template-columns: 1fr !important; gap: var(--sp-4); }
-.quotes > blockquote:nth-child(even) { margin-top: 0; margin-left: var(--sp-5); }
+/* This used to force a single column everywhere, because side by side
+   inside the narrow body column of a split act gave each quote about
+   eighteen characters a line. The testimonials act is full width now, so
+   that reason is gone and the guard only applies where it still holds. */
+.quotes { gap: var(--sp-4); }
+.act--split .quotes { grid-template-columns: 1fr; }
+.act--split .quotes > blockquote:nth-child(even) { margin-top: 0; margin-left: var(--sp-5); }
 .quotes blockquote p { max-width: 44ch; }
 
 /* The lede needs air under a display heading. */
@@ -833,4 +870,144 @@ summary::after { color: var(--navy); opacity: 0.65; }
 @media (max-width: 51.999rem) {
   .act > .frond:first-of-type { display: none; }
   .frond { width: calc(170px * var(--frond-scale)); }
+}
+
+
+/* --- Hook: her three outcomes under the statement ------------------
+   The palms moved to the left on this act, so the copy centres in the
+   space they leave rather than sitting hard left against them. */
+.act--statement .statement__list {
+  list-style: none;
+  padding: 0;
+  margin: var(--sp-3) auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem clamp(1rem, 3vw, 2.4rem);
+  max-width: 54ch;
+}
+.act--statement .statement__list li {
+  position: relative;
+  padding-left: 1.35em;
+  font-size: var(--step-0);
+  color: var(--ink);
+}
+.act--statement .statement__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.7em;
+  height: 0.4em;
+  border-left: 2px solid var(--navy);
+  border-bottom: 2px solid var(--navy);
+  transform: rotate(-45deg);
+}
+#why-pinterest .act__inner { text-align: center; }
+#why-pinterest .statement,
+#why-pinterest .statement__body { margin-inline: auto; }
+
+/* --- Who this is for: two lists side by side ---------------------- */
+.whofor__needs-heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--step-1);
+  line-height: 1.2;
+  margin: 0 0 var(--sp-2);
+  color: var(--navy);
+}
+
+/* --- Packages: the tab above the starter card --------------------- */
+.block--tabbed { position: relative; }
+.block__tab {
+  position: absolute;
+  left: -1px;
+  bottom: 100%;
+  display: inline-block;
+  padding: 0.45em 1.1em;
+  background: var(--navy);
+  color: #fff;
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--radius) var(--radius) 0 0;
+  white-space: nowrap;
+}
+/* The tab needs headroom or it collides with the card above it. */
+#packages .stack { row-gap: calc(var(--sp-4) + 1.6em); }
+
+/* --- Pinterest stats: three across, two down ---------------------- */
+.stats {
+  list-style: none;
+  padding: 0;
+  /* ul carries the reading measure by default, which squeezed six figures
+     into the left half of the panel. A grid of numbers is not prose. */
+  max-width: none;
+  margin: var(--sp-4) 0 0;
+  display: grid;
+  gap: var(--sp-4) var(--sp-3);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 34rem) { .stats { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 60rem) { .stats { grid-template-columns: repeat(3, 1fr); } }
+.stat { display: flex; flex-direction: column; gap: 0.3rem; }
+.stat__value {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 1.6rem + 3vw, 3.9rem);
+  line-height: 1;
+  color: var(--navy);
+}
+.stat__label {
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--ink-soft);
+  max-width: 26ch;
+}
+.stats__note {
+  margin-top: var(--sp-4);
+  max-width: 62ch;
+  font-size: var(--step-0);
+}
+.act--stats .act__inner { max-width: 72rem; }
+
+
+/* --- Testimonials: the two reviews next to each other ---------------
+   She asked for them side by side rather than stacked. In the split
+   layout they were confined to the narrow column, so this act runs full
+   width: heading first, reviews beneath it. A third review added in the
+   CMS simply starts a new row. */
+.act--testimonials .act__inner { display: block; }
+.act--testimonials .act__lead { margin-bottom: var(--sp-4); }
+@media (min-width: 48rem) {
+  .act--testimonials .quotes { grid-template-columns: repeat(2, 1fr); align-items: start; }
+}
+
+/* --- Emphasis, in colour instead of capitals ----------------------
+   Kandace writes emphasis as ALL CAPS. Shouted words read badly at
+   display sizes and get spelled out letter by letter by screen readers,
+   so the CMS marks them **like this** and they take the accent colour.
+   coral-ink is the palette's already-darkened coral, derived to pass AA
+   on the light panels. On navy the same job needs a light accent, so it
+   flips to gold. */
+:root { --mark: var(--coral-ink); }
+.mark { color: var(--mark); }
+.chapter,
+#book { --mark: var(--gold); }
+
+/* --- The arch ------------------------------------------------------
+   Her portfolio sets photographs in an arch. A very large top radius
+   clamps to half the width, which gives a true semicircle whatever the
+   image size, rather than a fixed radius that goes wrong when it scales. */
+.headshot {
+  border-radius: 999px 999px var(--radius) var(--radius);
+  overflow: hidden;
+}
+
+/* --- One frame, for personality ------------------------------------
+   Her portfolio deck sets the pin examples inside a mint frame. Just the
+   one, on the section that mirrors that page. */
+.act--showcase .strip {
+  border-block: 6px solid var(--mint);
+  padding-block: var(--sp-4);
 }

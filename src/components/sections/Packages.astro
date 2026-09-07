@@ -16,7 +16,8 @@ const { data, bookingLabel } = Astro.props;
 
     <div class="stack">
       {data.items.map((p) => (
-        <article class:list={['block', p.featured && 'block--featured']}>
+        <article class:list={['block', p.featured && 'block--featured', p.tab && 'block--tabbed']}>
+          {p.tab && <span class="block__tab">{p.tab}</span>}
           <h3>{p.name}</h3>
           <p class="price">
             {p.price}

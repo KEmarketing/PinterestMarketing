@@ -5,6 +5,7 @@ const { data } = Astro.props;
   <div class="wrap act__inner">
     <div class="act__lead">
       <h2>{data.heading}</h2>
+      {data.aside && <p class="act__aside-note">{data.aside}</p>}
     </div>
     <div class="act__body">
       <ol class="steps">

@@ -1,6 +1,7 @@
 ---
 import Fronds from '../Fronds.astro';
 const { data } = Astro.props;
+const paras = String(data.body ?? '').split(/\n\s*\n/).filter(Boolean);
 ---
 {/* Portrait leads on the left, words to its right, so About does not
     repeat the hero's arrangement. */}
@@ -13,7 +14,7 @@ const { data } = Astro.props;
     </div>
     <div class="act__body">
       <h2>{data.heading}</h2>
-      <p class="lede">{data.body}</p>
+      {paras.map((para, i) => <p class={i === 0 ? 'lede' : undefined}>{para}</p>)}
       {data.bullets.length > 0 && (
         <ul class="ticks">
           {data.bullets.map((b) => <li>{b}</li>)}
