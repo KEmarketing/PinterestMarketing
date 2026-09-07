@@ -623,12 +623,17 @@ summary::after { color: var(--navy); opacity: 0.65; }
   content: '';
   position: absolute;
   left: 0.15rem;
-  top: 1.45em;
-  width: 0.7rem;
-  height: 0.7rem;
+  top: 1.3em;
+  /* A tick, not a chevron. Both strokes used to be 0.7rem, and an L with
+     two equal arms rotated 45 degrees is a symmetrical V, which reads as
+     "expand me" rather than "done". A real checkmark is asymmetric: a
+     short downstroke and a long upstroke, so the height is roughly half
+     the width. */
+  width: 0.8rem;
+  height: 0.42rem;
   border-left: 2px solid var(--leaf);
   border-bottom: 2px solid var(--leaf);
-  transform: rotate(-45deg) translateY(-0.2rem);
+  transform: rotate(-45deg);
 }
 
 /* --- Quotes --------------------------------------------------- */
