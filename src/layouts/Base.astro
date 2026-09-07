@@ -190,16 +190,42 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
          rather than from a standstill, so the switch happens well
          outside anything that is on screen. */
       (function () {
-        if (!('IntersectionObserver' in window)) return;
-        var fronds = document.querySelectorAll('.frond');
-        if (!fronds.length) return;
-        for (var i = 0; i < fronds.length; i++) fronds[i].classList.add('frond--still');
-        var io = new IntersectionObserver(function (entries) {
-          for (var k = 0; k < entries.length; k++) {
-            entries[k].target.classList.toggle('frond--still', !entries[k].isIntersecting);
+        var acts = [].slice.call(document.querySelectorAll('.act'));
+        if (!acts.length) return;
+        var groups = acts.map(function (a) { return a.querySelectorAll('.frond'); });
+
+        /* Which fronds are worth drawing.
+
+           Every act is sticky at top 0 inside one container, so an act you
+           have scrolled past does not leave: it stays pinned behind the
+           ones after it, all the way down. That makes "touches the
+           viewport" true for nearly every act by the time you reach the
+           bottom, so an IntersectionObserver keeps waking fronds nobody can
+           see. Only the last act to have reached the screen is visible; the
+           ones before it sit behind opaque panels.
+
+           So find that act, keep it and one either side awake for the
+           handover and for scrolling back up, and let the rest stop
+           rendering. Fourteen fronds of vector art drop to about four, and
+           the count stays flat instead of climbing as you go down. */
+        var ticking = false;
+        function apply() {
+          ticking = false;
+          var vh = window.innerHeight, active = 0;
+          for (var i = 0; i < acts.length; i++) {
+            if (acts[i].getBoundingClientRect().top <= vh * 0.9) active = i;
           }
-        }, { rootMargin: '400px 400px 400px 400px' });
-        for (var j = 0; j < fronds.length; j++) io.observe(fronds[j]);
+          for (var j = 0; j < acts.length; j++) {
+            var awake = j >= active - 1 && j <= active + 1;
+            var f = groups[j];
+            for (var k = 0; k < f.length; k++) f[k].classList.toggle('frond--still', !awake);
+          }
+        }
+        function schedule() { if (!ticking) { ticking = true; requestAnimationFrame(apply); } }
+        window.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', schedule);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
+        apply();
       })();
     </script>
 

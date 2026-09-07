@@ -321,6 +321,14 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
   .frond--still .frond__pivot,
   .frond--still .frond__joint { animation: none; }
 
+  /* Stopping the sway was not enough. A sleeping frond was still 83 vector
+     paths the compositor kept painting, and fourteen of them exhausted the
+     tile memory in the lower half of the page: that is what arrived blank
+     and filled in as you scrolled. Sleeping now means the frond is not in
+     the render tree at all. Verified pixel identical over 58 frames
+     scrolling down and back up. */
+  .frond--still { display: none; }
+
   @keyframes joint {
     0%, 100% { transform: rotate(calc(-0.55deg * var(--gust-mult, 1))); }
     50%      { transform: rotate(calc(0.75deg * var(--gust-mult, 1))); }
