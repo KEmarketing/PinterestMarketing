@@ -449,6 +449,9 @@ summary::after { color: var(--navy); opacity: 0.65; }
 @media (max-width: 51.999rem) {
   .swipe-cue { display: flex; }
 }
+/* Shown at any width once the row actually overflows, rather than
+   assuming that only happens on a phone. */
+.act--overflowing .swipe-cue { display: flex; }
 .swipe-cue__arrow {
   display: inline-block;
   font-size: 1.15em;
@@ -676,7 +679,13 @@ summary::after { color: var(--navy); opacity: 0.65; }
 }
 .strip { align-items: center; padding-block: var(--sp-5); }
 @media (min-width: 64rem) {
-  .strip { justify-content: center; gap: var(--sp-4); overflow-x: visible; }
+  /* Six pins do not fit across a desktop screen, so the strip keeps
+     scrolling here instead of overflowing and being clipped by the act.
+     "safe center" is doing real work: plain centring makes whatever
+     overflows to the LEFT unreachable, because there is nothing to
+     scroll back to. Safe centring falls back to flex-start the moment
+     the content is too wide, so every pin can be reached. */
+  .strip { justify-content: safe center; gap: var(--sp-4); overflow-x: auto; }
   .pin img { width: 268px; }
   .pin:nth-child(odd)  { transform: translateY(-1.6rem) rotate(-1.4deg); }
   .pin:nth-child(even) { transform: translateY(1.6rem) rotate(1.2deg); }

@@ -241,6 +241,29 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
       })();
     </script>
 
+    <script is:inline>
+      /* Flag any act whose scrolling row is wider than the space it has, so
+         the swipe cue appears exactly when there is something to scroll to.
+         The number of pins and packages is editable in the CMS, so it is not
+         something the stylesheet can assume from the viewport width. */
+      (function () {
+        var rows = document.querySelectorAll('.strip, #packages .stack');
+        if (!rows.length) return;
+        function check() {
+          for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var act = row.closest('.act');
+            if (!act) continue;
+            act.classList.toggle('act--overflowing', row.scrollWidth > row.clientWidth + 4);
+          }
+        }
+        check();
+        window.addEventListener('resize', check);
+        window.addEventListener('load', check);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(check);
+      })();
+    </script>
+
     <footer class="site-footer">
       <div class="wrap">
         <p><strong>{SITE.name}</strong></p>
