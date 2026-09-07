@@ -647,12 +647,48 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .steps p { margin-bottom: 0; }
 
 /* --- Contact -------------------------------------------------- */
+/* This was a plain translucent rectangle and it read as an empty box:
+   only about 150px of content inside 300px of card. It now borrows the
+   move from her own pin designs, where a card sits on an offset block of
+   flat colour, and the two ways of reaching her are set as separate rows
+   rather than a loose list. */
 .reach {
   padding: var(--sp-4);
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--paper);
+  border: 1px solid var(--navy);
   border-radius: var(--radius);
+  box-shadow: 12px 12px 0 0 var(--mint);
 }
 .reach .actions { margin-top: 0; }
+.reach .btn { width: 100%; text-align: center; justify-content: center; }
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--sp-4) 0 0;
+  border-top: 1px solid var(--rule);
+}
+.contact-list li { margin: 0; border-bottom: 1px solid var(--rule); }
+.contact-list a {
+  display: block;
+  padding: 0.75em 0;
+  font-size: var(--step--1);
+  letter-spacing: 0.01em;
+  color: var(--navy);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.contact-list a:hover,
+.contact-list a:focus-visible { color: var(--coral-ink); text-decoration: underline; }
+
+.reach .contact-note {
+  margin: var(--sp-3) 0 0;
+  font-style: italic;
+}
+
+@media (max-width: 30rem) {
+  .reach { box-shadow: 8px 8px 0 0 var(--mint); }
+}
 
 /* --- Packages ------------------------------------------------- */
 .act__lead--row { margin-bottom: var(--sp-5); }
