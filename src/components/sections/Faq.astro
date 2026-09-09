@@ -11,7 +11,7 @@ const { data } = Astro.props;
     </div>
     <div class="act__body">
       {data.items.map((f) => (
-        <details>
+        <details name="faq">
           <summary>{f.question}</summary>
           <p>{f.answer}</p>
         </details>

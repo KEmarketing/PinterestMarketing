@@ -1077,3 +1077,79 @@ summary::after { color: var(--navy); opacity: 0.65; }
   border-block: 6px solid var(--mint);
   padding-block: var(--sp-4);
 }
+
+/* --- About: make three paragraphs fit the panel --------------------
+   The bio grew from one paragraph plus a bullet list to three full
+   paragraphs. With the first one set as a lede the column came to
+   599px, which put the act 51px past a 708px-tall window and pushed
+   "Hi, I'm Kandace" above the fold. Three paragraphs of a bio do not
+   need a lede: they are already the introduction. */
+#about .act__body .lede {
+  font-size: var(--step-0);
+  line-height: 1.62;
+  margin-bottom: var(--sp-3);
+}
+#about .act__body p { margin-bottom: var(--sp-3); }
+#about .act__body p:last-child { margin-bottom: 0; }
+
+/* --- Packages: one call to action, not one per card ---------------- */
+.packages__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--sp-5);
+}
+.packages__cta .btn { min-width: min(100%, 22rem); text-align: center; justify-content: center; }
+.block { padding-bottom: var(--sp-4); }
+
+/* --- Footer --------------------------------------------------------
+   Was four stacked paragraphs ranged left. Now the mark and name sit
+   against the section links, with the fine print on its own rule
+   underneath. */
+.site-footer__inner {
+  display: grid;
+  gap: var(--sp-4);
+  align-items: start;
+}
+@media (min-width: 48rem) {
+  .site-footer__inner {
+    grid-template-columns: auto 1fr auto;
+    gap: var(--sp-5);
+    align-items: center;
+  }
+}
+.site-footer__brand { display: flex; align-items: center; gap: var(--sp-2); }
+.site-footer__mark { width: 60px; height: 60px; flex: none; }
+.site-footer__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.2;
+  color: #fff;
+  max-width: 12ch;
+}
+.site-footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+}
+.site-footer__nav a {
+  color: #D3E0E4;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: var(--step--1);
+  border-bottom: 1px solid transparent;
+}
+.site-footer__nav a:hover,
+.site-footer__nav a:focus-visible { color: #fff; border-bottom-color: var(--gold); }
+.site-footer__reach { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; }
+@media (min-width: 48rem) { .site-footer__reach { justify-items: end; text-align: right; } }
+.site-footer__reach a { color: #fff; }
+
+.site-footer__fine {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+.site-footer__fine p { margin-bottom: var(--sp-1); opacity: 0.82; }
+.site-footer__fine p:last-child { margin-bottom: 0; }

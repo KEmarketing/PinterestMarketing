@@ -27,11 +27,12 @@ const { data, bookingLabel } = Astro.props;
           <ul>
             {p.features.map((f) => <li>{f}</li>)}
           </ul>
-          <a class="btn" href={resolveUrl(p.cta?.url ?? 'BOOKING_URL')}>
-            {p.cta?.label ?? bookingLabel}
-          </a>
         </article>
       ))}
+    </div>
+
+    <div class="packages__cta">
+      <a class="btn" href={resolveUrl('BOOKING_URL')}>{bookingLabel}</a>
     </div>
 
     {data.note && <p class="packages__note">{data.note}</p>}

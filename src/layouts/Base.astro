@@ -264,10 +264,50 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
       })();
     </script>
 
+    <script is:inline>
+      /* The FAQ is an exclusive accordion so the section can never grow
+         past the screen. Current browsers do that natively from the name
+         attribute on each details element; this only steps in where that
+         is not supported, so nothing runs twice. */
+      (function () {
+        if ('name' in document.createElement('details')) return;
+        var items = document.querySelectorAll('#faq details');
+        for (var i = 0; i < items.length; i++) {
+          items[i].addEventListener('toggle', function () {
+            if (!this.open) return;
+            for (var j = 0; j < items.length; j++) {
+              if (items[j] !== this) items[j].open = false;
+            }
+          });
+        }
+      })();
+    </script>
+
     <footer class="site-footer">
-      <div class="wrap">
-        <p><strong>{SITE.name}</strong></p>
-        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a> &middot; <a href={SITE.facebook}>Facebook</a></p>
+      <div class="wrap site-footer__inner">
+        <div class="site-footer__brand">
+          {/* Reversed mark: her navy lines knocked out to paper for the
+              dark footer, gold sparkle untouched because it already reads
+              on navy. Swap in an official reversed logo if she has one. */}
+          <img class="site-footer__mark" src="/marks/logo-ke-light.webp" alt="" width="256" height="256" />
+          <p class="site-footer__name">{SITE.name}</p>
+        </div>
+
+        <nav class="site-footer__nav" aria-label="Sections of this page">
+          <a href="#how-pinterest-works">Why Pinterest</a>
+          <a href="#packages">Services</a>
+          <a href="#pin-examples">Portfolio</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <ul class="site-footer__reach">
+          <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+          <li><a href={SITE.facebook}>Facebook</a></li>
+        </ul>
+      </div>
+
+      <div class="wrap site-footer__fine">
         <p>Not affiliated with or endorsed by Pinterest. Results vary and are not guaranteed.</p>
         <p>&copy; {new Date().getFullYear()} {SITE.name} &middot; Built with love by <a href="https://rootlineweb.co" rel="noopener">Rootline Web Co</a></p>
       </div>
