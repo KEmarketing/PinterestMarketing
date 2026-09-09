@@ -1168,11 +1168,19 @@ summary::after { color: var(--navy); opacity: 0.65; }
    text and 365 for the photo, with 175px of gap between them. So the
    hero gets a wider container and a tighter gap, which buys both columns
    room, and the photo keeps a portrait 4:5 instead of being stretched to
-   whatever height the type happens to be. */
+   whatever height the type happens to be.
+
+   The act has a 900px floor from min-height, and the content only used
+   740px of it, so the extra height the photo takes here is free: the
+   section does not grow. */
 @media (min-width: 64rem) {
   .act--hero .act__inner {
-    max-width: 76rem;
+    /* Wider than the other acts and with a tighter gap, because 1088px
+       split 548/365 with 175px of gap between them left the photo with
+       nowhere to go and a band of dead margin to its right. */
+    max-width: 82rem;
     column-gap: clamp(2rem, 3.5vw, 3.5rem);
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     align-items: center;
   }
   .act--hero .act__figure { align-self: center; }
