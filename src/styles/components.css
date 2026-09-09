@@ -694,7 +694,10 @@ summary::after { color: var(--navy); opacity: 0.65; }
   gap: var(--sp-4);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: var(--sp-2) var(--gutter) var(--sp-4);
+  /* The extra block padding is what the stagger below shifts into. The
+     row is a scroll container, so anything pushed past its box would be
+     clipped rather than allowed to hang out. */
+  padding: var(--sp-3) var(--gutter) var(--sp-4);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   /* Plain centring leaves anything overflowing to the LEFT unreachable,
@@ -717,6 +720,16 @@ summary::after { color: var(--navy); opacity: 0.65; }
 /* The attribution sits on the floor of each card, so the names line up
    across reviews of different lengths. */
 .quotes .quote-by { margin-top: auto; }
+
+/* Staggered like the pin strip, so a row of reviews is not a row of
+   matched boxes. No rotation here: a pin can sit crooked, a paragraph
+   someone has to read should not. */
+.quotes > blockquote:nth-child(odd)  { transform: translateY(-0.6rem); }
+.quotes > blockquote:nth-child(even) { transform: translateY(0.6rem); }
+@media (min-width: 48rem) {
+  .quotes > blockquote:nth-child(odd)  { transform: translateY(-1.1rem); }
+  .quotes > blockquote:nth-child(even) { transform: translateY(1.1rem); }
+}
 
 /* --- Process steps -------------------------------------------- */
 .steps { max-width: none; }
@@ -811,6 +824,12 @@ summary::after { color: var(--navy); opacity: 0.65; }
   .pin:nth-child(odd)  { transform: translateY(-1.6rem) rotate(-1.4deg); }
   .pin:nth-child(even) { transform: translateY(1.6rem) rotate(1.2deg); }
 }
+/* The stagger is not a desktop flourish. Without it the row reads as a
+   filmstrip, which is exactly what it looked like on a phone. It only
+   needs a shorter throw there, because the pins are much bigger relative
+   to the screen and the strip has less padding to absorb the shift. */
+.pin:nth-child(odd)  { transform: translateY(-0.7rem) rotate(-1.2deg); }
+.pin:nth-child(even) { transform: translateY(0.7rem) rotate(1deg); }
 @media (prefers-reduced-motion: reduce) {
   .pin { transform: none !important; }
 }
