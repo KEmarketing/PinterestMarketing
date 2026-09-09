@@ -1154,27 +1154,34 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .site-footer__fine p { margin-bottom: var(--sp-1); opacity: 0.82; }
 .site-footer__fine p:last-child { margin-bottom: 0; }
 
-/* --- Hero portrait: hold its own against the headline --------------
-   The column is 887px tall and the photo was 456px of it, so it read as
-   an afterthought beside four lines of display type. It now fills the
-   cell: full column width, stretched to the height of the text beside
-   it, cropped with object-fit rather than squashed. The focal point
-   sits above centre so the crop keeps her face when the column is tall
-   and narrow. The arch is unchanged, it just applies to a bigger shape.
+/* --- Hero portrait: give it real size without slicing it ----------
+   Two failed attempts worth recording, because both are the obvious move.
 
-   The column widths are deliberately left alone: widening the photo's
-   column narrowed the headline's, which wrapped it onto more lines and
-   pushed the whole act from 1047px to 1236px. Taller section, same
-   problem. */
+   Stretching the photo to the full height of the text column made it
+   365px wide by 887px tall: a sliver of a photograph, most of the frame
+   cropped away. Widening its column instead narrowed the headline's,
+   which wrapped the headline onto more lines and pushed the act from
+   1047px to 1236px, so the photo was still half the height of a section
+   that was now taller.
+
+   The real constraint was the container: 1088px split into 548 for the
+   text and 365 for the photo, with 175px of gap between them. So the
+   hero gets a wider container and a tighter gap, which buys both columns
+   room, and the photo keeps a portrait 4:5 instead of being stretched to
+   whatever height the type happens to be. */
 @media (min-width: 64rem) {
-  .act--hero .act__inner { align-items: stretch; }
-  .act--hero .act__lead { align-self: center; }
-  .act--hero .act__figure { align-self: stretch; display: flex; }
+  .act--hero .act__inner {
+    max-width: 76rem;
+    column-gap: clamp(2rem, 3.5vw, 3.5rem);
+    align-items: center;
+  }
+  .act--hero .act__figure { align-self: center; }
   .act--hero .act__figure .headshot {
     width: 100%;
     max-width: none;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
     object-fit: cover;
-    object-position: 50% 25%;
+    object-position: 50% 22%;
   }
 }
