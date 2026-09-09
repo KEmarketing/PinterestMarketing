@@ -349,22 +349,41 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
      showed nothing but its tail along the bottom edge, which is why
      every section looked identical on a phone. */
   @media (max-width: 600px) {
-    /* --frond-w is the single source of truth at this width: the element
-       is sized from it and rooted from it, so overriding the one value
-       moves and resizes a frond together. */
-    /* One size for every frond at this width, ignoring the scale prop.
-       The scale prop pairs a small supporting palm with a big one, which
-       is a desktop idea: on a phone each act shows only one, so a 2.2
-       arrived at half the size of its neighbours and cropped to a stub
-       of stem rather than a sweep of leaves. Variety comes from the
-       corner here, not the size. */
+    /* ROOT AT THE CORNER, LEAF SWEEPING IN.
+       On a desktop the frond is rooted well outside the panel and the
+       edge crops it, which is what makes it read as one enormous leaf.
+       That crop stops working at phone width, because the frond is wider
+       than the panel: the only part still on screen is a band of leaflet
+       tips running parallel to each other, which looks like a distorted
+       fan rather than a palm. Here each frond is mirrored so its stem
+       base sits just outside its corner and the leaf arcs into the
+       panel, and it is sized to the screen rather than cropped by it.
+       The mirrors are what aim the sweep: the artwork grows up and to
+       the right from a root at its lower left, so a top corner needs the
+       vertical flip and a right corner needs the horizontal one. */
     .frond {
-      --frond-w: 680px;
+      --frond-w: min(440px, 108vw);
       width: var(--frond-w);
     }
-    .frond--tl, .frond--tr { top: calc(-0.30 * var(--frond-w)); }
-    .frond--bl, .frond--br { bottom: calc(-0.30 * var(--frond-w)); }
-    .frond--tl, .frond--bl { left: calc(-0.40 * var(--frond-w)); }
-    .frond--tr, .frond--br { right: calc(-0.40 * var(--frond-w)); }
+    .frond--tl {
+      transform: scaleY(-1) rotate(14deg);
+      top: calc(-0.06 * var(--frond-w)); left: calc(-0.10 * var(--frond-w));
+      bottom: auto; right: auto;
+    }
+    .frond--tr {
+      transform: scale(-1, -1) rotate(-14deg);
+      top: calc(-0.06 * var(--frond-w)); right: calc(-0.10 * var(--frond-w));
+      bottom: auto; left: auto;
+    }
+    .frond--bl {
+      transform: rotate(-14deg);
+      bottom: calc(-0.06 * var(--frond-w)); left: calc(-0.10 * var(--frond-w));
+      top: auto; right: auto;
+    }
+    .frond--br {
+      transform: scaleX(-1) rotate(14deg);
+      bottom: calc(-0.06 * var(--frond-w)); right: calc(-0.10 * var(--frond-w));
+      top: auto; left: auto;
+    }
   }
 </style>
