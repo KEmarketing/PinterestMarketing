@@ -5,7 +5,7 @@ const paras = String(data.body ?? '').split(/\n\s*\n/).filter(Boolean);
 ---
 {/* Portrait leads on the left, words to its right, so About does not
     repeat the hero's arrangement. */}
-<section class="act act--split act--portrait act--lat-band-bottom" id="about">
+<section class="act act--split act--portrait act--lat-edge-right" id="about">
   <Fronds corner="tl" scale={2.2} tone="deep" opacity={0.3} delay={1.7} />
   <Fronds corner="bl" scale={3.9} tone="deep" opacity={0.4} delay={0.3} />
   <div class="wrap act__inner">

@@ -854,16 +854,24 @@ summary::after { color: var(--navy); opacity: 0.65; }
    questions at 1.86:1 and the testimonial credits at 3.8:1. In a split
    act they drop to a quarter and pull further off the edge, which keeps
    them as an edge treatment rather than a backdrop for body copy. */
+/* One wash level for every frond on the page.
+
+   There used to be three different multipliers: split and portrait acts
+   halved their fronds, #book took 0.62, and every other act used the raw
+   value. That is why some panels looked washed and others looked heavy,
+   and it got worse when the testimonials act stopped being a split act
+   and its fronds jumped back to full strength. Now the per-frond opacity
+   prop only sets the relationship between the small frond and the big
+   one, and this single token sets how present any of them are. Tune the
+   one number. */
+:root { --frond-wash: 0.38; }
+.frond { --frond-alpha: calc(var(--frond-opacity) * var(--frond-wash)); }
+
 @media (min-width: 64rem) {
-  .act--split .frond,
-  .act--portrait .frond { --frond-alpha: calc(var(--frond-opacity) * 0.5); }
   .act--split .frond--tl, .act--split .frond--bl,
   .act--portrait .frond--tl, .act--portrait .frond--bl { left: -42%; }
   .act--split .frond--tr, .act--split .frond--br,
   .act--portrait .frond--tr, .act--portrait .frond--br { right: -42%; }
-}
-@media (max-width: 63.999rem) {
-  .act--split .frond, .act--portrait .frond { --frond-alpha: calc(var(--frond-opacity) * 0.55); }
 }
 
 /* The chapter kicker was mint on navy at 0.9rem: 3.7:1, under AA for
@@ -871,7 +879,6 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .chapter__sub { color: #DCEFE7; }
 
 /* The closing line sits over a frond on navy. */
-#book .frond { --frond-alpha: calc(var(--frond-opacity) * 0.62); }
 #book .statement__body { color: #EAF2F4; }
 
 /* ===============================================================
@@ -899,8 +906,11 @@ summary::after { color: var(--navy); opacity: 0.65; }
    so the pattern reads as light cut into the colour. */
 .act--lat-inverse { --panel-lattice-opacity: 0.5; }
 
-/* The hero's fronds are both on the right, so its lattice band sits on
-   the left rather than stacking underneath them. */
+/* Lattice and fronds never share a side. Every act that carries fronds
+   gets an edge lattice on the opposite side: fronds tl/bl sit left, so
+   the motif goes right, and vice versa. The big lower frond reaches past
+   the middle of the panel, and the edge mask fades out by 34%, so
+   opposite sides is what actually keeps them off each other. */
 #top                 { --panel-lattice: url('/marks/fret-navy.svg');    --panel-lattice-size: 220px 220px; }
 #why-pinterest       { --panel-lattice: url('/marks/lattice-white.svg'); --panel-lattice-size: 168px 168px; }
 #how-pinterest-works { --panel-lattice: url('/marks/fret-navy.svg');    --panel-lattice-size: 200px 200px; }
