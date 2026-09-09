@@ -349,9 +349,18 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
      showed nothing but its tail along the bottom edge, which is why
      every section looked identical on a phone. */
   @media (max-width: 600px) {
+    /* --frond-w is the single source of truth at this width: the element
+       is sized from it and rooted from it, so overriding the one value
+       moves and resizes a frond together. */
+    /* One size for every frond at this width, ignoring the scale prop.
+       The scale prop pairs a small supporting palm with a big one, which
+       is a desktop idea: on a phone each act shows only one, so a 2.2
+       arrived at half the size of its neighbours and cropped to a stub
+       of stem rather than a sweep of leaves. Variety comes from the
+       corner here, not the size. */
     .frond {
-      width: calc(170px * var(--frond-scale));
-      --frond-w: calc(170px * var(--frond-scale));
+      --frond-w: 680px;
+      width: var(--frond-w);
     }
     .frond--tl, .frond--tr { top: calc(-0.30 * var(--frond-w)); }
     .frond--bl, .frond--br { bottom: calc(-0.30 * var(--frond-w)); }

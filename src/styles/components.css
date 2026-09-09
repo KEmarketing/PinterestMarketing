@@ -958,23 +958,25 @@ summary::after { color: var(--navy); opacity: 0.65; }
 
 @media (max-width: 51.999rem) {
   .act > .frond:first-of-type { display: none; }
-  .frond { width: calc(170px * var(--frond-scale)); }
+
+  /* ONE SIZE AND ONE STRENGTH FOR EVERY PHONE FROND.
+     The small corner frond is drawn at scale 2.1 to 2.4 and the big one
+     at 3.8 to 4.3, because on a desktop they are a pair and one supports
+     the other. On a phone only one survives per act, so a 2.2 frond
+     turned up at roughly half the size of its neighbours and cropped
+     down to a stub of stem instead of a sweep of leaves. Here the scale
+     and opacity props are ignored: every frond gets the same size and
+     the same wash, and the variety comes from which corner it grows out
+     of. The one size is set in the component, next to the offsets that
+     are anchored to it. Setting --frond-alpha rather than
+     --frond-opacity is deliberate: the opacity prop is an inline style
+     on the element and no stylesheet rule can beat it. */
+  .frond { --frond-alpha: calc(0.46 * var(--frond-wash)); }
 
   #why-pinterest > .frond:first-of-type:not(.frond--still),
   #who-its-for   > .frond:first-of-type:not(.frond--still),
   #about         > .frond:first-of-type:not(.frond--still),
   #book          > .frond:first-of-type:not(.frond--still) { display: block; }
-
-  /* The small frond was drawn at about half the strength of the big one
-     because it used to be the supporting palm. On a phone it is now the
-     only one in the section, so those four come up to match, or half the
-     page reads faint and the other half does not. Setting --frond-alpha
-     rather than --frond-opacity is deliberate: the opacity prop is an
-     inline style on the element and nothing in a stylesheet can beat it. */
-  #why-pinterest > .frond:first-of-type,
-  #who-its-for   > .frond:first-of-type,
-  #about         > .frond:first-of-type,
-  #book          > .frond:first-of-type { --frond-alpha: calc(0.46 * var(--frond-wash)); }
 
   /* Not :last-of-type. The act's last div child is the content wrap, not
      a frond, so that selector matches nothing at all. This is "the second
