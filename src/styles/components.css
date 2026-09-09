@@ -87,7 +87,11 @@ li::marker { color: var(--leaf); }
 .chapter__line {
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: var(--step-3);
+  /* The loudest type on the page, deliberately. Every heading used to
+     land between 2.1 and 3.4rem, which is an even, polite voice all the
+     way down: nothing was ever big. The breaks hold one line each, so
+     they are the cheapest place to break the scale. */
+  font-size: var(--step-4);
   line-height: 1.1;
   color: #fff;
   margin: 0;
@@ -510,7 +514,53 @@ summary::after { color: var(--navy); opacity: 0.65; }
   z-index: -1;
 }
 .chapter__line,
-.chapter__sub { position: relative; }
+.chapter__sub { position: relative; z-index: 1; }
+
+/* --- The pinned chapter break ---------------------------------------
+   Two of her real pins, cropped by the edge of the panel so they read as
+   coming into the page rather than being placed on it. The panel already
+   holds one line and a kicker, so there is room for them without
+   crowding anything. On a phone there is only room for one, and it goes
+   bottom right where the copy is not. */
+.chapter--pinned { overflow: hidden; }
+.chapter__pins { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.chapter__pin {
+  position: absolute;
+  width: clamp(128px, 15vw, 208px);
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 24px 44px -26px rgba(0, 0, 0, 0.6);
+}
+.chapter__pin--1 { left: -1.5%;  top: 6%;    transform: rotate(-7deg); }
+.chapter__pin--2 { right: -1.5%; bottom: 4%; transform: rotate(6deg); }
+
+@media (max-width: 51.999rem) {
+  /* One pin, in a band of its own below the copy. Absolutely positioning
+     it in a corner put it straight across the kicker line, and reserving
+     space with padding did not help: the panel has a min-height, so the
+     padding squeezed the text rather than moving it. Here the pin holder
+     stops being absolute and becomes a real row in the panel's grid, so
+     it takes its own height and the panel grows to fit. The pin then
+     hangs out of the bottom of that row and the panel's overflow crops
+     it, which is the same rising-from-the-edge look with nothing behind
+     the words. */
+  .chapter--pinned .chapter__pins {
+    position: relative;
+    inset: auto;
+    justify-self: stretch;
+    width: 100%;
+    height: 30vw;
+    margin-top: var(--sp-4);
+  }
+  .chapter__pin--1 { display: none; }
+  .chapter__pin--2 {
+    width: 42vw;
+    right: 4%;
+    top: 0;
+    bottom: auto;
+    transform: rotate(7deg);
+  }
+}
 
 @media (max-width: 40rem) {
   .chapter::before { background-size: 128px 128px; }
@@ -656,7 +706,10 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .quotes::-webkit-scrollbar { display: none; }
 .quotes:focus-visible { outline: 2px solid var(--coral-ink); outline-offset: 2px; }
 .quotes > blockquote {
-  flex: 0 0 min(82vw, 30rem);
+  /* 27.5rem is the widest a card can be and still let two of them sit
+     inside a 1024px laptop without the row scrolling. Wider than that
+     and a pair of reviews asks for a swipe for no reason. */
+  flex: 0 0 min(82vw, 27.5rem);
   display: flex;
   flex-direction: column;
   scroll-snap-align: center;
@@ -824,20 +877,33 @@ summary::after { color: var(--navy); opacity: 0.65; }
 /* --- Explainer notes, revised --------------------------------- */
 /* Three points in a two-column grid left a hole. They read better as
    a stacked list with the label beside the text. */
-.notes { grid-template-columns: 1fr !important; gap: 0; }
+/* --- Explainer: three cards, not three rows of prose ----------------
+   These were rows in a table, stacked inside the narrow column of a
+   split act, which is the most essay-like thing on the page. The act
+   runs full width now and they are three cards: a comparison reads
+   faster side by side, and on a phone it stacks into three things you
+   take one at a time instead of one long passage. Each card takes a
+   different accent along its top, which is the one bit of colour play
+   in this section. */
+.act--explainer .act__inner { display: block; }
+.act--explainer .act__lead { margin-bottom: var(--sp-4); }
+.act--explainer .act__lead .lede { max-width: 56ch; }
+
+.notes { grid-template-columns: 1fr; gap: var(--sp-3); }
+@media (min-width: 48rem) {
+  .notes { grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+}
 .note {
-  display: grid;
-  gap: var(--sp-1) var(--sp-4);
-  padding: var(--sp-3) 0;
-  background: none;
-  border-top: 1px solid var(--rule);
-  border-radius: 0;
+  padding: var(--sp-4);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: 4px solid var(--accent, var(--leaf));
+  border-radius: var(--radius);
 }
-.note:last-child { border-bottom: 1px solid var(--rule); }
-@media (min-width: 34rem) {
-  .note { grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr); align-items: baseline; }
-}
-.note h3 { margin-bottom: 0; color: var(--navy); }
+.note:nth-child(1) { --accent: var(--mint); }
+.note:nth-child(2) { --accent: var(--blush); }
+.note:nth-child(3) { --accent: var(--gold); }
+.note h3 { margin-bottom: var(--sp-2); color: var(--navy); }
 
 
 /* The lede needs air under a display heading. */
@@ -1105,6 +1171,28 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .mark { color: var(--mark); }
 .chapter,
 #book { --mark: var(--gold); }
+
+/* --- One highlighter swipe ------------------------------------------
+   Emphasis on this page is a colour swap, which is quiet. In the hero,
+   and only in the hero, the marked words get a swipe of her blush
+   behind them instead: it is the same move her own pins make, it is the
+   first thing anyone sees, and one of them on a page is a flourish
+   where five would be a texture. The tapered ends are what stop it
+   reading as a highlighted table cell. */
+#top .mark {
+  color: var(--ink);
+  background-image: linear-gradient(100deg,
+    rgba(255, 209, 193, 0) 0.4%,
+    var(--blush) 2.2%,
+    var(--blush) 97.8%,
+    rgba(255, 209, 193, 0) 99.6%);
+  background-repeat: no-repeat;
+  background-size: 100% 0.36em;
+  background-position: 0 78%;
+  padding-inline: 0.08em;
+  -webkit-box-decoration-break: clone;
+          box-decoration-break: clone;
+}
 
 /* --- The arch ------------------------------------------------------
    Her portfolio sets photographs in an arch. A very large top radius

@@ -1,11 +1,25 @@
 ---
 /* A short full-bleed beat between acts. Deliberately holds almost
    nothing: it exists to give the eye a break so the page reads as
-   chapters rather than one long scroll. */
+   chapters rather than one long scroll.
+   One of the three carries a couple of her real pins, bleeding in from
+   the edges. Her pin designs are the brightest thing she owns and they
+   were only appearing once on the whole page.
+   The pins come last in the markup on purpose: on a desktop they are
+   absolutely positioned and the order does not matter, but on a phone
+   the holder becomes a real row in the panel's grid and it has to land
+   underneath the copy. */
 import { emphasise } from '../../utils.mjs';
-const { data } = Astro.props;
+const { data, pins = [] } = Astro.props;
 ---
-<div class="chapter">
+<div class:list={['chapter', pins.length > 0 && 'chapter--pinned']}>
   <p class="chapter__line" set:html={emphasise(data.line)} />
   {data.sub && <p class="chapter__sub" set:html={emphasise(data.sub)} />}
+  {pins.length > 0 && (
+    <div class="chapter__pins" aria-hidden="true">
+      {pins.map((p, i) => (
+        <img class={`chapter__pin chapter__pin--${i + 1}`} src={p.src} alt="" width="400" height="600" loading="lazy" />
+      ))}
+    </div>
+  )}
 </div>

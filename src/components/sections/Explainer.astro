@@ -1,7 +1,11 @@
 ---
+/* Three cards rather than three rows of prose. The content is a
+   comparison, so it reads faster as three things side by side than as a
+   passage, and on a phone it stacks into three cards you can take one
+   at a time. */
 const { data } = Astro.props;
 ---
-<section class="act act--pin act--split act--lat-band-bottom" id="how-pinterest-works">
+<section class="act act--pin act--explainer act--lat-band-bottom" id="how-pinterest-works">
   <div class="wrap act__inner">
     <div class="act__lead">
       <h2>{data.heading}</h2>
