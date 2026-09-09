@@ -1276,12 +1276,22 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .site-footer__nav a:focus-visible { color: #fff; border-bottom-color: var(--gold); }
 .site-footer__reach { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; }
 @media (min-width: 48rem) { .site-footer__reach { justify-items: end; text-align: right; } }
+
+/* On a phone the footer is one column, so everything in it centres:
+   the wordmark, the links and the two ways of reaching her. */
+@media (max-width: 47.999rem) {
+  .site-footer__inner { justify-items: center; text-align: center; }
+  .site-footer__brand { justify-content: center; }
+  .site-footer__nav { justify-content: center; }
+  .site-footer__reach { justify-items: center; }
+}
 .site-footer__reach a { color: #fff; }
 
 .site-footer__fine {
   margin-top: var(--sp-4);
   padding-top: var(--sp-3);
   border-top: 1px solid rgba(255, 255, 255, 0.16);
+  text-align: center;
 }
 .site-footer__fine p { margin-bottom: var(--sp-1); opacity: 0.82; }
 .site-footer__fine p:last-child { margin-bottom: 0; }
