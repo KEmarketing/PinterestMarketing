@@ -5,9 +5,9 @@ const { data } = Astro.props;
 {/* Six figures in a 3 x 2 grid, as she asked. The numbers carry the panel,
     so they are set in the display face at heading scale and the label under
     each one stays small enough that the eye reads the figure first. */}
-<section class="act act--stats act--lat-edge-right" id="pinterest-stats">
-  <Fronds corner="tl" scale={2.2} tone="deep" opacity={0.28} delay={1.2} />
-  <Fronds corner="bl" scale={3.8} tone="deep" opacity={0.42} delay={2.4} />
+<section class="act act--stats act--lat-edge-left" id="pinterest-stats">
+  <Fronds corner="tr" scale={2.2} tone="deep" opacity={0.28} delay={1.2} />
+  <Fronds corner="br" scale={3.8} tone="deep" opacity={0.42} delay={2.4} />
   <div class="wrap act__inner">
     <h2>{data.heading}</h2>
     {data.items.length > 0 && (
