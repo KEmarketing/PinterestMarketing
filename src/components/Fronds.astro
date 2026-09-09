@@ -339,10 +339,23 @@ const uid = 'f' + Math.random().toString(36).slice(2, 8);
   }
 
   /* Smaller phones: pull the fronds further off-edge so they frame
-     rather than crowd the copy. */
+     rather than crowd the copy.
+
+     The offsets are anchored to the frond's OWN width here, not left as
+     percentages. A percentage top/bottom resolves against the section,
+     and a section on a phone is 850 to 1300px tall, so -34% threw the
+     frond three or four hundred pixels clear of a panel it is only 300px
+     tall itself. The top frond vanished completely and the bottom one
+     showed nothing but its tail along the bottom edge, which is why
+     every section looked identical on a phone. */
   @media (max-width: 600px) {
-    .frond { width: calc(170px * var(--frond-scale)); }
-    .frond--tl, .frond--bl { left: -46%; }
-    .frond--tr, .frond--br { right: -46%; }
+    .frond {
+      width: calc(170px * var(--frond-scale));
+      --frond-w: calc(170px * var(--frond-scale));
+    }
+    .frond--tl, .frond--tr { top: calc(-0.30 * var(--frond-w)); }
+    .frond--bl, .frond--br { bottom: calc(-0.30 * var(--frond-w)); }
+    .frond--tl, .frond--bl { left: calc(-0.40 * var(--frond-w)); }
+    .frond--tr, .frond--br { right: calc(-0.40 * var(--frond-w)); }
   }
 </style>

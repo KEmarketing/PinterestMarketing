@@ -943,15 +943,46 @@ summary::after { color: var(--navy); opacity: 0.65; }
 
 
 /* ===============================================================
-   PHONE: ONE FROND PER ACT
-   Two fronds in a 390px panel crowd each other and crowd the copy.
-   On a phone each act keeps only its big corner frond; the small edge
-   one is always the first child.
+   PHONE: ONE FROND PER ACT, ALTERNATING
+   Two fronds in a 390px panel crowd each other and crowd the copy, so
+   each act keeps one. Keeping the same one every time was the problem:
+   the big frond is always the LAST child and always a bottom corner, so
+   scrolling a phone gave the same palm in the same place eight times.
+   Half the acts keep their small top frond instead, which alternates
+   the corner down the page: br, tl, tr, bl, bl, tl, bl, tr.
+
+   The :not() is load bearing. An id selector outranks .frond--still,
+   which is what puts an off-screen frond out of the render tree, and
+   without it these four acts would keep painting while asleep.
    =============================================================== */
 
 @media (max-width: 51.999rem) {
   .act > .frond:first-of-type { display: none; }
   .frond { width: calc(170px * var(--frond-scale)); }
+
+  #why-pinterest > .frond:first-of-type:not(.frond--still),
+  #who-its-for   > .frond:first-of-type:not(.frond--still),
+  #about         > .frond:first-of-type:not(.frond--still),
+  #book          > .frond:first-of-type:not(.frond--still) { display: block; }
+
+  /* The small frond was drawn at about half the strength of the big one
+     because it used to be the supporting palm. On a phone it is now the
+     only one in the section, so those four come up to match, or half the
+     page reads faint and the other half does not. Setting --frond-alpha
+     rather than --frond-opacity is deliberate: the opacity prop is an
+     inline style on the element and nothing in a stylesheet can beat it. */
+  #why-pinterest > .frond:first-of-type,
+  #who-its-for   > .frond:first-of-type,
+  #about         > .frond:first-of-type,
+  #book          > .frond:first-of-type { --frond-alpha: calc(0.46 * var(--frond-wash)); }
+
+  /* Not :last-of-type. The act's last div child is the content wrap, not
+     a frond, so that selector matches nothing at all. This is "the second
+     frond", which is the big one. */
+  #why-pinterest > .frond + .frond,
+  #who-its-for   > .frond + .frond,
+  #about         > .frond + .frond,
+  #book          > .frond + .frond { display: none; }
 }
 
 
