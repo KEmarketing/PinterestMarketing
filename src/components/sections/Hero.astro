@@ -22,7 +22,9 @@ const lede = String(data.subheading ?? '').split(/\n\s*\n/).filter(Boolean);
     </div>
     {data.image && (
       <div class="act__figure">
-        <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" />
+        <span class="arch">
+          <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" />
+        </span>
       </div>
     )}
   </div>

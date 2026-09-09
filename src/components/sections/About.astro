@@ -10,7 +10,11 @@ const paras = String(data.body ?? '').split(/\n\s*\n/).filter(Boolean);
   <Fronds corner="bl" scale={2.3} tone="deep" opacity={0.3} delay={0.3} />
   <div class="wrap act__inner">
     <div class="act__figure">
-      {data.image && <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" loading="lazy" />}
+      {data.image && (
+        <span class="arch">
+          <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" loading="lazy" />
+        </span>
+      )}
     </div>
     <div class="act__body">
       <h2>{data.heading}</h2>

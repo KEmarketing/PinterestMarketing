@@ -836,15 +836,15 @@ summary::after { color: var(--navy); opacity: 0.65; }
 
 /* --- Portraits ------------------------------------------------ */
 .act__figure { display: flex; justify-content: center; }
-.act__figure .headshot { margin-top: 0; max-width: 100%; width: min(100%, 420px); }
+.act__figure .arch { width: min(100%, 420px); }
 @media (max-width: 63.999rem) {
   /* The hero portrait used to be hidden here. She wants it on phones, so
      it closes the hero instead: source order already puts it after the
      buttons, which keeps the headline first on a small screen. */
   .act--hero .act__figure { margin-top: var(--sp-4); }
-  .act--hero .act__figure .headshot { width: min(100%, 260px); }
+  .act--hero .act__figure .arch { width: min(100%, 260px); }
   .act--portrait .act__figure { margin-bottom: var(--sp-4); }
-  .act--portrait .act__figure .headshot { width: min(100%, 260px); }
+  .act--portrait .act__figure .arch { width: min(100%, 260px); }
 }
 
 /* ===============================================================
@@ -1222,6 +1222,43 @@ summary::after { color: var(--navy); opacity: 0.65; }
   overflow: hidden;
 }
 
+/* --- The frame around the arch --------------------------------------
+   Her portfolio sets photographs in an arch inside a bright frame. This
+   is a band rather than a border, because a border only takes a colour
+   and a padded box takes a background: that is what lets her lattice run
+   through the frame instead of it being a flat stripe.
+   The band is set in pixels, not a percentage. Percentage padding
+   resolves against the containing block, not the element, so a
+   percentage band came out at 8px on a phone, 15px at 768 and 10px at
+   1024, which is backwards.
+   The photo sizing lives on this wrapper now, not on the image, so the
+   frame is included in whatever width the layout hands the figure. */
+.arch {
+  display: block;
+  padding: 14px;
+  /* The fret at a small tile, not the lattice at its usual one. Tile size
+     is the whole game here: the lattice motif is about 170px across, so
+     inside a 14px band you get one stray arc of it and the frame just
+     looks like a solid stripe with a smudge. The fret repeats every 22px,
+     which fits the band. */
+  background:
+    url('/marks/fret-white.svg') 0 0 / 18px 18px,
+    var(--arch-frame, var(--coral));
+  border-radius: 999px 999px calc(var(--radius) + 0.6rem) calc(var(--radius) + 0.6rem);
+  box-shadow: 0 20px 40px -32px rgba(30, 44, 58, 0.65);
+}
+.arch .headshot {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 0;
+}
+@media (min-width: 64rem) {
+  .arch { padding: 22px; background-size: 22px 22px, auto; }
+}
+/* Coral on the near-white hero panel, mint on the gold About panel. */
+#about { --arch-frame: var(--mint); }
+
 /* --- One frame, for personality ------------------------------------
    Her portfolio deck sets the pin examples inside a mint frame. Just the
    one, on the section that mirrors that page. */
@@ -1359,9 +1396,8 @@ summary::after { color: var(--navy); opacity: 0.65; }
     align-items: center;
   }
   .act--hero .act__figure { align-self: center; }
+  .act--hero .act__figure .arch { width: 100%; max-width: none; }
   .act--hero .act__figure .headshot {
-    width: 100%;
-    max-width: none;
     height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
