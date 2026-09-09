@@ -1153,3 +1153,28 @@ summary::after { color: var(--navy); opacity: 0.65; }
 }
 .site-footer__fine p { margin-bottom: var(--sp-1); opacity: 0.82; }
 .site-footer__fine p:last-child { margin-bottom: 0; }
+
+/* --- Hero portrait: hold its own against the headline --------------
+   The column is 887px tall and the photo was 456px of it, so it read as
+   an afterthought beside four lines of display type. It now fills the
+   cell: full column width, stretched to the height of the text beside
+   it, cropped with object-fit rather than squashed. The focal point
+   sits above centre so the crop keeps her face when the column is tall
+   and narrow. The arch is unchanged, it just applies to a bigger shape.
+
+   The column widths are deliberately left alone: widening the photo's
+   column narrowed the headline's, which wrapped it onto more lines and
+   pushed the whole act from 1047px to 1236px. Taller section, same
+   problem. */
+@media (min-width: 64rem) {
+  .act--hero .act__inner { align-items: stretch; }
+  .act--hero .act__lead { align-self: center; }
+  .act--hero .act__figure { align-self: stretch; display: flex; }
+  .act--hero .act__figure .headshot {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 25%;
+  }
+}
