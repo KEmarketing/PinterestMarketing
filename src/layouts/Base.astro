@@ -247,7 +247,7 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
          The number of pins and packages is editable in the CMS, so it is not
          something the stylesheet can assume from the viewport width. */
       (function () {
-        var rows = document.querySelectorAll('.strip, #packages .stack');
+        var rows = document.querySelectorAll('.strip, #packages .stack, #testimonials .quotes');
         if (!rows.length) return;
         function check() {
           for (var i = 0; i < rows.length; i++) {
@@ -286,11 +286,9 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
     <footer class="site-footer">
       <div class="wrap site-footer__inner">
         <div class="site-footer__brand">
-          {/* Reversed mark: her navy lines knocked out to paper for the
-              dark footer, gold sparkle untouched because it already reads
-              on navy. Swap in an official reversed logo if she has one. */}
-          <img class="site-footer__mark" src="/marks/logo-ke-light.webp" alt="" width="256" height="256" />
-          <p class="site-footer__name">{SITE.name}</p>
+          {/* Her stacked wordmark, which already carries the name, so there
+              is no typeset name beside it. */}
+          <img class="site-footer__wordmark" src="/marks/logo-ke-wordmark.webp" alt={SITE.name} width="536" height="206" />
         </div>
 
         <nav class="site-footer__nav" aria-label="Sections of this page">

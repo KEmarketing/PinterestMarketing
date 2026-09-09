@@ -637,12 +637,36 @@ summary::after { color: var(--navy); opacity: 0.65; }
 }
 
 /* --- Quotes --------------------------------------------------- */
-.quotes { display: grid; gap: var(--sp-5); }
-@media (min-width: 48rem) {
-  .quotes { grid-template-columns: repeat(2, 1fr); align-items: start; }
-  /* the second quote drops, so the pair is not a matched set of boxes */
-  .quotes > blockquote:nth-child(even) { margin-top: var(--sp-5); }
+/* The reviews scroll sideways, the same way the pin examples do. The
+   list is editable in the CMS, so it has to look right at two reviews
+   and at ten: a grid reflows into ragged rows and eventually outgrows
+   the screen, where a row of fixed-width cards simply gets longer. */
+.quotes {
+  display: flex;
+  align-items: stretch;
+  gap: var(--sp-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: var(--sp-2) var(--gutter) var(--sp-4);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* Plain centring leaves anything overflowing to the LEFT unreachable,
+     because there is nothing to scroll back towards. Safe centring
+     falls back to flex-start the moment the row is too wide, so the
+     first review can always be reached. */
+  justify-content: safe center;
 }
+.quotes::-webkit-scrollbar { display: none; }
+.quotes:focus-visible { outline: 2px solid var(--coral-ink); outline-offset: 2px; }
+.quotes > blockquote {
+  flex: 0 0 min(82vw, 30rem);
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: center;
+}
+/* The attribution sits on the floor of each card, so the names line up
+   across reviews of different lengths. */
+.quotes .quote-by { margin-top: auto; }
 
 /* --- Process steps -------------------------------------------- */
 .steps { max-width: none; }
@@ -814,15 +838,6 @@ summary::after { color: var(--navy); opacity: 0.65; }
 }
 .note h3 { margin-bottom: 0; color: var(--navy); }
 
-/* --- Quotes, revised ------------------------------------------ */
-/* This used to force a single column everywhere, because side by side
-   inside the narrow body column of a split act gave each quote about
-   eighteen characters a line. The testimonials act is full width now, so
-   that reason is gone and the guard only applies where it still holds. */
-.quotes { gap: var(--sp-4); }
-.act--split .quotes { grid-template-columns: 1fr; }
-.act--split .quotes > blockquote:nth-child(even) { margin-top: 0; margin-left: var(--sp-5); }
-.quotes blockquote p { max-width: 44ch; }
 
 /* The lede needs air under a display heading. */
 .act__lead h1 + .lede,
@@ -1038,16 +1053,12 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .act--stats .act__inner { max-width: 72rem; }
 
 
-/* --- Testimonials: the two reviews next to each other ---------------
+/* --- Testimonials: the reviews next to each other -------------------
    She asked for them side by side rather than stacked. In the split
    layout they were confined to the narrow column, so this act runs full
-   width: heading first, reviews beneath it. A third review added in the
-   CMS simply starts a new row. */
+   width: heading first, then the row of reviews, which scrolls. */
 .act--testimonials .act__inner { display: block; }
-.act--testimonials .act__lead { margin-bottom: var(--sp-4); }
-@media (min-width: 48rem) {
-  .act--testimonials .quotes { grid-template-columns: repeat(2, 1fr); align-items: start; }
-}
+.act--testimonials .act__lead { margin-bottom: var(--sp-2); }
 
 /* --- Emphasis, in colour instead of capitals ----------------------
    Kandace writes emphasis as ALL CAPS. Shouted words read badly at
@@ -1117,15 +1128,14 @@ summary::after { color: var(--navy); opacity: 0.65; }
     align-items: center;
   }
 }
-.site-footer__brand { display: flex; align-items: center; gap: var(--sp-2); }
-.site-footer__mark { width: 60px; height: 60px; flex: none; }
-.site-footer__name {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--step-1);
-  line-height: 1.2;
-  color: #fff;
-  max-width: 12ch;
+/* The footer brand is her own stacked wordmark rather than the circle
+   mark with the name typeset next to it. Capped at 230px because the
+   artwork is 536px wide, which keeps it above 2x on a retina screen. */
+.site-footer__brand { display: flex; align-items: center; }
+.site-footer__wordmark {
+  width: min(230px, 62vw);
+  height: auto;
+  flex: none;
 }
 .site-footer__nav {
   display: flex;

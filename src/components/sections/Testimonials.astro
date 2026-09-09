@@ -1,4 +1,6 @@
 ---
+/* The reviews are a scrolling row rather than a grid, so the section
+   stays one clean line whether there are two of them or ten. */
 import Fronds from '../Fronds.astro';
 const { data } = Astro.props;
 ---
@@ -9,20 +11,24 @@ const { data } = Astro.props;
     <div class="act__lead">
       <h2>{data.heading}</h2>
     </div>
-    <div class="act__body">
-      <div class="quotes">
-        {data.items.map((t) => (
-          <blockquote>
-            <p>{t.quote}</p>
-            <footer class="quote-by">
-              {t.image && (
-                <img class="avatar" src={t.image} alt={t.imageAlt ?? ''} width="72" height="72" loading="lazy" />
-              )}
-              <cite>{t.name}{t.role && `, ${t.role}`}</cite>
-            </footer>
-          </blockquote>
-        ))}
-      </div>
-    </div>
+  </div>
+  <div class="quotes" role="region" aria-label="Client reviews" tabindex="0">
+    {data.items.map((t) => (
+      <blockquote>
+        <p>{t.quote}</p>
+        <footer class="quote-by">
+          {t.image && (
+            <img class="avatar" src={t.image} alt={t.imageAlt ?? ''} width="72" height="72" loading="lazy" />
+          )}
+          <cite>{t.name}{t.role && `, ${t.role}`}</cite>
+        </footer>
+      </blockquote>
+    ))}
+  </div>
+  <div class="wrap">
+    <p class="swipe-cue">
+      <span>Scroll to see more</span>
+      <span class="swipe-cue__arrow" aria-hidden="true">&rarr;</span>
+    </p>
   </div>
 </section>
