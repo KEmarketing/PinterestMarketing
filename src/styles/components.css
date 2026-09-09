@@ -296,8 +296,13 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
 .site-nav a:focus-visible { border-bottom-color: var(--navy); color: var(--navy); }
 
 @media (max-width: 40rem) {
-  .site-header .wrap { flex-wrap: wrap; justify-content: center; gap: var(--sp-2); }
-  .wordmark__mark { height: calc(48px + 2 * var(--sp-3)); }
+  .site-header .wrap { flex-wrap: wrap; justify-content: center; gap: var(--sp-3); }
+  /* The header is two rows at this width, so the logo is no longer
+     filling the height of a single bar. The negative margins that let it
+     bleed into the header padding have to go with it: they were pulling
+     the artwork 24px down over the nav links, which is why the two read
+     as one stacked-up block. */
+  .wordmark__mark { height: 72px; margin-block: 0; }
   .site-nav { justify-content: center; gap: 0.75rem 1.1rem; }
   .site-nav a { font-size: 0.72rem; letter-spacing: 0.04em; }
 }
@@ -485,14 +490,6 @@ summary::after { color: var(--navy); opacity: 0.65; }
   flex: 0 0 56px;
   border-radius: 50%;
   object-fit: cover;
-}
-
-/* On a phone the hero photo lands under the buttons and only a
-   sliver of it is above the fold, which reads like a mistake. The
-   hero goes back to type only at that width. Her face still appears
-   further down in About. */
-@media (max-width: 51.999rem) {
-  #top .headshot { display: none; }
 }
 
 /* --- Lattice in the chapter breaks ----------------------------- */
@@ -769,7 +766,11 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .act__figure { display: flex; justify-content: center; }
 .act__figure .headshot { margin-top: 0; max-width: 100%; width: min(100%, 420px); }
 @media (max-width: 63.999rem) {
-  .act--hero .act__figure { display: none; }
+  /* The hero portrait used to be hidden here. She wants it on phones, so
+     it closes the hero instead: source order already puts it after the
+     buttons, which keeps the headline first on a small screen. */
+  .act--hero .act__figure { margin-top: var(--sp-4); }
+  .act--hero .act__figure .headshot { width: min(100%, 260px); }
   .act--portrait .act__figure { margin-bottom: var(--sp-4); }
   .act--portrait .act__figure .headshot { width: min(100%, 260px); }
 }
