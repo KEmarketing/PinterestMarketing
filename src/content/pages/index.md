@@ -7,7 +7,7 @@ draft: false
 hero:
   heading: "Great Pinterest marketing moves your audience from **inspiration** to **action**"
   subheading: |-
-    The audience you're trying to reach is already on Pinterest searching for ideas, solutions, and products.
+    The audience you're trying to reach is already on Pinterest searching for ideas, solutions, and products you have.
 
     But are you there?
 
