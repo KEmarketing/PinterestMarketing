@@ -124,6 +124,20 @@ const pages = defineCollection({
       sub: z.string().optional(),
     })).default([]),
 
+    /* --- email signup ---
+       Dormant by design: every field is optional and the section renders
+       only when `url` holds something, so the page is unchanged while she
+       is still choosing an email platform. It is a link out, not a wired
+       integration, so any platform that gives her a hosted signup page
+       works and she can swap platforms later without a code change. */
+    signup: z.object({
+      url: z.string().optional(),
+      heading: z.string().optional(),
+      body: z.string().optional(),
+      buttonLabel: z.string().optional(),
+      note: z.string().optional(),
+    }).optional(),
+
     /* --- contact --- */
     contact: z.object({
       heading: z.string(),

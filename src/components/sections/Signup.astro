@@ -1,0 +1,26 @@
+---
+/* The email signup band.
+   It does not exist until a signup link is in the CMS. No link, no
+   section, so nothing half-built sits on the page while she is still
+   choosing an email platform. This is a link out rather than a wired
+   integration, which is why any platform works and why swapping
+   platforms later is a CMS edit rather than a code change. */
+const { data } = Astro.props;
+const url = String(data?.url ?? '').trim();
+const heading = String(data?.heading ?? '').trim() || 'Join the email list';
+const body = String(data?.body ?? '').trim();
+const label = String(data?.buttonLabel ?? '').trim() || 'Sign up';
+const note = String(data?.note ?? '').trim();
+---
+{url && (
+  <div class="signup" id="signup">
+    <div class="wrap signup__inner">
+      <h2 class="signup__heading">{heading}</h2>
+      {body && <p class="signup__body">{body}</p>}
+      {/* Opens in a new tab: the signup page is on her email platform, and
+          this keeps her own site open behind it. */}
+      <a class="btn" href={url} target="_blank" rel="noopener">{label}</a>
+      {note && <p class="signup__note">{note}</p>}
+    </div>
+  </div>
+)}

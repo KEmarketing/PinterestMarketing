@@ -161,6 +161,20 @@ content:
           - { name: line, label: Big line, type: string }
           - { name: sub, label: Small line under it, type: string }
 
+      - name: signup
+        label: Email signup
+        type: object
+        description: "Paste your signup link below to turn this section on. While it is empty the section does not appear on the site at all."
+        fields:
+          - name: url
+            label: Signup link
+            type: string
+            description: "The web address of the signup page from your email platform. It has to be a page people can open, not embed code."
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Text, type: text }
+          - { name: buttonLabel, label: Button text, type: string }
+          - { name: note, label: Small line under the button, type: string }
+
       - name: contact
         label: Contact
         type: object

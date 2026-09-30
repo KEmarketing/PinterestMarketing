@@ -329,6 +329,39 @@ html { scroll-behavior: smooth; }
 .site-footer p { max-width: none; margin-bottom: var(--sp-1); }
 .site-footer a { color: #fff; }
 
+/* --- Email signup band ------------------------------------------------
+   Not an act. Acts are sticky and a full screen tall, and this is a short
+   offer rather than a chapter of the page, so it behaves like a chapter
+   break instead: normal flow, sliding over whatever is pinned behind it.
+   Blush-pale because it sits between the mint FAQ and the paper-warm
+   contact panel and has to read as its own beat. */
+.signup {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--sp-6);
+  background: var(--blush-pale);
+  border-top: 1px solid var(--rule);
+  text-align: center;
+}
+.signup__inner { display: grid; justify-items: center; }
+.signup__heading {
+  font-size: var(--step-2);
+  line-height: 1.1;
+  margin-bottom: var(--sp-2);
+  max-width: 22ch;
+}
+.signup__body {
+  max-width: 48ch;
+  margin-bottom: var(--sp-4);
+  color: var(--ink);
+}
+.signup__note {
+  font-size: var(--step--1);
+  color: var(--ink-soft-tint);
+  margin: var(--sp-3) 0 0;
+  max-width: 44ch;
+}
+
 /* --- Contact -------------------------------------------------- */
 .contact-list { list-style: none; padding: 0; margin: var(--sp-4) 0 0; }
 .contact-list li { margin-bottom: var(--sp-1); }

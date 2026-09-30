@@ -202,6 +202,13 @@ chapters:
   - line: "Packages and pricing"
     sub: "Upfront pricing, no pressure sales and no long-term contracts."
 
+signup:
+  url: ""
+  heading: "Want the free Pinterest starter guide?"
+  body: "A short walkthrough of what to have in place before you start pinning, sent straight to your inbox."
+  buttonLabel: "Send me the guide"
+  note: ""
+
 contact:
   heading: "Let's talk about it"
   body: "Tell me what you're working on and what you'd like Pinterest to do for it. If booking a call feels like a lot right now, email or message me instead. Starting there is completely fine."
