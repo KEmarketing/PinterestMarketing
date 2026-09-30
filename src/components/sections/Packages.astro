@@ -10,7 +10,7 @@ const { data, bookingLabel } = Astro.props;
     </div>
 
     <p class="swipe-cue">
-      <span>Swipe for all four</span>
+      <span>Swipe for all options</span>
       <span class="swipe-cue__arrow" aria-hidden="true">&rarr;</span>
     </p>
 
@@ -32,7 +32,7 @@ const { data, bookingLabel } = Astro.props;
     </div>
 
     <div class="packages__cta">
-      <a class="btn" href={resolveUrl('BOOKING_URL')}>{bookingLabel}</a>
+      <a class="btn" href={resolveUrl('BOOKING_URL')}>{data.ctaLabel ?? bookingLabel}</a>
     </div>
 
     {data.note && <p class="packages__note">{data.note}</p>}

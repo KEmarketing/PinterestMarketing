@@ -121,7 +121,7 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
             shows through. It already contains her name, so there is no
             wordmark set beside it: the accessible name carries it instead. */}
         <a class="wordmark" href="/" aria-label={`${SITE.name}, back to top`}>
-          <img class="wordmark__mark" src="/marks/logo-ke.webp" alt={SITE.name} width="256" height="256" />
+          <img class="wordmark__mark" src="/marks/logo-ke-wordmark.webp" alt={SITE.name} width="536" height="206" />
         </a>
 
         <nav class="site-nav" aria-label="Sections of this page">
@@ -154,14 +154,25 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
       (function () {
         var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
         var acts = document.querySelectorAll('.act');
+        var header = document.querySelector('.site-header');
 
+        /* The header is frozen at the top now, so every act has to pin
+           BELOW it rather than at 0, or the header sits over the first
+           hundred pixels of whatever is holding. Its height is fluid
+           (it wraps to two rows on a phone) so it is measured, published
+           as --header-h for the stylesheet, and re-measured on resize. */
         function fit() {
+          var hh = header ? header.offsetHeight : 0;
+          document.documentElement.style.setProperty('--header-h', hh + 'px');
+          var avail = window.innerHeight - hh;
           for (var i = 0; i < acts.length; i++) {
             var a = acts[i];
             a.style.top = '';
             if (reduce.matches) continue;
-            var overshoot = a.offsetHeight - window.innerHeight;
-            a.style.top = overshoot > 0 ? (-overshoot) + 'px' : '0px';
+            /* A tall act still sticks by its BOTTOM: top is pulled up by
+               the overshoot so its last line lands on the bottom edge. */
+            var overshoot = a.offsetHeight - avail;
+            a.style.top = overshoot > 0 ? (hh - overshoot) + 'px' : hh + 'px';
           }
         }
 

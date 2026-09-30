@@ -17,6 +17,7 @@ const paras = String(data.body ?? '').split(/\n\s*\n/).filter(Boolean);
       )}
     </div>
     <div class="act__body">
+      {data.kicker && <p class="act__kicker">{data.kicker}</p>}
       <h2>{data.heading}</h2>
       {paras.map((para, i) => <p class={i === 0 ? 'lede' : undefined}>{para}</p>)}
       {data.bullets.length > 0 && (

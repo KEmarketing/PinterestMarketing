@@ -2,17 +2,22 @@
 import { resolveUrl } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
-<section class="act act--wash act--split act--flip act--lat-band-top" id="contact">
+{/* Heading left, the box of ways to reach her on the right, as she asked. */}
+<section class="act act--wash act--split act--lat-band-top" id="contact">
   <div class="wrap act__inner">
     <div class="act__lead">
       <h2>{data.heading}</h2>
-      <p class="lede">{data.body}</p>
+      {String(data.body ?? '').split(/\n\s*\n/).filter(Boolean).map((para, i) => (
+        <p class={i === 0 ? 'lede' : undefined}>{para}</p>
+      ))}
     </div>
     <div class="act__body">
       <div class="reach reach--end">
         <div class="actions">
           <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
         </div>
+        {data.boxHeading && <p class="reach__heading">{data.boxHeading}</p>}
+        {data.boxBody && <p class="reach__body">{data.boxBody}</p>}
         <ul class="contact-list">
           {data.email && (
             <li><a href={`mailto:${data.email}`}>{data.email}</a></li>

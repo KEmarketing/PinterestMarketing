@@ -47,7 +47,7 @@ li::marker { color: var(--leaf); }
 .act {
   position: sticky;
   top: 0;
-  min-height: 100svh;
+  min-height: calc(100svh - var(--header-h, 0px));
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -246,7 +246,11 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
 
 /* --- Header --------------------------------------------------- */
 .site-header {
-  position: relative;
+  /* Frozen to the top, as she asked. The acts pin below it: their sticky
+     top and their min-height both come off --header-h, which Base.astro
+     measures, because this header's height changes with the viewport. */
+  position: sticky;
+  top: 0;
   z-index: 10;
   padding: var(--sp-3) 0;
   background: var(--paper);
@@ -267,14 +271,11 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
 }
 .wordmark__mark {
   display: block;
+  /* Her stacked wordmark, so it is set by height and lets its width
+     follow. The circle mark used to bleed into the header padding to
+     fill the bar; a wide lockup doing that would crowd the nav. */
+  height: 64px;
   width: auto;
-  /* Full height of the bar, edge to edge, without making the bar taller.
-     The negative margins cancel the header's own vertical padding, so the
-     logo's LAYOUT height stays what it was and the row does not grow,
-     while the image draws across the padding as well. Change the 56px and
-     the bar keeps its current height regardless. */
-  height: calc(56px + 2 * var(--sp-3));
-  margin-block: calc(-1 * var(--sp-3));
 }
 
 /* Section links. They scroll rather than navigate, so they are set quietly:
@@ -306,7 +307,7 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
      bleed into the header padding have to go with it: they were pulling
      the artwork 24px down over the nav links, which is why the two read
      as one stacked-up block. */
-  .wordmark__mark { height: 72px; margin-block: 0; }
+  .wordmark__mark { height: 54px; }
   .site-nav { justify-content: center; gap: 0.75rem 1.1rem; }
   .site-nav a { font-size: 0.72rem; letter-spacing: 0.04em; }
 }
@@ -315,7 +316,8 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
    above the acts and the acts pin at the top of the screen. */
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-.act, .chapter { scroll-margin-top: 0; }
+/* Anchor jumps have to clear the frozen header. */
+.act, .chapter { scroll-margin-top: var(--header-h, 0px); }
 
 /* --- Footer --------------------------------------------------- */
 .site-footer {
@@ -328,6 +330,119 @@ html { scroll-behavior: smooth; }
 }
 .site-footer p { max-width: none; margin-bottom: var(--sp-1); }
 .site-footer a { color: #fff; }
+
+/* --- The hero has to fit above the fold -------------------------------
+   Her note: "the section following the hero overlaps the hero section too
+   soon, covering up the action buttons." Measured at 1440x900 and that is
+   not really an overlap timing problem: the hero act is 896px tall inside
+   793px of space once the frozen header is subtracted, so the buttons
+   start 23px BELOW the fold before anything is scrolled, and the next act
+   reaches them almost immediately.
+
+   The text column is what overflows, not the photograph: 736px of lead
+   against a 637px figure, and 311px of that is the headline. So on short
+   screens the headline, the spacing under it and the act's own padding
+   all come down. Tall screens are untouched. */
+@media (min-width: 64rem) and (max-height: 960px) {
+  .act--hero { padding-block: clamp(var(--sp-3), 3.4vh, var(--sp-5)); }
+  .act--hero h1 { font-size: clamp(2.2rem, 1.35rem + 2.4vw, 3.15rem); }
+  .act--hero .act__lead h1 + .lede { margin-top: var(--sp-2); }
+  .act--hero .act__lead .lede { margin-bottom: var(--sp-2); }
+  .act--hero .actions { margin-top: var(--sp-3); }
+}
+@media (min-width: 64rem) and (max-height: 820px) {
+  .act--hero { padding-block: var(--sp-3); }
+  .act--hero h1 { font-size: clamp(2rem, 1.2rem + 2.1vw, 2.8rem); }
+}
+/* A 1366x768 or 1280x720 laptop is the tightest real case: the columns
+   are narrower there too, so the headline takes more lines in less
+   height. The lede comes down to body size here as well. */
+@media (min-width: 64rem) and (max-height: 780px) {
+  .act--hero { padding-block: 14px; }
+  .act--hero h1 { font-size: clamp(1.85rem, 1rem + 1.9vw, 2.45rem); }
+  .act--hero .act__lead .lede { font-size: var(--step-0); margin-bottom: var(--sp-1); }
+  .act--hero .actions { margin-top: var(--sp-2); }
+}
+
+/* --- Process as cards ------------------------------------------------
+   She asked for boxes rather than a column of text, and sent a reference
+   with the step number set above each card. The act runs full width so
+   three cards fit across; the numeral is the only accent, because the
+   explainer cards already carry the colored top rules and two sets of
+   them in one page would read as a system rather than a moment. */
+.act--steps .act__inner { display: block; }
+.act--steps .act__lead { margin-bottom: var(--sp-4); }
+
+.stepcards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: none;
+  display: grid;
+  gap: var(--sp-3);
+}
+@media (min-width: 48rem) {
+  .stepcards { grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+}
+/* The base stylesheet numbers every ol > li with a generated counter, so
+   without this the cards showed 01 twice: once from that counter and once
+   from the numeral in the markup. */
+.stepcards > li { padding-left: 0; }
+.stepcards > li::before { content: none; }
+.stepcard {
+  padding: var(--sp-4);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.stepcard__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  line-height: 1;
+  color: var(--gold-ink);
+  margin-bottom: var(--sp-2);
+}
+.stepcard h3 { margin-bottom: var(--sp-2); color: var(--navy); }
+.stepcard p { margin-bottom: 0; max-width: none; }
+
+.steps__cta { display: flex; justify-content: center; margin-top: var(--sp-5); }
+
+/* --- The line she wanted tucked under the hook statement ------------- */
+.statement__sub {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  color: var(--navy);
+  margin-bottom: var(--sp-3);
+}
+
+/* --- A supporting line under the first three figures ----------------- */
+.stat__note {
+  display: block;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--ink-soft-tint);
+  margin-top: var(--sp-1);
+  max-width: 30ch;
+}
+
+/* --- Founder & Owner, over her name ---------------------------------- */
+.act__kicker {
+  font-size: var(--step--1);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft-tint);
+  margin-bottom: var(--sp-1);
+}
+
+/* --- The "not ready for a call" half of the contact box -------------- */
+.reach__heading {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  color: var(--navy);
+  margin: var(--sp-4) 0 var(--sp-1);
+}
+.reach__body { margin-bottom: var(--sp-2); }
 
 /* --- Email signup band ------------------------------------------------
    Not an act. Acts are sticky and a full screen tall, and this is a short

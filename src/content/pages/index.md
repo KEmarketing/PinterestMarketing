@@ -7,9 +7,9 @@ draft: false
 hero:
   heading: "Great Pinterest marketing moves your audience from **inspiration** to **action**"
   subheading: |-
-    The audience you're trying to reach is already on Pinterest searching for ideas, solutions, and products. But are you there? And if you are, are you getting noticed?
+    The audience you're trying to reach is already on Pinterest searching for ideas, solutions, and products. But are you there? And are you getting noticed?
 
-    This is where we come in to help your business get discovered, and turn that discovery into meaningful traffic, engagement, and sales.
+    This is where I come in to help your business get discovered, and turn that discovery into meaningful traffic, engagement, and sales.
   cta:
     label: "Book a discovery call to know more"
     url: "BOOKING_URL"
@@ -20,8 +20,9 @@ hero:
   imageAlt: "Kandace Emory working at her laptop"
 
 hook:
-  heading: "So how do you get noticed on Pinterest?"
-  body: "We do the research to know what will get you seen. Then we work to create a strategic, data-driven Pinterest marketing system tailored to your brand which can:"
+  heading: "How I get you noticed on Pinterest!"
+  sub: "This is where I come in!"
+  body: "I do the research to know what will get you seen. Then I work to create a strategic, data-driven Pinterest marketing system tailored to your brand which can:"
   bullets:
     - "Increase your content visibility"
     - "Drive quality traffic to your website"
@@ -29,23 +30,23 @@ hook:
 
 explainer:
   heading: "Why Pinterest vs. social media?"
-  body: "Pinterest is a search engine, not a social media feed, so it's going to behave more like Google and YouTube than Instagram and TikTok. This is a good thing. On Pinterest content is seen based on what pinners are searching, not because something went viral."
+  body: "Pinterest is a search engine, not a social media feed, so it's going to behave more like Google and YouTube than Instagram and TikTok. This is a good thing! On Pinterest content is seen based on what pinners are searching and not because something went viral."
   points:
-    - heading: "It's searched, not scrolled"
-      body: "Pins get surfaced by what people type in. Which means the words on and around your pin matter more than what time of day you posted."
-    - heading: "You already have the raw material"
+    - heading: "Content searched, not scrolled"
+      body: "Pins get surfaced by what people type in, which means the words on and around your pin matter more than what time of day you post."
+    - heading: "Use what you already have"
       body: "Blog posts, products, freebies, and courses are all things already on your site that will get pinned, so no need to start from scratch with content."
-    - heading: "It builds on itself"
-      body: "Pinterest is slow and cumulative rather than fast and disposable. Social media posts can be shown for as little as 24 hours, but users on Pinterest can find your content for months to come."
+    - heading: "Content builds on itself"
+      body: "Pinterest is slow and cumulative rather than fast and disposable. Unlike social media, users on Pinterest can find your content for months to come!"
 
 whoFor:
-  heading: "Who is this for"
+  heading: "It's perfect for:"
   items:
     - "E-commerce brands"
     - "Lifestyle bloggers"
     - "Course creators"
     - "Etsy sellers"
-    - "Teachers Pay Teachers sellers"
+    - "TPT sellers"
     - "LTK or Amazon affiliates"
   needsHeading: "Pinterest marketing success starts with having a:"
   needs:
@@ -53,11 +54,12 @@ whoFor:
     - "Active product catalog, blog posts, and/or listings"
     - "Brand identity"
     - "Buyer persona, or knowing your target audience"
-  footnote: "If you've got the items above, great. Then you're ready for the next step. Book a free discovery call so we can know more about you and your business marketing goals."
+  footnote: "You're ready for the next step if you check these boxes!"
 
 packages:
   heading: "Packages"
-  intro: "Many ways for us to work for you. All packages can be tailored to meet your custom marketing needs."
+  intro: "Many ways for me to work for you. All packages can be tailored to meet your custom marketing needs."
+  ctaLabel: "Book a discovery call to get started!"
   note: "*Services including scheduled posts are all done through Tailwind. Clients required to set up their own account with Tailwind."
   items:
     - name: "The Audit"
@@ -88,7 +90,7 @@ packages:
     - name: "The Signature"
       price: "$529"
       cadence: "per month"
-      summary: "Monthly marketing and Pinterest maintenance simply handled for you. No minimum commitment, though we do recommend giving this 3 to 4 months to see best results from your Pinterest marketing strategy."
+      summary: "Monthly marketing and Pinterest maintenance simply handled for you. No minimum commitment, though I do recommend giving this 3 to 4 months to see best results from your Pinterest marketing strategy."
       features:
         - "Everything in the Setup package ongoing monthly, plus:"
         - "30 fresh pins created and scheduled monthly"
@@ -129,13 +131,14 @@ work:
       alt: "Pin design reading Orlando resort hotel with the best pools"
 
 about:
-  heading: "Hi, I'm Kandace"
+  kicker: "Founder & Owner"
+  heading: "Kandace Emory"
   body: |-
-    I'm a Pinterest manager, strategist, and creative at heart, and I love helping businesses get their products and ideas in front of the people who are already looking for them.
+    I'm Kandace, a Pinterest Manager, strategist, and creative at heart with a Bachelor's degree in Marketing. I love helping businesses get their products and ideas in front of the people who are already searching for them on Pinterest.
 
-    Before becoming a Pinterest Manager, I spent years working behind the scenes of businesses and events. I've owned my own product-based business, managed a corporate promotional product program, and created marketing and collateral for corporate events.
+    Before specializing in Pinterest, I spent years working in corporate events and promotional product marketing, where I discovered just how much I love bringing creativity and strategy together.
 
-    Today, I specialize exclusively in Pinterest marketing and management. That means you can hand Pinterest over to someone who is focused on understanding the platform, keeping up with its ever-changing trends, and strategically optimizing your content so you can spend more time doing what you do best.
+    Today, I use that experience to help businesses grow their visibility and website traffic on Pinterest, so they can spend more time doing what they love.
   bullets: []
   image: "/images/about-2.webp"
   imageAlt: "Kandace Emory"
@@ -157,13 +160,14 @@ testimonials:
 process:
   heading: "How it works"
   aside: "This is where it starts!"
+  ctaLabel: "Book a discovery call"
   steps:
-    - heading: "Book a discovery call"
-      body: "A quick call to hear more about your business, and your current marketing strategy and goals. This helps us best tailor the right Pinterest marketing and management approach for you."
-    - heading: "Receive a custom proposal"
-      body: "After hearing about your business, we'll put together a custom strategy for your Pinterest marketing and continued management. We start with our packages and build out from there based on your goals."
-    - heading: "Sign, pay and we get to work"
-      body: "Once the proposal is just the way you'd like it, it's time to sign the contract, pay the invoices, and then we get working to bring your business Pinterest marketing success."
+    - heading: "Discovery Call"
+      body: "I want to hear about your business, current marketing strategy, and Pinterest goals. This helps me best tailor the right Pinterest marketing and management approach for you."
+    - heading: "Custom Strategy Proposal"
+      body: "I'll put together a custom plan for your Pinterest marketing and continued management. I start with my packages and build out from there based on your business goals and budget."
+    - heading: "Implementation & Optimization"
+      body: "Once the proposal is just the way you'd like it, then I implement your tailored plan and work to optimize your content to bring you consistent growth and Pinterest marketing success."
 
 faq:
   heading: "Questions"
@@ -171,32 +175,37 @@ faq:
     - question: "What do I need in place before we start?"
       answer: "Preferably a website or a platform with something on it worth sending people to: products, blog posts, digital products or listings."
     - question: "How long until I see results with my Pinterest?"
-      answer: "Understanding that consistency is key and giving Pinterest marketing a 3 to 6 month length of time to see solid month over month results is the best approach, not to say we can't see results sooner. There are so many variables at play with expected growth rate, but a modest growth rate would be 2 to 5% month over month."
+      answer: "Understanding that consistency is key and giving Pinterest marketing a 3 to 6 month length of time to see solid month over month results is the best approach, not to say I can't see results sooner. There are so many variables at play with expected growth rate, but a modest growth rate would be 2 to 5% month over month."
     - question: "Do I have to sign long-term contracts?"
-      answer: "No, we offer month to month contracts, or we can tailor a contract to span over a period of time that makes sense for you and your business marketing goals."
+      answer: "No, I offer month to month contracts, or we can tailor a contract to span over a period of time that makes sense for you and your business marketing goals."
     - question: "Do you offer paid-ad marketing strategies?"
-      answer: "Possibly in the future, but as of right now we utilize organic marketing methods for all our Pinterest marketing services."
+      answer: "Possibly in the future, but as of right now I use organic marketing methods for all my Pinterest marketing services."
+    - question: "Can you take on ALL my Pinterest management and marketing needs?"
+      answer: "Yes, that's exactly what I do. As a Pinterest manager I handle everything from profile setup and optimization, to building out your boards and descriptions, creating and scheduling all your pins, managing analytics and trend reports, and so much more. Book a free discovery call to learn more!"
 
 stats:
   heading: "Pinterest stats you need to know"
   items:
+    - value: "80B+"
+      label: "Monthly searches"
+      note: "That's a lot of opportunity for your products and brands to be discovered!"
     - value: "640M+"
       label: "Monthly active users"
+      note: "People in over 180 countries use Pinterest to discover, plan, shop, and take action."
     - value: "96%"
       label: "of top searches are unbranded"
+      note: "This gives you an opening to be discovered by people who may not know your brand."
     - value: "80%"
       label: "of weekly Pinners feel inspired by the shopping experience"
-    - value: "39%"
-      label: "of consumers have used Pinterest as a search engine"
     - value: "50%"
       label: "of Pinterest's global audience is Gen Z"
-    - value: "1.5B"
-      label: "Pins saved every week"
+    - value: "39%"
+      label: "of consumers have used Pinterest as a search engine"
   body: "Pinterest isn't simply a place to post pretty pictures. It's a powerful discovery platform where 640 million people search for ideas, discover brands and make purchasing decisions."
 
 chapters:
   - line: "Is Pinterest marketing right for you?"
-    sub: "Don't know? That's okay, keep scrolling to know for sure."
+    sub: "Keep scrolling to know for sure."
   - line: "How do you get started?"
     sub: "Whether you're new to Pinterest or have an existing profile, it all starts here. **Three steps, and the first one is a conversation.**"
   - line: "Packages and pricing"
@@ -210,8 +219,15 @@ signup:
   note: ""
 
 contact:
-  heading: "Let's talk about it"
-  body: "Tell me what you're working on and what you'd like Pinterest to do for it. If booking a call feels like a lot right now, email or message me instead. Starting there is completely fine."
+  heading: "Ready to put Pinterest to work for you?"
+  body: |-
+    Tell me what you're working on and where you'd like Pinterest to take you.
+
+    We'll talk through your goals, what's possible, and whether working together makes sense.
+
+    No pressure, just a conversation about your next step.
+  boxHeading: "Not ready for a call?"
+  boxBody: "Email me or message me on Facebook."
   cta:
     label: "Book a discovery call"
     url: "BOOKING_URL"

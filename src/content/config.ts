@@ -30,6 +30,7 @@ const pages = defineCollection({
     /* --- the hook --- */
     hook: z.object({
       heading: z.string(),
+      sub: z.string().optional(),
       body: z.string(),
       bullets: z.array(z.string()).default([]),
     }),
@@ -55,6 +56,7 @@ const pages = defineCollection({
     /* --- packages --- */
     packages: z.object({
       heading: z.string(),
+      ctaLabel: z.string().optional(),
       intro: z.string().optional(),
       note: z.string().optional(),
       items: z.array(z.object({
@@ -79,6 +81,7 @@ const pages = defineCollection({
 
     /* --- about --- */
     about: z.object({
+      kicker: z.string().optional(),
       heading: z.string(),
       body: z.string(),
       bullets: z.array(z.string()).default([]),
@@ -101,6 +104,7 @@ const pages = defineCollection({
     /* --- process --- */
     process: z.object({
       heading: z.string(),
+      ctaLabel: z.string().optional(),
       aside: z.string().optional(),
       steps: z.array(z.object({ heading: z.string(), body: z.string() })).default([]),
     }),
@@ -108,7 +112,11 @@ const pages = defineCollection({
     /* --- pinterest stats --- */
     stats: z.object({
       heading: z.string(),
-      items: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
+      items: z.array(z.object({
+        value: z.string(),
+        label: z.string(),
+        note: z.string().optional(),
+      })).default([]),
       body: z.string().optional(),
     }).optional(),
 
@@ -143,6 +151,8 @@ const pages = defineCollection({
       heading: z.string(),
       body: z.string(),
       cta: linkGroup,
+      boxHeading: z.string().optional(),
+      boxBody: z.string().optional(),
       email: z.string().optional(),
       facebook: z.string().optional(),
       responseNote: z.string().optional(),

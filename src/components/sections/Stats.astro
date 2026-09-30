@@ -16,6 +16,7 @@ const { data } = Astro.props;
           <li class="stat">
             <span class="stat__value">{s.value}</span>
             <span class="stat__label">{s.label}</span>
+            {s.note && <span class="stat__note">{s.note}</span>}
           </li>
         ))}
       </ul>

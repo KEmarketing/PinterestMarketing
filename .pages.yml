@@ -42,7 +42,9 @@ content:
         type: object
         fields:
           - { name: heading, label: Heading, type: string }
+          - { name: sub, label: Small line under the heading, type: string }
           - { name: body, label: Text, type: text }
+          - { name: bullets, label: What it can do for them, type: string, list: true }
 
       - name: explainer
         label: Why Pinterest
@@ -73,6 +75,7 @@ content:
         fields:
           - { name: heading, label: Heading, type: string }
           - { name: intro, label: Intro line, type: text }
+          - { name: ctaLabel, label: Button text, type: string }
           - { name: note, label: Note under the packages, type: text }
           - name: items
             label: Package
@@ -104,6 +107,7 @@ content:
         label: About you
         type: object
         fields:
+          - { name: kicker, label: Small line above your name, type: string }
           - { name: heading, label: Heading, type: string }
           - { name: body, label: Text, type: text }
           - { name: bullets, label: Background points, type: string, list: true }
@@ -131,6 +135,8 @@ content:
         type: object
         fields:
           - { name: heading, label: Heading, type: string }
+          - { name: aside, label: Small line by the heading, type: string }
+          - { name: ctaLabel, label: Button text, type: string }
           - name: steps
             label: Step
             type: object
@@ -138,6 +144,22 @@ content:
             fields:
               - { name: heading, label: Step title, type: string }
               - { name: body, label: Step text, type: text }
+
+      - name: stats
+        label: Pinterest stats
+        type: object
+        fields:
+          - name: items
+            label: Stat
+            type: object
+            list: true
+            description: "The figures in the grid. Six of them fills the layout neatly."
+            fields:
+              - { name: value, label: The number, type: string }
+              - { name: label, label: What it means, type: string }
+              - { name: note, label: Extra line under it, type: text }
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Paragraph under the grid, type: text }
 
       - name: faq
         label: Questions
@@ -187,6 +209,8 @@ content:
             fields:
               - { name: label, label: Button text, type: string }
               - { name: url, label: Button link, type: string }
+          - { name: boxHeading, label: Heading inside the box, type: string }
+          - { name: boxBody, label: Line inside the box, type: text }
           - { name: email, label: Email address, type: string }
           - { name: facebook, label: Facebook page link, type: string }
           - { name: responseNote, label: How fast you reply, type: string }
