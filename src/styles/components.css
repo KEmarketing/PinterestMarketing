@@ -343,6 +343,14 @@ html { scroll-behavior: smooth; }
    against a 637px figure, and 311px of that is the headline. So on short
    screens the headline, the spacing under it and the act's own padding
    all come down. Tall screens are untouched. */
+/* Her hero copy is four short lines rather than two paragraphs: the
+   statement, two questions, then the answer. A full paragraph gap
+   between each one pushed the buttons off a laptop screen, so the
+   first three sit as a stanza and only the last carries a real gap
+   before the buttons. This sits ABOVE the height steps on purpose:
+   they need to be able to close it further. */
+.act--hero .act__lead .lede:not(:last-of-type) { margin-bottom: var(--sp-1); }
+
 @media (min-width: 64rem) and (max-height: 960px) {
   .act--hero { padding-block: clamp(var(--sp-3), 3.4vh, var(--sp-5)); }
   .act--hero h1 { font-size: clamp(2.2rem, 1.35rem + 2.4vw, 3.15rem); }
@@ -353,6 +361,10 @@ html { scroll-behavior: smooth; }
 @media (min-width: 64rem) and (max-height: 820px) {
   .act--hero { padding-block: var(--sp-3); }
   .act--hero h1 { font-size: clamp(2rem, 1.2rem + 2.1vw, 2.8rem); }
+  /* 1280x800 sits between the steps and had the thinnest margin of any
+     screen measured. Closing the stanza buys it back without touching
+     the type size. */
+  #top .act__lead .lede:not(:last-of-type) { margin-bottom: 4px; }
 }
 /* A 1366x768 or 1280x720 laptop is the tightest real case: the columns
    are narrower there too, so the headline takes more lines in less
@@ -360,8 +372,41 @@ html { scroll-behavior: smooth; }
 @media (min-width: 64rem) and (max-height: 780px) {
   .act--hero { padding-block: 14px; }
   .act--hero h1 { font-size: clamp(1.85rem, 1rem + 1.9vw, 2.45rem); }
-  .act--hero .act__lead .lede { font-size: var(--step-0); margin-bottom: var(--sp-1); }
+  /* `#top .lede` sets the size, and an id outranks any number of
+     classes, so this override has to carry the id too. */
+  #top .act__lead .lede { font-size: var(--step-0); margin-bottom: var(--sp-1); line-height: 1.5; }
+  /* Four lines instead of two cost this screen the whole margin it
+     had, so the stanza closes up rather than the copy shrinking. */
+  #top .act__lead .lede:not(:last-of-type) { margin-bottom: 2px; }
   .act--hero .actions { margin-top: var(--sp-2); }
+}
+
+/* --- Her centred hook screen -----------------------------------------
+   She asked for the copy centred here. Centring the bullet list too
+   left the three arrow markers stair-stepping down the middle, so the
+   list stays a centred BLOCK with its items left aligned and the
+   markers in one column. And she asked for the sub line to be tucked
+   under the big title, so the title gives up its usual gap. */
+#why-pinterest .statement { margin-bottom: var(--sp-2); }
+.act--centred .statement__list {
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
+  max-width: min(54ch, 100%);
+  margin-inline: auto;
+  text-align: left;
+}
+
+/* The packages intro is the only lede on the page sitting over an
+   unmasked pattern, where soft grey measured 4.81 against the darkest
+   stroke. It takes the full ink, as the hero lede already does. */
+#packages .act__lead--row .lede { color: var(--ink); }
+
+/* Five section links cannot hold one row on a phone without dropping
+   the type below a legible size, so the break is made deliberate:
+   three then two, centred, rather than CONTACT orphaned on its own. */
+@media (max-width: 28rem) {
+  .site-nav { max-width: 18rem; margin-inline: auto; }
 }
 
 /* --- Process as cards ------------------------------------------------
@@ -584,6 +629,13 @@ summary::after { color: var(--navy); opacity: 0.65; }
     padding: 0 var(--gutter) var(--sp-3);
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    /* Her navy tab is positioned above its card, and a horizontal
+       scroller cannot keep overflow-y visible: the browser forces it
+       to auto, which cut the tab off completely on a phone and on a
+       tablet. The row carries the headroom inside the scroll box
+       instead, and pulls back up so the gap does not grow. */
+    padding-top: 2.7em;
+    margin-top: -1.5em;
   }
   #packages .stack::-webkit-scrollbar { display: none; }
 

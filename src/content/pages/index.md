@@ -7,7 +7,11 @@ draft: false
 hero:
   heading: "Great Pinterest marketing moves your audience from **inspiration** to **action**"
   subheading: |-
-    The audience you're trying to reach is already on Pinterest searching for ideas, solutions, and products. But are you there? And are you getting noticed?
+    The audience you're trying to reach is already on Pinterest searching for ideas, solutions, and products.
+
+    But are you there?
+
+    And are you getting noticed?
 
     This is where I come in to help your business get discovered, and turn that discovery into meaningful traffic, engagement, and sales.
   cta:
@@ -58,7 +62,7 @@ whoFor:
 
 packages:
   heading: "Packages"
-  intro: "Many ways for me to work for you. All packages can be tailored to meet your custom marketing needs."
+  intro: "Many ways for me to work for you! All packages can be tailored to meet your custom marketing needs."
   ctaLabel: "Book a discovery call to get started!"
   note: "*Services including scheduled posts are all done through Tailwind. Clients required to set up their own account with Tailwind."
   items:
@@ -158,8 +162,7 @@ testimonials:
       imageAlt: "Michelle Leek"
 
 process:
-  heading: "How it works"
-  aside: "This is where it starts!"
+  heading: "This is where it starts!"
   ctaLabel: "Book a discovery call"
   steps:
     - heading: "Discovery Call"
@@ -207,7 +210,7 @@ chapters:
   - line: "Is Pinterest marketing right for you?"
     sub: "Keep scrolling to know for sure."
   - line: "How do you get started?"
-    sub: "Whether you're new to Pinterest or have an existing profile, it all starts here. **Three steps, and the first one is a conversation.**"
+    sub: "Whether you're new to Pinterest or have an existing profile, it all starts here: **Three steps, and the first one is a conversation.**"
   - line: "Packages and pricing"
     sub: "Upfront pricing, no pressure sales and no long-term contracts."
 
