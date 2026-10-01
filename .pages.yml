@@ -68,6 +68,7 @@ content:
           - { name: intro, label: Intro line, type: text }
           - { name: items, label: List, type: string, list: true }
           - { name: footnote, label: Closing line, type: text }
+          - { name: ctaLabel, label: Button text, type: string }
 
       - name: packages
         label: Packages
@@ -88,6 +89,8 @@ content:
               - { name: summary, label: Who it suits, type: text }
               - { name: features, label: What's included, type: string, list: true }
               - { name: featured, label: Highlight this one, type: boolean, default: false }
+              - { name: tab, label: "Tab above the card (leave empty for none)", type: string }
+              - { name: tabTone, label: Tab color, type: select, options: { values: [navy, coral] } }
 
       - name: work
         label: Pin examples
@@ -113,6 +116,7 @@ content:
           - { name: bullets, label: Background points, type: string, list: true }
           - { name: image, label: Photo, type: image }
           - { name: imageAlt, label: Photo description, type: string }
+          - { name: ctaLabel, label: Button text under the photo, type: string }
 
       - name: testimonials
         label: Testimonials
@@ -184,18 +188,15 @@ content:
           - { name: sub, label: Small line under it, type: string }
 
       - name: signup
-        label: Email signup
+        label: Email list button
         type: object
-        description: "Paste your signup link below to turn this section on. While it is empty the section does not appear on the site at all."
+        description: "The last screen of the page invites people onto your email list. Paste your signup link below and the button appears there. While it is empty the words show but there is no button."
         fields:
           - name: url
             label: Signup link
             type: string
             description: "The web address of the signup page from your email platform. It has to be a page people can open, not embed code."
-          - { name: heading, label: Heading, type: string }
-          - { name: body, label: Text, type: text }
           - { name: buttonLabel, label: Button text, type: string }
-          - { name: note, label: Small line under the button, type: string }
 
       - name: contact
         label: Contact
@@ -218,12 +219,9 @@ content:
       - name: closing
         label: Bottom of the page
         type: object
+        description: "The last screen. The email list button is set up under Email list button."
         fields:
           - { name: heading, label: Heading, type: string }
           - { name: body, label: Text, type: text }
-          - name: cta
-            label: Button
-            type: object
-            fields:
-              - { name: label, label: Button text, type: string }
-              - { name: url, label: Button link, type: string }
+          - { name: signoff, label: Last line, type: string }
+

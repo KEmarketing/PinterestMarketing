@@ -12,12 +12,12 @@ const { data } = Astro.props;
       ))}
     </div>
     <div class="act__body">
+      {/* Her mockup: the box holds the heading, the line, the reply note and
+          the two links; the button sits under the box, the box's width. */}
       <div class="reach reach--end">
-        <div class="actions">
-          <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
-        </div>
         {data.boxHeading && <p class="reach__heading">{data.boxHeading}</p>}
         {data.boxBody && <p class="reach__body">{data.boxBody}</p>}
+        {data.responseNote && <p class="contact-note">{data.responseNote}</p>}
         <ul class="contact-list">
           {data.email && (
             <li><a href={`mailto:${data.email}`}>{data.email}</a></li>
@@ -26,7 +26,9 @@ const { data } = Astro.props;
             <li><a href={data.facebook}>Message on Facebook</a></li>
           )}
         </ul>
-        {data.responseNote && <p class="contact-note">{data.responseNote}</p>}
+      </div>
+      <div class="actions contact__actions">
+        <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
       </div>
     </div>
   </div>

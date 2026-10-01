@@ -1,6 +1,11 @@
 ---
 import Fronds from '../Fronds.astro';
+import { emphasise } from '../../utils.mjs';
 const { data } = Astro.props;
+/* Her mockup: the top row of three sits on a navy band that runs the
+   full width of the screen; the bottom three sit on the blush. */
+const top = data.items.slice(0, 3);
+const rest = data.items.slice(3);
 ---
 {/* Six figures in a 3 x 2 grid, as she asked. The numbers carry the panel,
     so they are set in the display face at heading scale and the label under
@@ -9,10 +14,27 @@ const { data } = Astro.props;
   <Fronds corner="tr" scale={2.2} tone="deep" opacity={0.28} delay={1.2} />
   <Fronds corner="br" scale={3.8} tone="deep" opacity={0.42} delay={2.4} />
   <div class="wrap act__inner">
-    <h2>{data.heading}</h2>
-    {data.items.length > 0 && (
-      <ul class="stats">
-        {data.items.map((s) => (
+    <h2 set:html={emphasise(data.heading)} />
+  </div>
+  {top.length > 0 && (
+    <div class="stats__band">
+      <div class="wrap">
+        <ul class="stats stats--top">
+          {top.map((s) => (
+            <li class="stat">
+              <span class="stat__value">{s.value}</span>
+              <span class="stat__label">{s.label}</span>
+              {s.note && <span class="stat__note">{s.note}</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )}
+  <div class="wrap act__inner act__inner--after-band">
+    {rest.length > 0 && (
+      <ul class="stats stats--rest">
+        {rest.map((s) => (
           <li class="stat">
             <span class="stat__value">{s.value}</span>
             <span class="stat__label">{s.label}</span>
@@ -21,6 +43,6 @@ const { data } = Astro.props;
         ))}
       </ul>
     )}
-    {data.body && <p class="stats__note">{data.body}</p>}
+    {data.body && <p class="stats__note" set:html={emphasise(data.body)} />}
   </div>
 </section>

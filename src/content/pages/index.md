@@ -5,13 +5,13 @@ urlPath: "index"
 draft: false
 
 hero:
-  heading: "Great Pinterest marketing moves your audience from **inspiration** to **action**"
+  heading: "Great Pinterest marketing moves your audience from **inspiration to action**"
   subheading: |-
-    The audience you're trying to reach is already on Pinterest searching for ideas, solutions, and products you have.
+    The audience you're trying to reach is already on Pinterest searching for ideas, solutions, and products.
 
     But are you there?
 
-    And are you getting noticed?
+    And if you are, are you getting noticed?
 
     This is where I come in to help your business get discovered, and turn that discovery into meaningful traffic, engagement, and sales.
   cta:
@@ -34,7 +34,7 @@ hook:
 
 explainer:
   heading: "Why Pinterest vs. social media?"
-  body: "Pinterest is a search engine, not a social media feed, so it's going to behave more like Google and YouTube than Instagram and TikTok. This is a good thing! On Pinterest content is seen based on what pinners are searching and not because something went viral."
+  body: "__Pinterest is a search engine__, not a social media feed, so it's going to behave more like Google and YouTube than Instagram and TikTok. **This is a good thing!** On Pinterest content is seen based on what pinners are searching and not because something went viral."
   points:
     - heading: "Content searched, not scrolled"
       body: "Pins get surfaced by what people type in, which means the words on and around your pin matter more than what time of day you post."
@@ -59,6 +59,7 @@ whoFor:
     - "Brand identity"
     - "Buyer persona, or knowing your target audience"
   footnote: "You're ready for the next step if you check these boxes!"
+  ctaLabel: "Book a discovery call."
 
 packages:
   heading: "Packages"
@@ -93,7 +94,9 @@ packages:
       featured: false
     - name: "The Signature"
       price: "$529"
-      cadence: "per month"
+      cadence: "monthly"
+      tab: "Management"
+      tabTone: "coral"
       summary: "Monthly marketing and Pinterest maintenance simply handled for you. No minimum commitment, though I do recommend giving this 3 to 4 months to see best results from your Pinterest marketing strategy."
       features:
         - "Everything in the Setup package ongoing monthly, plus:"
@@ -146,6 +149,7 @@ about:
   bullets: []
   image: "/images/about-2.webp"
   imageAlt: "Kandace Emory"
+  ctaLabel: "Book a call with Kandace"
 
 testimonials:
   heading: "What clients are saying"
@@ -187,7 +191,7 @@ faq:
       answer: "Yes, that's exactly what I do. As a Pinterest manager I handle everything from profile setup and optimization, to building out your boards and descriptions, creating and scheduling all your pins, managing analytics and trend reports, and so much more. Book a free discovery call to learn more!"
 
 stats:
-  heading: "Pinterest stats you need to know"
+  heading: "Pinterest stats **you need to know**"
   items:
     - value: "80B+"
       label: "Monthly searches"
@@ -216,10 +220,7 @@ chapters:
 
 signup:
   url: ""
-  heading: "Want the free Pinterest starter guide?"
-  body: "A short walkthrough of what to have in place before you start pinning, sent straight to your inbox."
-  buttonLabel: "Send me the guide"
-  note: ""
+  buttonLabel: "Keep me in the loop"
 
 contact:
   heading: "Ready to put Pinterest to work for you?"
@@ -232,16 +233,17 @@ contact:
   boxHeading: "Not ready for a call?"
   boxBody: "Email me or message me on Facebook."
   cta:
-    label: "Book a discovery call"
+    label: "Let's talk Pinterest!"
     url: "BOOKING_URL"
   email: "kandace.pinmarketing@gmail.com"
   facebook: "https://www.facebook.com/kandacepinterestmarketing/"
   responseNote: "I usually reply within one business day."
 
 closing:
-  heading: "Ready when you are"
-  body: "Book the call and we'll work out whether this is a fit. Worst case, you leave with a straight answer about whether Pinterest is worth your time right now."
-  cta:
-    label: "Book a discovery call"
-    url: "BOOKING_URL"
+  heading: "Not quite ready? That's okay"
+  body: |-
+    Pinterest isn't going anywhere, and neither am I.
+
+    Join my email list for practical Pinterest tips, ideas, and strategies you can put to work while you decide what comes next.
+  signoff: "And when you're ready for some help, you'll know where to find me."
 ---

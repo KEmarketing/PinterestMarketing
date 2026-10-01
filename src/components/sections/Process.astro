@@ -16,8 +16,10 @@ const { data } = Astro.props;
         {data.steps.map((s, i) => (
           <li class="stepcard">
             <span class="stepcard__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-            <h3>{s.heading}</h3>
-            <p>{s.body}</p>
+            <div class="stepcard__box">
+              <h3>{s.heading}</h3>
+              <p>{s.body}</p>
+            </div>
           </li>
         ))}
       </ol>

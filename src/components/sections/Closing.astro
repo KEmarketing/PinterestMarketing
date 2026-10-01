@@ -1,16 +1,25 @@
 ---
 import Fronds from '../Fronds.astro';
-import { resolveUrl } from '../../utils.mjs';
-const { data } = Astro.props;
+const { data, signup } = Astro.props;
+const paras = String(data.body ?? '').split(/\n\s*\n/).filter(Boolean);
+/* The button is the email list signup. No link in the CMS yet, no
+   button: her words stand on their own until she pastes one in. */
+const url = String(signup?.url ?? '').trim();
+const label = String(signup?.buttonLabel ?? '').trim() || 'Keep me in the loop';
 ---
-<section class="act act--statement act--centred" id="book">
-  <Fronds corner="tr" scale={2.4} tone="mint" opacity={0.34} delay={0.5} />
-  <Fronds corner="bl" scale={4.3} tone="mint" opacity={0.55} delay={2.9} />
+{/* Her last screen: navy, the invitation onto her email list, the
+    sign-off in italics. */}
+<section class="act act--statement act--centred act--closing" id="book">
+  <Fronds corner="tl" scale={4.3} tone="mint" opacity={0.55} delay={2.9} />
+  <Fronds corner="bl" scale={2.4} tone="mint" opacity={0.34} delay={0.5} />
   <div class="wrap act__inner">
     <h2 class="statement">{data.heading}</h2>
-    <p class="statement__body">{data.body}</p>
-    <div class="actions">
-      <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
-    </div>
+    {paras.map((para) => <p class="statement__body">{para}</p>)}
+    {url && (
+      <div class="actions">
+        <a class="btn btn--mint btn--caps" href={url} target="_blank" rel="noopener">{label}</a>
+      </div>
+    )}
+    {data.signoff && <p class="closing__signoff">{data.signoff}</p>}
   </div>
 </section>

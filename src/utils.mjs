@@ -23,5 +23,9 @@ export function isPlaceholder(text) {
 export function emphasise(text) {
   const esc = String(text ?? '')
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  return esc.replace(/\*\*(.+?)\*\*/g, '<span class="mark">$1</span>');
+  return esc
+    .replace(/\*\*(.+?)\*\*/g, '<span class="mark">$1</span>')
+    /* __like this__ underlines in the accent instead: her explainer
+       mockup underlines "Pinterest is a search engine" in coral. */
+    .replace(/__(.+?)__/g, '<span class="mark mark--line">$1</span>');
 }

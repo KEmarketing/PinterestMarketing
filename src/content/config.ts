@@ -51,6 +51,8 @@ const pages = defineCollection({
       needsHeading: z.string().optional(),
       needs: z.array(z.string()).default([]),
       footnote: z.string().optional(),
+      /* her mockup puts a mint "Book a discovery call." under the list */
+      ctaLabel: z.string().optional(),
     }),
 
     /* --- packages --- */
@@ -68,6 +70,8 @@ const pages = defineCollection({
         featured: z.boolean().default(false),
         /* optional tab above the card, e.g. "New to Pinterest" */
         tab: z.string().optional(),
+        /* navy by default; her mockup gives The Signature a coral one */
+        tabTone: z.enum(['navy', 'coral']).optional(),
         cta: linkGroup.optional(),
       })).default([]),
     }),
@@ -87,6 +91,8 @@ const pages = defineCollection({
       bullets: z.array(z.string()).default([]),
       image: z.string().optional(),
       imageAlt: z.string().optional(),
+      /* her mockup puts a coral "Book a call with Kandace" under the photo */
+      ctaLabel: z.string().optional(),
     }),
 
     /* --- testimonials --- */
@@ -133,17 +139,16 @@ const pages = defineCollection({
     })).default([]),
 
     /* --- email signup ---
-       Dormant by design: every field is optional and the section renders
-       only when `url` holds something, so the page is unchanged while she
-       is still choosing an email platform. It is a link out, not a wired
-       integration, so any platform that gives her a hosted signup page
-       works and she can swap platforms later without a code change. */
+       Her closing screen is the email list invitation. The words for it
+       live in `closing`; this group holds only the link and the button
+       text. The button renders only when `url` holds something, so the
+       screen is complete while she is still choosing an email platform
+       and the button appears the moment a link is pasted in. It is a
+       link out, not a wired integration, so any platform that gives her
+       a hosted signup page works. */
     signup: z.object({
       url: z.string().optional(),
-      heading: z.string().optional(),
-      body: z.string().optional(),
       buttonLabel: z.string().optional(),
-      note: z.string().optional(),
     }).optional(),
 
     /* --- contact --- */
@@ -162,7 +167,8 @@ const pages = defineCollection({
     closing: z.object({
       heading: z.string(),
       body: z.string(),
-      cta: linkGroup,
+      /* the italic last line under the button */
+      signoff: z.string().optional(),
     }),
   }),
 });

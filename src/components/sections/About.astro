@@ -1,5 +1,6 @@
 ---
 import Fronds from '../Fronds.astro';
+import { resolveUrl } from '../../utils.mjs';
 const { data } = Astro.props;
 const paras = String(data.body ?? '').split(/\n\s*\n/).filter(Boolean);
 ---
@@ -14,6 +15,9 @@ const paras = String(data.body ?? '').split(/\n\s*\n/).filter(Boolean);
         <span class="arch">
           <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" loading="lazy" />
         </span>
+      )}
+      {data.ctaLabel && (
+        <a class="btn btn--coral about__cta" href={resolveUrl('BOOKING_URL')}>{data.ctaLabel}</a>
       )}
     </div>
     <div class="act__body">

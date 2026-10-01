@@ -5,6 +5,10 @@ const { data } = Astro.props;
 /* One CMS textarea, blank line between paragraphs. Keeps the editing
    experience to a single field instead of subheadingA / subheadingB. */
 const lede = String(data.subheading ?? '').split(/\n\s*\n/).filter(Boolean);
+/* Her mockup sets the two questions apart from the statement around
+   them: italic, in the display face, as a pair. A paragraph that ends
+   in a question mark is one of those. */
+const isAsk = (p) => /\?\s*$/.test(p);
 ---
 <section class="act act--pin act--hero act--lat-edge-left" id="top">
   <Fronds corner="tr" scale={2.3} tone="deep" opacity={0.34} delay={0.0} />
@@ -12,11 +16,11 @@ const lede = String(data.subheading ?? '').split(/\n\s*\n/).filter(Boolean);
   <div class="wrap act__inner">
     <div class="act__lead">
       <h1 set:html={emphasise(data.heading)} />
-      {lede.map((para) => <p class="lede">{para}</p>)}
+      {lede.map((para) => <p class:list={['lede', isAsk(para) && 'lede--ask']}>{para}</p>)}
       <div class="actions">
         <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
         {data.secondaryCta && (
-          <a class="btn btn--ghost" href={resolveUrl(data.secondaryCta.url)}>{data.secondaryCta.label}</a>
+          <a class="btn" href={resolveUrl(data.secondaryCta.url)}>{data.secondaryCta.label}</a>
         )}
       </div>
     </div>

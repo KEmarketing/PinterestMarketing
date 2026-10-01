@@ -365,6 +365,11 @@ html { scroll-behavior: smooth; }
      screen measured. Closing the stanza buys it back without touching
      the type size. */
   #top .act__lead .lede:not(:last-of-type) { margin-bottom: 4px; }
+  /* The italic question pair is display-sized; at this height it and
+     the lede both come down a step or the buttons drop below the fold. */
+  #top .act__lead .lede { font-size: var(--step-0); line-height: 1.5; }
+  #top .lede--ask { font-size: 1.5rem; }
+  #top .lede:not(.lede--ask) + .lede--ask { margin-top: var(--sp-2); }
 }
 /* A 1366x768 or 1280x720 laptop is the tightest real case: the columns
    are narrower there too, so the headline takes more lines in less
@@ -378,6 +383,7 @@ html { scroll-behavior: smooth; }
   /* Four lines instead of two cost this screen the whole margin it
      had, so the stanza closes up rather than the copy shrinking. */
   #top .act__lead .lede:not(:last-of-type) { margin-bottom: 2px; }
+  #top .lede--ask { font-size: 1.3rem; }
   .act--hero .actions { margin-top: var(--sp-2); }
 }
 
@@ -434,22 +440,29 @@ html { scroll-behavior: smooth; }
    from the numeral in the markup. */
 .stepcards > li { padding-left: 0; }
 .stepcards > li::before { content: none; }
-.stepcard {
-  padding: var(--sp-4);
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-}
+/* Her reference sets the number ABOVE each box, outside it, as a hollow
+   outline figure, with the heading and text centred inside the box. */
+.stepcard { text-align: center; }
 .stepcard__num {
   display: block;
   font-family: var(--font-display);
-  font-size: var(--step-3);
+  font-size: var(--step-4);
   line-height: 1;
-  color: var(--gold-ink);
-  margin-bottom: var(--sp-2);
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--navy);
+  margin-bottom: calc(var(--sp-2) * -0.5);
+  position: relative;
+  z-index: 1;
+}
+.stepcard__box {
+  padding: var(--sp-5) var(--sp-4) var(--sp-4);
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 18px 36px -30px rgba(30, 44, 58, 0.5);
+  height: calc(100% - var(--step-4) * 0.5);
 }
 .stepcard h3 { margin-bottom: var(--sp-2); color: var(--navy); }
-.stepcard p { margin-bottom: 0; max-width: none; }
+.stepcard p { margin: 0 auto; max-width: 30ch; }
 
 .steps__cta { display: flex; justify-content: center; margin-top: var(--sp-5); }
 
@@ -495,33 +508,6 @@ html { scroll-behavior: smooth; }
    break instead: normal flow, sliding over whatever is pinned behind it.
    Blush-pale because it sits between the mint FAQ and the paper-warm
    contact panel and has to read as its own beat. */
-.signup {
-  position: relative;
-  z-index: 1;
-  padding-block: var(--sp-6);
-  background: var(--blush-pale);
-  border-top: 1px solid var(--rule);
-  text-align: center;
-}
-.signup__inner { display: grid; justify-items: center; }
-.signup__heading {
-  font-size: var(--step-2);
-  line-height: 1.1;
-  margin-bottom: var(--sp-2);
-  max-width: 22ch;
-}
-.signup__body {
-  max-width: 48ch;
-  margin-bottom: var(--sp-4);
-  color: var(--ink);
-}
-.signup__note {
-  font-size: var(--step--1);
-  color: var(--ink-soft-tint);
-  margin: var(--sp-3) 0 0;
-  max-width: 44ch;
-}
-
 /* --- Contact -------------------------------------------------- */
 .contact-list { list-style: none; padding: 0; margin: var(--sp-4) 0 0; }
 .contact-list li { margin-bottom: var(--sp-1); }
@@ -593,8 +579,7 @@ html { scroll-behavior: smooth; }
 /* The closing call sits on navy, so it inverts. */
 #book h2 { color: #fff; }
 #book p { color: #D3E0E4; }
-#book .btn { background: #fff; color: var(--navy); border-color: #fff; }
-#book .btn:hover { background: var(--mint); border-color: var(--mint); }
+
 
 /* The footer follows the closing panel, so it steps a shade darker
    rather than merging into it. */
@@ -1456,8 +1441,8 @@ summary::after { color: var(--navy); opacity: 0.65; }
 @media (min-width: 64rem) {
   .arch { padding: 22px; background-size: 22px 22px, auto; }
 }
-/* Coral on the near-white hero panel, mint on the gold About panel. */
-#about { --arch-frame: var(--mint); }
+/* Coral on both: her About mockup frames the portrait in coral too. */
+#about { --arch-frame: var(--coral); }
 
 /* --- One frame, for personality ------------------------------------
    Her portfolio deck sets the pin examples inside a mint frame. Just the
@@ -1477,6 +1462,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
   font-size: var(--step-0);
   line-height: 1.62;
   margin-bottom: var(--sp-3);
+  color: var(--ink);
 }
 #about .act__body p { margin-bottom: var(--sp-3); }
 #about .act__body p:last-child { margin-bottom: 0; }
@@ -1603,4 +1589,193 @@ summary::after { color: var(--navy); opacity: 0.65; }
     object-fit: cover;
     object-position: 50% 22%;
   }
+}
+
+/* ===============================================================
+   HER MOCKUPS
+   The revision doc came with a Canva mockup for nearly every screen.
+   Her copy went in first; this block is the design she drew around
+   it. Her light coral (#FFA384) reads at 1.6:1 on her blush and cream
+   panels, so wherever it carries words it steps to the darker corals
+   in tokens.css, which keep the hue and pass.
+   =============================================================== */
+
+/* Three more button colours, all from her board. */
+.btn--mint  { background: var(--mint);  color: var(--navy); border-color: var(--mint);  font-weight: 700; }
+.btn--mint:hover  { background: #A9D6C0; border-color: #A9D6C0; }
+.btn--coral { background: var(--coral); color: var(--ink);  border-color: var(--coral); }
+.btn--coral:hover { background: #F6906E; border-color: #F6906E; }
+.btn--caps  { font-size: var(--step--1); letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* An underline in the accent, the second emphasis marker. */
+.mark--line {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--coral);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}
+
+/* --- Hero (image 2): the two questions as a pair in the italic display face --- */
+#top .lede--ask {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.45rem, 1rem + 1.4vw, 2rem);
+  line-height: 1.2;
+  color: var(--navy);
+}
+#top .lede--ask + .lede--ask { margin-top: 0; }
+#top .lede:not(.lede--ask) + .lede--ask { margin-top: var(--sp-3); }
+
+/* --- Hook (image 3): a white rule under the sub line, bullets as white pills --- */
+#why-pinterest .statement__sub {
+  display: inline-block;
+  padding-bottom: 0.35em;
+  border-bottom: 2px solid #fff;
+}
+.act--centred .statement__list { gap: 0.7rem; align-items: center; }
+.act--centred .statement__list li {
+  padding: 0.45em 1.2em;
+  background: rgba(255, 255, 255, 0.92);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  color: var(--navy);
+  /* a slightly uneven edge, the way her brush-stroke pills sit */
+  clip-path: polygon(1% 8%, 99% 0%, 100% 90%, 98% 100%, 2% 96%, 0% 14%);
+}
+.act--centred .statement__list li::before { content: none; }
+
+/* --- Explainer (image 4): "This is a good thing!" in coral --- */
+#how-pinterest-works .lede .mark { color: var(--coral-text); font-weight: 500; }
+
+/* --- It's perfect for (image 7) --- */
+#who-its-for .act__lead h2 {
+  display: inline-block;
+  padding-bottom: 0.25em;
+  border-bottom: 3px solid var(--mint);
+  margin-bottom: var(--sp-3);
+}
+#who-its-for .whofor__needs-heading { color: var(--coral-ink); }
+#who-its-for .act__body .ticks li { color: var(--coral-text); }
+#who-its-for .act__body .ticks li::before { border-color: var(--coral-text); }
+.whofor__footnote {
+  margin: var(--sp-3) 0 0;
+  font-size: var(--step--1);
+  color: var(--coral-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  padding-bottom: var(--sp-3);
+  border-bottom: 3px solid var(--mint);
+}
+.whofor__actions { margin-top: var(--sp-3); }
+@media (min-width: 64rem) {
+  /* the vertical mint divider between her two columns */
+  #who-its-for .act__body { border-left: 3px solid var(--mint); padding-left: clamp(1.5rem, 3vw, 3rem); }
+}
+
+/* --- Packages (image 9): a mint price band across every card; a coral tab --- */
+#packages .block .price {
+  display: block;
+  margin: 0 calc(var(--sp-4) * -1) var(--sp-3);
+  padding: 0.35em var(--sp-4);
+  background: var(--mint);
+  color: var(--navy);
+}
+#packages .block .cadence { color: var(--navy); }
+@media (min-width: 64rem) {
+  #packages .block .price { margin-inline: calc(var(--sp-3) * -1); padding-inline: var(--sp-3); }
+}
+@media (max-width: 51.999rem) {
+  /* the swipe cards have no padding, so the band keeps to the card width */
+  #packages .block .price { margin-inline: 0; padding-inline: var(--sp-3); }
+}
+.block__tab--coral { background: var(--coral); color: var(--ink); }
+
+/* --- Pin examples (image 11): the intro line in a mint band --- */
+.showcase__band {
+  background: var(--mint-pale);
+  padding-block: var(--sp-3);
+  margin-top: var(--sp-2);
+}
+/* the band's inner wrap matches .act__inner so the line sits under the heading */
+.showcase__band .wrap { max-width: 68rem; }
+.showcase__band .lede { margin: 0; color: var(--ink); max-width: 36rem; }
+.act--showcase .act__inner { margin-bottom: 0; }
+
+/* --- Stats (image 12): "you need to know" in coral; the top three on a navy band --- */
+#pinterest-stats h2 .mark { color: var(--coral-ink); }
+#pinterest-stats .act__inner { padding-bottom: 0; }
+.stats__band {
+  background: var(--navy);
+  padding-block: var(--sp-4);
+  margin-top: var(--sp-3);
+  position: relative;
+  z-index: 1;
+}
+.stats__band .wrap { max-width: 72rem; }
+.stats__band .stats { margin: 0; }
+.stats__band .stat__value { color: var(--gold-pale); }
+.stats__band .stat__label { color: #fff; }
+.stats__band .stat__note {
+  color: var(--blush);
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  line-height: 1.35;
+}
+.act__inner--after-band { padding-top: var(--sp-4); }
+.act__inner--after-band .stats { margin-top: 0; }
+#pinterest-stats .stats__note { color: var(--coral-text); font-weight: 600; }
+
+/* --- About (image 13): her name in coral at display size; a coral button under the photo --- */
+#about .act__kicker { color: var(--navy); font-weight: 700; letter-spacing: 0.1em; font-size: var(--step-0); }
+#about .act__body h2 {
+  color: var(--coral-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: clamp(2.6rem, 1.8rem + 3vw, 4.4rem);
+  line-height: 1;
+  margin-bottom: var(--sp-3);
+}
+.about__cta {
+  display: flex;
+  justify-content: center;
+  width: min(100%, 420px);
+  margin-top: var(--sp-3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: var(--step--1);
+}
+#about .act__figure { display: grid; justify-items: start; }
+
+/* --- Contact (image 15): the words lean toward the box; a mint rule under the heading;
+       the button sits under the box at the box's width --- */
+#contact .reach__heading { font-weight: 700; font-style: italic; font-family: var(--font-body); font-size: var(--step-0); margin-top: 0; }
+#contact .reach__body { margin-bottom: 0.25em; font-style: italic; font-size: var(--step--1); }
+#contact .reach .contact-note { margin: 0 0 var(--sp-2); }
+.contact__actions { margin-top: var(--sp-3); width: 100%; }
+@media (min-width: 64rem) { .contact__actions { max-width: 26rem; margin-left: auto; } }
+.contact__actions .btn { width: 100%; text-align: center; justify-content: center; }
+@media (min-width: 64rem) {
+  #contact .act__lead { text-align: right; }
+  #contact .act__lead h2 {
+    display: inline-block;
+    padding-bottom: 0.2em;
+    background: linear-gradient(var(--mint), var(--mint)) no-repeat right bottom / 55% 3px;
+  }
+  #contact .act__lead p { margin-left: auto; }
+}
+
+/* --- Closing (image 16): her email-list invitation on navy --- */
+/* #book h2 sets white further up, so this carries the id to win. */
+#book.act--closing .statement { color: var(--mint); max-width: 16ch; margin-bottom: var(--sp-3); }
+.act--closing .statement__body { font-size: var(--step-0); max-width: 52ch; margin-bottom: var(--sp-2); }
+.act--closing .actions { margin-top: var(--sp-3); justify-content: center; }
+.closing__signoff {
+  margin-top: var(--sp-4);
+  font-style: italic;
+  font-size: var(--step-1);
+  color: #EAF2F4;
+  max-width: 44ch;
 }

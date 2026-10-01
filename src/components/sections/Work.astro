@@ -7,8 +7,14 @@ const { data } = Astro.props;
 <section class="act act--showcase act--lat-band-top" id="pin-examples">
   <div class="wrap act__inner">
     <h2>{data.heading}</h2>
-    {data.intro && <p class="lede">{data.intro}</p>}
   </div>
+  {/* Her mockup runs the intro line through a mint band the full width
+      of the screen, and rules the strip above and below in the same mint. */}
+  {data.intro && (
+    <div class="showcase__band">
+      <div class="wrap"><p class="lede">{data.intro}</p></div>
+    </div>
+  )}
   <div class="strip" role="region" aria-label="Pin design examples" tabindex="0">
     {data.images.map((img, i) => (
       <figure class="pin" style={`--i:${i}`}>

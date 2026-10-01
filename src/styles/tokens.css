@@ -15,6 +15,7 @@
   --blush: #FFD1C1;
   --coral: #FFA384;
   --coral-ink: #D83600;     /* derived: coral darkened to pass AA on white */
+  --coral-text: #C43100;    /* derived: coral for body-size text on her blush and cream panels (4.7:1) */
   --gold: #EDD776;
   --gold-deep: #DDC24F;
   --amber: #ECA453;

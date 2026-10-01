@@ -13,7 +13,6 @@ import About from '../components/sections/About.astro';
 import Process from '../components/sections/Process.astro';
 import Stats from '../components/sections/Stats.astro';
 import Faq from '../components/sections/Faq.astro';
-import Signup from '../components/sections/Signup.astro';
 import Contact from '../components/sections/Contact.astro';
 import Closing from '../components/sections/Closing.astro';
 
@@ -70,9 +69,9 @@ const chapter = (i) => d.chapters?.[i];
   <About data={d.about} />
 
   <Faq data={d.faq} />
-  {/* Renders nothing until a signup link exists in the CMS. */}
-  <Signup data={d.signup} />
   <Contact data={d.contact} />
-  <Closing data={d.closing} />
+  {/* The last screen invites people onto her email list. The button
+      renders only once a signup link exists in the CMS. */}
+  <Closing data={d.closing} signup={d.signup} />
 
 </Base>

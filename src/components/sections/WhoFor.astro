@@ -1,5 +1,6 @@
 ---
 import Fronds from '../Fronds.astro';
+import { resolveUrl } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
 {/* Not flipped: her copy doc puts "Who is this for" on the left and the
@@ -22,7 +23,12 @@ const { data } = Astro.props;
           {data.needs.map((item) => <li>{item}</li>)}
         </ul>
       )}
-      {data.footnote && <p class="act__aside-note">{data.footnote}</p>}
+      {data.footnote && <p class="whofor__footnote">{data.footnote}</p>}
+      {data.ctaLabel && (
+        <div class="actions whofor__actions">
+          <a class="btn btn--mint" href={resolveUrl('BOOKING_URL')}>{data.ctaLabel}</a>
+        </div>
+      )}
     </div>
   </div>
 </section>
