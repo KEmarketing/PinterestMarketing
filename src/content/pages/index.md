@@ -12,8 +12,6 @@ hero:
     But are you there?
 
     And if you are, are you getting noticed?
-
-    This is where I come in to help your business get discovered, and turn that discovery into meaningful traffic, engagement, and sales.
   cta:
     label: "Book a discovery call to know more"
     url: "BOOKING_URL"
@@ -25,12 +23,12 @@ hero:
 
 hook:
   heading: "How I get you noticed on Pinterest!"
-  sub: "This is where I come in!"
+  sub: "This is where I come in..."
   body: "I do the research to know what will get you seen. Then I work to create a strategic, data-driven Pinterest marketing system tailored to your brand which can:"
   bullets:
     - "Increase your content visibility"
     - "Drive quality traffic to your website"
-    - "Transform your content into long-term leads and revenue"
+    - "Transform content into long-term leads and revenue"
 
 explainer:
   heading: "Why Pinterest vs. social media?"
@@ -49,21 +47,21 @@ whoFor:
     - "E-commerce brands"
     - "Lifestyle bloggers"
     - "Course creators"
-    - "Etsy sellers"
     - "TPT sellers"
+    - "Etsy sellers"
     - "LTK or Amazon affiliates"
-  needsHeading: "Pinterest marketing success starts with having a:"
+  needsHeading: "Pinterest marketing success starts with a:"
   needs:
     - "Website"
     - "Active product catalog, blog posts, and/or listings"
     - "Brand identity"
-    - "Buyer persona, or knowing your target audience"
-  footnote: "You're ready for the next step if you check these boxes!"
+    - "Buyer persona / target audience"
+  footnote: "You're ready for the next step if you have these items!"
   ctaLabel: "Book a discovery call."
 
 packages:
   heading: "Packages"
-  intro: "Many ways for me to work for you! All packages can be tailored to meet your custom marketing needs."
+  intro: "All packages can be tailored to meet your custom marketing needs."
   ctaLabel: "Book a discovery call to get started!"
   note: "*Services including scheduled posts are all done through Tailwind. Clients required to set up their own account with Tailwind."
   items:

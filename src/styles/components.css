@@ -351,42 +351,6 @@ html { scroll-behavior: smooth; }
    they need to be able to close it further. */
 .act--hero .act__lead .lede:not(:last-of-type) { margin-bottom: var(--sp-1); }
 
-@media (min-width: 64rem) and (max-height: 960px) {
-  .act--hero { padding-block: clamp(var(--sp-3), 3.4vh, var(--sp-5)); }
-  .act--hero h1 { font-size: clamp(2.2rem, 1.35rem + 2.4vw, 3.15rem); }
-  .act--hero .act__lead h1 + .lede { margin-top: var(--sp-2); }
-  .act--hero .act__lead .lede { margin-bottom: var(--sp-2); }
-  .act--hero .actions { margin-top: var(--sp-3); }
-}
-@media (min-width: 64rem) and (max-height: 820px) {
-  .act--hero { padding-block: var(--sp-3); }
-  .act--hero h1 { font-size: clamp(2rem, 1.2rem + 2.1vw, 2.8rem); }
-  /* 1280x800 sits between the steps and had the thinnest margin of any
-     screen measured. Closing the stanza buys it back without touching
-     the type size. */
-  #top .act__lead .lede:not(:last-of-type) { margin-bottom: 4px; }
-  /* The italic question pair is display-sized; at this height it and
-     the lede both come down a step or the buttons drop below the fold. */
-  #top .act__lead .lede { font-size: var(--step-0); line-height: 1.5; }
-  #top .lede--ask { font-size: 1.5rem; }
-  #top .lede:not(.lede--ask) + .lede--ask { margin-top: var(--sp-2); }
-}
-/* A 1366x768 or 1280x720 laptop is the tightest real case: the columns
-   are narrower there too, so the headline takes more lines in less
-   height. The lede comes down to body size here as well. */
-@media (min-width: 64rem) and (max-height: 780px) {
-  .act--hero { padding-block: 14px; }
-  .act--hero h1 { font-size: clamp(1.85rem, 1rem + 1.9vw, 2.45rem); }
-  /* `#top .lede` sets the size, and an id outranks any number of
-     classes, so this override has to carry the id too. */
-  #top .act__lead .lede { font-size: var(--step-0); margin-bottom: var(--sp-1); line-height: 1.5; }
-  /* Four lines instead of two cost this screen the whole margin it
-     had, so the stanza closes up rather than the copy shrinking. */
-  #top .act__lead .lede:not(:last-of-type) { margin-bottom: 2px; }
-  #top .lede--ask { font-size: 1.3rem; }
-  .act--hero .actions { margin-top: var(--sp-2); }
-}
-
 /* --- Her centred hook screen -----------------------------------------
    She asked for the copy centred here. Centring the bullet list too
    left the three arrow markers stair-stepping down the middle, so the
@@ -1593,172 +1557,275 @@ summary::after { color: var(--navy); opacity: 0.65; }
 
 /* ===============================================================
    HER MOCKUPS
-   The revision doc came with a Canva mockup for nearly every screen.
-   Her copy went in first; this block is the design she drew around
-   it. Her light coral (#FFA384) reads at 1.6:1 on her blush and cream
-   panels, so wherever it carries words it steps to the darker corals
-   in tokens.css, which keep the hue and pass.
+   The revision doc came with a Canva mockup for nearly every screen,
+   and the screens are built to those mockups: her type scale and
+   weights, her colours as drawn (her light coral included, where she
+   drew it), her spacing. Where a mockup and her typed note differ,
+   the mockup is the later word and wins.
    =============================================================== */
 
-/* Three more button colours, all from her board. */
+/* Buttons from her board. */
 .btn--mint  { background: var(--mint);  color: var(--navy); border-color: var(--mint);  font-weight: 700; }
 .btn--mint:hover  { background: #A9D6C0; border-color: #A9D6C0; }
 .btn--coral { background: var(--coral); color: var(--ink);  border-color: var(--coral); }
 .btn--coral:hover { background: #F6906E; border-color: #F6906E; }
 .btn--caps  { font-size: var(--step--1); letter-spacing: 0.14em; text-transform: uppercase; }
 
-/* An underline in the accent, the second emphasis marker. */
+/* The second emphasis marker: an underline in the accent, text colour unchanged. */
 .mark--line {
-  color: inherit;
   text-decoration: underline;
   text-decoration-color: var(--coral);
   text-decoration-thickness: 2px;
-  text-underline-offset: 0.18em;
+  text-underline-offset: 0.2em;
 }
 
-/* --- Hero (image 2): the two questions as a pair in the italic display face --- */
+/* --- Hero (image 2) ---------------------------------------------------
+   A heavy headline that takes four lines, the lede at reading weight,
+   then the two questions as a pair in bold true italic, then the
+   buttons. Nothing after the questions. */
+.act--hero h1 {
+  font-weight: 700;
+  font-size: clamp(2.8rem, 1.2rem + 3.6vw, 4.6rem);
+  line-height: 1.0;
+  letter-spacing: -0.005em;
+}
+#top .lede { font-weight: 400; }
 #top .lede--ask {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 500;
-  font-size: clamp(1.45rem, 1rem + 1.4vw, 2rem);
-  line-height: 1.2;
+  font-weight: 700;
+  font-size: clamp(1.7rem, 1rem + 2vw, 2.6rem);
+  line-height: 1.12;
+  max-width: none;
   color: var(--navy);
 }
 #top .lede--ask + .lede--ask { margin-top: 0; }
 #top .lede:not(.lede--ask) + .lede--ask { margin-top: var(--sp-3); }
+#top .lede--ask:last-of-type { margin-bottom: var(--sp-4); }
 
-/* --- Hook (image 3): a white rule under the sub line, bullets as white pills --- */
-#why-pinterest .statement__sub {
-  display: inline-block;
-  padding-bottom: 0.35em;
-  border-bottom: 2px solid #fff;
+/* --- Hook (image 3) -------------------------------------------------- */
+#why-pinterest .statement {
+  font-weight: 500;
+  font-size: clamp(2.4rem, 1.5rem + 3.6vw, 4.6rem);
+  line-height: 1.08;
+  max-width: 20ch;
+  margin-bottom: var(--sp-2);
 }
-.act--centred .statement__list { gap: 0.7rem; align-items: center; }
+#why-pinterest .statement__sub {
+  position: relative;
+  display: inline-block;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1rem + 1.5vw, 2.2rem);
+  padding-bottom: 0.3em;
+  border-bottom: 0;
+  margin-bottom: var(--sp-3);
+}
+/* the rule runs wider than the words, as she drew it */
+#why-pinterest .statement__sub::after {
+  content: '';
+  position: absolute;
+  left: -16%; right: -16%; bottom: 0;
+  height: 2px;
+  background: #fff;
+}
+.act--centred .statement__body { font-size: var(--step-1); font-weight: 400; max-width: 56ch; margin-bottom: var(--sp-3); color: var(--ink); }
+.act--centred .statement__list { gap: 0.6rem; align-items: center; margin-top: 0; max-width: none; }
+@media (min-width: 48rem) { .act--centred .statement__list li { white-space: nowrap; } }
+@media (max-width: 47.999rem) {
+  .act--centred .statement__list li { font-size: 1.1rem; padding-inline: 1em; }
+  .act--centred .statement__body { font-size: var(--step-0); }
+}
 .act--centred .statement__list li {
-  padding: 0.45em 1.2em;
-  background: rgba(255, 255, 255, 0.92);
+  padding: 0.38em 1.5em;
+  background: rgba(255, 255, 255, 0.95);
   font-family: var(--font-display);
-  font-size: var(--step-1);
+  font-weight: 500;
+  font-size: clamp(1.3rem, 1rem + 0.9vw, 1.75rem);
   color: var(--navy);
-  /* a slightly uneven edge, the way her brush-stroke pills sit */
   clip-path: polygon(1% 8%, 99% 0%, 100% 90%, 98% 100%, 2% 96%, 0% 14%);
 }
 .act--centred .statement__list li::before { content: none; }
 
-/* --- Explainer (image 4): "This is a good thing!" in coral --- */
-#how-pinterest-works .lede .mark { color: var(--coral-text); font-weight: 500; }
+/* --- Why Pinterest (image 4): wide intro, coral underline, coral line ---- */
+.act--explainer .act__lead .lede { max-width: 74ch; }
+#how-pinterest-works .lede .mark { color: var(--coral); font-weight: 400; }
+#how-pinterest-works .lede .mark--line { color: inherit; }
 
-/* --- It's perfect for (image 7) --- */
+/* --- It's perfect for (image 7) ---------------------------------------
+   Plain dots, no rules between items, larger text; the right column in
+   her coral with a big coral heading; the footnote underlined; a wide
+   mint button. */
 #who-its-for .act__lead h2 {
   display: inline-block;
-  padding-bottom: 0.25em;
-  border-bottom: 3px solid var(--mint);
-  margin-bottom: var(--sp-3);
+  padding-bottom: 0.2em;
+  border-bottom: 4px solid var(--mint);
+  margin-bottom: var(--sp-2);
 }
-#who-its-for .whofor__needs-heading { color: var(--coral-ink); }
-#who-its-for .act__body .ticks li { color: var(--coral-text); }
-#who-its-for .act__body .ticks li::before { border-color: var(--coral-text); }
+#who-its-for .ticks li {
+  border: 0;
+  padding: 0.45em 0 0.45em 1.4em;
+  font-size: clamp(1.25rem, 1rem + 0.9vw, 1.7rem);
+  line-height: 1.3;
+}
+#who-its-for .ticks li:first-child { border-top: 0; }
+#who-its-for .ticks li::before {
+  width: 0.38em; height: 0.38em;
+  border: 0;
+  border-radius: 50%;
+  background: var(--navy);
+  transform: none;
+  left: 0.25em; top: 0.95em;
+}
+#who-its-for .act__lead .ticks li { padding-block: 0.6em; }
+#who-its-for .act__body .ticks li { color: var(--coral); padding-block: 0.25em; font-size: clamp(1.15rem, 0.95rem + 0.8vw, 1.55rem); }
+#who-its-for .act__body .ticks li::before { background: var(--coral); }
+#who-its-for .whofor__needs-heading {
+  color: var(--coral);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 1rem + 1.6vw, 2.3rem);
+  line-height: 1.15;
+  margin-bottom: var(--sp-2);
+}
 .whofor__footnote {
-  margin: var(--sp-3) 0 0;
-  font-size: var(--step--1);
-  color: var(--coral-text);
+  margin: var(--sp-2) 0 0;
+  font-size: var(--step-1);
+  color: var(--coral);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
-  padding-bottom: var(--sp-3);
-  border-bottom: 3px solid var(--mint);
+  padding-bottom: var(--sp-2);
+  border-bottom: 4px solid var(--mint);
 }
-.whofor__actions { margin-top: var(--sp-3); }
+.whofor__actions { margin-top: var(--sp-2); }
+.whofor__actions .btn { width: 100%; justify-content: center; text-align: center; font-size: var(--step-1); padding-block: 0.75em; }
 @media (min-width: 64rem) {
-  /* the vertical mint divider between her two columns */
-  #who-its-for .act__body { border-left: 3px solid var(--mint); padding-left: clamp(1.5rem, 3vw, 3rem); }
+  #who-its-for .act__body { border-left: 4px solid var(--mint); padding-left: clamp(1.5rem, 3vw, 3rem); }
 }
 
-/* --- Packages (image 9): a mint price band across every card; a coral tab --- */
+/* --- Steps (image 8, her reference): centred heading, compact boxes ---- */
+.act--steps .act__lead { text-align: center; margin-bottom: var(--sp-3); }
+.act--steps .act__lead h2 { margin-inline: auto; }
+.stepcards { max-width: 62rem; margin-inline: auto; }
+.stepcard__num {
+  font-size: var(--step-3);
+  -webkit-text-stroke: 1px var(--ink-soft);
+  color: transparent;
+  margin-bottom: calc(var(--step-3) * -0.45);
+}
+.stepcard__box {
+  padding: var(--sp-4) var(--sp-3) var(--sp-3);
+  box-shadow: 0 10px 28px -22px rgba(30, 44, 58, 0.45), 0 0 0 1px rgba(69, 95, 118, 0.08);
+  height: calc(100% - var(--step-3) * 0.55);
+}
+.stepcard h3 { font-size: var(--step-0); margin-bottom: var(--sp-1); }
+.stepcard p { font-size: var(--step--1); line-height: 1.55; max-width: 30ch; }
+
+/* --- Packages (image 9): one tight header row, outlined mint price bands,
+       bold tabs, denser card text --- */
+.act__lead--row { margin-bottom: var(--sp-3); }
+@media (min-width: 64rem) {
+  .act__lead--row { grid-template-columns: auto 1fr; column-gap: var(--sp-3); align-items: baseline; }
+  .act__lead--row .lede { font-size: var(--step-0); max-width: none; font-weight: 400; }
+}
+#packages .act__lead--row .lede { color: var(--ink); }
 #packages .block .price {
   display: block;
-  margin: 0 calc(var(--sp-4) * -1) var(--sp-3);
-  padding: 0.35em var(--sp-4);
+  margin: 0 calc(var(--sp-4) * -1 - 1px) var(--sp-2);
+  padding: 0.3em var(--sp-4);
   background: var(--mint);
+  border: 1px solid var(--navy);
   color: var(--navy);
+  font-size: var(--step-1);
 }
 #packages .block .cadence { color: var(--navy); }
+#packages .block > p { font-size: var(--step--1); line-height: 1.55; }
+#packages .block ul { font-size: 0.82rem; line-height: 1.5; }
+#packages .block li { margin-bottom: 0.45rem; }
 @media (min-width: 64rem) {
-  #packages .block .price { margin-inline: calc(var(--sp-3) * -1); padding-inline: var(--sp-3); }
+  #packages .block .price { margin-inline: calc(var(--sp-3) * -1 - 1px); padding-inline: var(--sp-3); }
 }
 @media (max-width: 51.999rem) {
-  /* the swipe cards have no padding, so the band keeps to the card width */
   #packages .block .price { margin-inline: 0; padding-inline: var(--sp-3); }
 }
-.block__tab--coral { background: var(--coral); color: var(--ink); }
+.block__tab { font-weight: 700; }
+.block__tab--coral { background: var(--coral); color: var(--navy); }
 
-/* --- Pin examples (image 11): the intro line in a mint band --- */
-.showcase__band {
-  background: var(--mint-pale);
-  padding-block: var(--sp-3);
-  margin-top: var(--sp-2);
-}
-/* the band's inner wrap matches .act__inner so the line sits under the heading */
-.showcase__band .wrap { max-width: 68rem; }
-.showcase__band .lede { margin: 0; color: var(--ink); max-width: 36rem; }
+/* --- Pin examples (image 11): tight, thin mint rules, smaller pins -------- */
+.act--showcase .act__inner > h2 { margin-bottom: var(--sp-2); }
 .act--showcase .act__inner { margin-bottom: 0; }
+.showcase__band { background: var(--mint-pale); padding-block: var(--sp-2); margin-top: 0; }
+.showcase__band .wrap { max-width: 68rem; }
+.showcase__band .lede { margin: 0; color: var(--navy); font-weight: 400; font-size: var(--step-0); max-width: 40ch; }
+.act--showcase .strip { border-block: 3px solid var(--mint); padding-block: var(--sp-3); }
+.pin img { width: min(60vw, 225px); }
 
-/* --- Stats (image 12): "you need to know" in coral; the top three on a navy band --- */
-#pinterest-stats h2 .mark { color: var(--coral-ink); }
+/* --- Stats (image 12) ------------------------------------------------- */
+#pinterest-stats h2 .mark { color: var(--coral); }
 #pinterest-stats .act__inner { padding-bottom: 0; }
-.stats__band {
-  background: var(--navy);
-  padding-block: var(--sp-4);
-  margin-top: var(--sp-3);
-  position: relative;
-  z-index: 1;
-}
+.stats__band { background: var(--navy); padding-block: var(--sp-3); margin-top: var(--sp-2); position: relative; z-index: 1; }
 .stats__band .wrap { max-width: 72rem; }
 .stats__band .stats { margin: 0; }
+#pinterest-stats .stat__value { font-size: clamp(2.1rem, 1.3rem + 2.2vw, 3.2rem); }
 .stats__band .stat__value { color: var(--gold-pale); }
-.stats__band .stat__label { color: #fff; }
-.stats__band .stat__note {
-  color: var(--blush);
-  font-family: var(--font-display);
-  font-size: var(--step-0);
-  line-height: 1.35;
-}
-.act__inner--after-band { padding-top: var(--sp-4); }
+.stats__band .stat__label { color: #fff; font-weight: 600; }
+.stats__band .stat__note { color: var(--coral); font-family: var(--font-display); font-size: var(--step-0); line-height: 1.3; }
+.act__inner--after-band { padding-top: var(--sp-3); }
 .act__inner--after-band .stats { margin-top: 0; }
-#pinterest-stats .stats__note { color: var(--coral-text); font-weight: 600; }
+#pinterest-stats .stats__note { color: var(--coral); font-weight: 700; font-size: var(--step-0); margin-top: var(--sp-3); }
 
-/* --- About (image 13): her name in coral at display size; a coral button under the photo --- */
-#about .act__kicker { color: var(--navy); font-weight: 700; letter-spacing: 0.1em; font-size: var(--step-0); }
-#about .act__body h2 {
-  color: var(--coral-ink);
+/* --- About (image 13): thin coral ring, plain kicker, coral name, justified
+       bio, the outlined coral button under the photo --- */
+#about .arch { padding: 6px; background: var(--coral); box-shadow: none; }
+#about .act__kicker {
+  font-size: clamp(1.3rem, 1rem + 0.9vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: clamp(2.6rem, 1.8rem + 3vw, 4.4rem);
-  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 0;
+}
+#about .act__body h2 {
+  color: var(--coral);
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-size: clamp(2.4rem, 1.4rem + 2.8vw, 3.9rem);
+  line-height: 1.02;
+  max-width: 8ch;
   margin-bottom: var(--sp-3);
 }
+#about .act__body p, #about .act__body .lede { color: var(--ink); font-weight: 500; font-size: 1.15rem; line-height: 1.5; }
+#about .act__figure .arch { width: 100%; }
+.about__cta { width: 100%; }
+@media (min-width: 64rem) { #about .act__body p { text-align: justify; hyphens: auto; } }
 .about__cta {
   display: flex;
   justify-content: center;
   width: min(100%, 420px);
-  margin-top: var(--sp-3);
+  margin-top: var(--sp-2);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  font-weight: 400;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  background: #FFB69D;
+  border: 2px solid var(--coral);
+  color: var(--navy);
 }
+.about__cta:hover { background: var(--coral); border-color: var(--coral); }
 #about .act__figure { display: grid; justify-items: start; }
 
-/* --- Contact (image 15): the words lean toward the box; a mint rule under the heading;
-       the button sits under the box at the box's width --- */
-#contact .reach__heading { font-weight: 700; font-style: italic; font-family: var(--font-body); font-size: var(--step-0); margin-top: 0; }
-#contact .reach__body { margin-bottom: 0.25em; font-style: italic; font-size: var(--step--1); }
-#contact .reach .contact-note { margin: 0 0 var(--sp-2); }
+/* --- Contact (image 15) ------------------------------------------------ */
+#contact .reach { padding: var(--sp-3); }
+#contact .reach__heading { font-weight: 700; font-style: italic; font-family: var(--font-body); font-size: var(--step-0); margin-top: 0; margin-bottom: 0.2em; }
+#contact .reach__body { margin-bottom: 0.1em; font-style: italic; font-size: var(--step--1); }
+#contact .reach .contact-note { margin: 0 0 var(--sp-2); font-size: var(--step--1); }
 .contact__actions { margin-top: var(--sp-3); width: 100%; }
-@media (min-width: 64rem) { .contact__actions { max-width: 26rem; margin-left: auto; } }
-.contact__actions .btn { width: 100%; text-align: center; justify-content: center; }
+.contact__actions .btn { width: 100%; text-align: center; justify-content: center; font-weight: 700; }
 @media (min-width: 64rem) {
+  .contact__actions { max-width: 26rem; margin-left: auto; }
   #contact .act__lead { text-align: right; }
+  #contact .act__lead h2 { font-size: var(--step-2); }
   #contact .act__lead h2 {
     display: inline-block;
     padding-bottom: 0.2em;
@@ -1767,15 +1834,49 @@ summary::after { color: var(--navy); opacity: 0.65; }
   #contact .act__lead p { margin-left: auto; }
 }
 
-/* --- Closing (image 16): her email-list invitation on navy --- */
-/* #book h2 sets white further up, so this carries the id to win. */
-#book.act--closing .statement { color: var(--mint); max-width: 16ch; margin-bottom: var(--sp-3); }
-.act--closing .statement__body { font-size: var(--step-0); max-width: 52ch; margin-bottom: var(--sp-2); }
-.act--closing .actions { margin-top: var(--sp-3); justify-content: center; }
-.closing__signoff {
-  margin-top: var(--sp-4);
-  font-style: italic;
-  font-size: var(--step-1);
-  color: #EAF2F4;
-  max-width: 44ch;
+/* --- Closing (image 16): mint heading at medium weight, bold white body,
+       bold italic sign-off, one modest frond --- */
+#book.act--closing .statement {
+  color: var(--mint);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 1.3rem + 2.6vw, 3.5rem);
+  line-height: 1.1;
+  max-width: 14ch;
+  margin-bottom: var(--sp-2);
 }
+#book.act--closing .statement__body { color: #fff; font-weight: 600; font-size: var(--step--1); max-width: 58ch; margin-bottom: var(--sp-2); line-height: 1.6; }
+.act--closing .actions { margin-top: var(--sp-2); justify-content: center; }
+.closing__signoff { margin-top: var(--sp-3); font-style: italic; font-weight: 600; font-size: var(--step-0); color: #fff; max-width: 48ch; }
+
+/* --- Hero height steps -----------------------------------------------
+   These sit after the mockup block on purpose: they have the same
+   specificity as the hero rules above and must come later to win. A
+   short laptop screen brings the headline, the lede and the question
+   pair down a step each so the buttons stay above the fold. */
+@media (min-width: 64rem) and (max-height: 960px) {
+  .act--hero { padding-block: clamp(var(--sp-3), 3.4vh, var(--sp-5)); }
+  .act--hero .act__lead h1 + .lede { margin-top: var(--sp-2); }
+  .act--hero .act__lead .lede { margin-bottom: var(--sp-2); }
+  .act--hero .actions { margin-top: var(--sp-3); }
+}
+@media (min-width: 64rem) and (max-height: 880px) {
+  .act--hero h1 { font-size: clamp(2.5rem, 1.1rem + 3vw, 4rem); }
+}
+@media (min-width: 64rem) and (max-height: 820px) {
+  .act--hero { padding-block: var(--sp-3); }
+  .act--hero h1 { font-size: clamp(2.2rem, 1rem + 2.6vw, 3.4rem); }
+  #top .act__lead .lede:not(:last-of-type) { margin-bottom: 4px; }
+  #top .act__lead .lede { font-size: var(--step-0); line-height: 1.5; }
+  #top .lede--ask { font-size: 1.6rem; }
+  #top .lede:not(.lede--ask) + .lede--ask { margin-top: var(--sp-2); }
+}
+/* A 1366x768 or 1280x720 laptop is the tightest real case. */
+@media (min-width: 64rem) and (max-height: 780px) {
+  .act--hero { padding-block: 14px; }
+  .act--hero h1 { font-size: clamp(1.9rem, 0.8rem + 2.1vw, 2.7rem); }
+  #top .act__lead .lede:not(:last-of-type) { margin-bottom: 2px; }
+  #top .lede--ask { font-size: 1.3rem; }
+  #top .lede--ask:last-of-type { margin-bottom: var(--sp-2); }
+  .act--hero .actions { margin-top: var(--sp-2); }
+}
+
