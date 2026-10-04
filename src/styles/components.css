@@ -1746,7 +1746,9 @@ summary::after { color: var(--navy); opacity: 0.65; }
 
 /* --- Packages (image 9): one tight header row, outlined mint price bands,
        bold tabs, denser card text --- */
-.act__lead--row { margin-bottom: var(--sp-3); }
+/* The tabs stand about 2.4em above their cards, so the header row needs
+   that much plus a clear gap or NEW TO PINTEREST runs into "Packages". */
+.act__lead--row { margin-bottom: calc(2.6em + var(--sp-4)); }
 @media (min-width: 64rem) {
   .act__lead--row { grid-template-columns: auto 1fr; column-gap: var(--sp-3); align-items: baseline; }
   .act__lead--row .lede { font-size: var(--step-0); max-width: none; font-weight: 400; }
