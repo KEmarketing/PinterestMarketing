@@ -256,40 +256,43 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
   background: var(--paper);
   border-bottom: 1px solid var(--rule);
 }
-.site-header .wrap {
+.site-header__bar {
+  /* Stacked by default: the logo on a row of its own, then the two
+     groups of links, which share a row when there is room and take one
+     each on a phone. */
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-3);
+  justify-content: center;
+  gap: var(--sp-2) clamp(0.9rem, 2.2vw, 2rem);
 }
 .wordmark {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  flex: 0 0 100%;
   text-decoration: none;
   color: var(--navy);
-  flex: none;
 }
 .wordmark__mark {
   display: block;
-  /* Her stacked wordmark, so it is set by height and lets its width
-     follow. The circle mark used to bleed into the header padding to
-     fill the bar; a wide lockup doing that would crowd the nav. */
-  height: 64px;
-  width: auto;
+  /* Her one-line logo: the name across the top, Pinterest Marketing
+     under it. It is wide and shallow, so it is set by width. */
+  width: min(300px, 72vw);
+  height: auto;
 }
 
 /* Section links. They scroll rather than navigate, so they are set quietly:
    the logo should still be the loudest thing in the header. */
 .site-nav {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
   align-items: center;
-  gap: clamp(0.9rem, 2.2vw, 2rem);
+  justify-content: center;
+  gap: 0.75rem 1.1rem;
 }
 .site-nav a {
-  font-size: var(--step--1);
-  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--ink);
@@ -300,16 +303,38 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
 .site-nav a:hover,
 .site-nav a:focus-visible { border-bottom-color: var(--navy); color: var(--navy); }
 
-@media (max-width: 40rem) {
-  .site-header .wrap { flex-wrap: wrap; justify-content: center; gap: var(--sp-3); }
-  /* The header is two rows at this width, so the logo is no longer
-     filling the height of a single bar. The negative margins that let it
-     bleed into the header padding have to go with it: they were pulling
-     the artwork 24px down over the nav links, which is why the two read
-     as one stacked-up block. */
-  .wordmark__mark { height: 54px; }
-  .site-nav { justify-content: center; gap: 0.75rem 1.1rem; }
-  .site-nav a { font-size: 0.72rem; letter-spacing: 0.04em; }
+/* The email list button. She asked for it in a different color from the
+   links beside it, so it takes her mint, the same as the email list
+   button on the last screen. */
+.site-nav a.site-nav__join {
+  padding: 0.6em 1.1em;
+  background: var(--mint);
+  color: var(--navy);
+  font-weight: 600;
+  border: 0;
+  border-radius: var(--radius);
+}
+.site-nav a.site-nav__join:hover,
+.site-nav a.site-nav__join:focus-visible { background: #A9D6C0; color: var(--navy); }
+
+@media (min-width: 40rem) {
+  .site-nav { gap: clamp(0.9rem, 2.2vw, 2rem); }
+  .site-nav a { font-size: var(--step--1); letter-spacing: 0.06em; }
+}
+
+/* One row once all of it fits: three links, the logo in the middle, two
+   links and the button. The side columns are equal, so the logo sits on
+   the true center of the page whatever the links either side weigh. */
+@media (min-width: 72rem) {
+  .site-header__bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 3vw, 3rem);
+  }
+  .wordmark { grid-column: 2; grid-row: 1; }
+  .wordmark__mark { width: clamp(260px, 22vw, 330px); }
+  .site-nav--left  { grid-column: 1; grid-row: 1; justify-content: flex-end; }
+  .site-nav--right { grid-column: 3; grid-row: 1; justify-content: flex-start; }
 }
 
 /* An anchor lands under the header without this, because the header sits
@@ -371,13 +396,6 @@ html { scroll-behavior: smooth; }
    unmasked pattern, where soft grey measured 4.81 against the darkest
    stroke. It takes the full ink, as the hero lede already does. */
 #packages .act__lead--row .lede { color: var(--ink); }
-
-/* Five section links cannot hold one row on a phone without dropping
-   the type below a legible size, so the break is made deliberate:
-   three then two, centred, rather than CONTACT orphaned on its own. */
-@media (max-width: 28rem) {
-  .site-nav { max-width: 18rem; margin-inline: auto; }
-}
 
 /* --- Process as cards ------------------------------------------------
    She asked for boxes rather than a column of text, and sent a reference
@@ -563,8 +581,9 @@ summary::after { color: var(--navy); opacity: 0.65; }
    PACKAGES ON A PHONE
    Four full cards stacked made this section 3500px tall and turned
    the pinned hold into a very long one. On a phone they become a
-   swipe instead: no borders, no card faces, one package per screen
-   with the next one peeking so the gesture is obvious.
+   swipe instead: one package per screen with the next one peeking so
+   the gesture is obvious. They keep their boxes, as on a desktop,
+   which is what she asked for.
    =============================================================== */
 
 @media (max-width: 51.999rem) {
@@ -591,12 +610,8 @@ summary::after { color: var(--navy); opacity: 0.65; }
   #packages .block {
     flex: 0 0 76vw;          /* the next card peeks, which is the hint */
     scroll-snap-align: start;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-    padding: 0;
+    padding: var(--sp-3);
   }
-  #packages .block--featured { box-shadow: none; }
 }
 
 /* The swipe cue. Visible only where the strip exists. */
@@ -684,7 +699,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .chapter__pin--2 { right: -1.5%; bottom: 4%; transform: rotate(6deg); }
 
 @media (max-width: 51.999rem) {
-  /* One pin, in a band of its own below the copy. Absolutely positioning
+  /* The pins, in a band of their own below the copy. Absolutely positioning
      it in a corner put it straight across the kicker line, and reserving
      space with padding did not help: the panel has a min-height, so the
      padding squeezed the text rather than moving it. Here the pin holder
@@ -701,13 +716,19 @@ summary::after { color: var(--navy); opacity: 0.65; }
     height: 30vw;
     margin-top: var(--sp-4);
   }
-  .chapter__pin--1 { display: none; }
+  /* One pin either side, as she asked, so the panel is balanced. */
+  .chapter__pin--1 {
+    width: 40vw;
+    left: 5%;
+    top: 0;
+    transform: rotate(-6deg);
+  }
   .chapter__pin--2 {
-    width: 42vw;
-    right: 4%;
+    width: 40vw;
+    right: 5%;
     top: 0;
     bottom: auto;
-    transform: rotate(7deg);
+    transform: rotate(6deg);
   }
 }
 
@@ -870,15 +891,11 @@ summary::after { color: var(--navy); opacity: 0.65; }
    across reviews of different lengths. */
 .quotes .quote-by { margin-top: auto; }
 
-/* Staggered like the pin strip, so a row of reviews is not a row of
-   matched boxes. No rotation here: a pin can sit crooked, a paragraph
-   someone has to read should not. */
-.quotes > blockquote:nth-child(odd)  { transform: translateY(-0.6rem); }
-.quotes > blockquote:nth-child(even) { transform: translateY(0.6rem); }
-@media (min-width: 48rem) {
-  .quotes > blockquote:nth-child(odd)  { transform: translateY(-1.1rem); }
-  .quotes > blockquote:nth-child(even) { transform: translateY(1.1rem); }
-}
+/* Level, not staggered: she asked for the reviews and the green rules
+   beside them to line up along the top. The stagger was a transform,
+   and a transform is also what had been lifting each review above the
+   palm behind it, so the row now does that job itself. */
+.quotes { position: relative; }
 
 /* --- Process steps -------------------------------------------- */
 .steps { max-width: none; }
@@ -1745,7 +1762,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
   #packages .block .price { margin-inline: calc(var(--sp-3) * -1 - 1px); padding-inline: var(--sp-3); }
 }
 @media (max-width: 51.999rem) {
-  #packages .block .price { margin-inline: 0; padding-inline: var(--sp-3); }
+  #packages .block .price { margin-inline: calc(var(--sp-3) * -1 - 1px); padding-inline: var(--sp-3); }
 }
 .block__tab { font-weight: 700; }
 .block__tab--coral { background: var(--coral); color: var(--navy); }
@@ -1825,7 +1842,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
 @media (min-width: 64rem) {
   .contact__actions { max-width: 26rem; margin-left: auto; }
   #contact .act__lead { text-align: right; }
-  #contact .act__lead h2 { font-size: var(--step-2); }
+  #contact .act__lead h2 { font-size: clamp(2rem, 1.15rem + 1.75vw, 2.75rem); line-height: 1.12; }
   #contact .act__lead h2 {
     display: inline-block;
     padding-bottom: 0.2em;
@@ -1848,6 +1865,175 @@ summary::after { color: var(--navy); opacity: 0.65; }
 .act--closing .actions { margin-top: var(--sp-2); justify-content: center; }
 .closing__signoff { margin-top: var(--sp-3); font-style: italic; font-weight: 600; font-size: var(--step-0); color: #fff; max-width: 48ch; }
 
+/* ===============================================================
+   HER COMMENTS
+   The notes she left in the margin of the revision doc, which say
+   things the mockups do not.
+   =============================================================== */
+
+/* --- Each screen holds a little before the next one arrives ----------
+   Her note: the buttons should stay seen a bit more, and the next page
+   should not creep up over the one before it. Every act is pinned, so
+   the room under it is scroll distance during which it simply stays
+   put, whole, before anything starts to cover it. */
+.act:not(:last-child) { margin-bottom: 26svh; }
+@media (prefers-reduced-motion: reduce) {
+  .act:not(:last-child) { margin-bottom: 0; }
+}
+
+/* --- Hero -------------------------------------------------------------
+   The first line of the headline in the deeper ink, on its own line. A
+   thin solid frame on the photo, no pattern in it. A little air between
+   the two questions. */
+.h1__lead { display: block; color: var(--ink); }
+.act--hero .arch { padding: 6px; background: var(--coral); }
+@media (min-width: 64rem) { .act--hero .arch { padding: 8px; } }
+#top .lede--ask + .lede--ask { margin-top: 0.4em; }
+/* She does not want a word left on a line by itself, in the headline or
+   in the questions. */
+.act--hero h1 > span:last-child { display: block; text-wrap: balance; }
+#top .lede--ask { text-wrap: balance; }
+/* On a phone the button was starting below the bottom of the screen: the
+   first line of the headline broke in two and the panel opened with a
+   lot of air above it. The headline comes down far enough to hold
+   "Pinterest Marketing:" on one line, and the top padding closes up. */
+@media (max-width: 63.999rem) {
+  .act--hero { padding-top: var(--sp-4); }
+  .act--hero h1 { font-size: clamp(2rem, 9.1vw, 2.8rem); }
+}
+
+/* --- The blue breaks ---------------------------------------------------
+   No word left alone on a line. A small line typed on several lines
+   keeps them. The first break's small line a size up, on one line. */
+.chapter__line { text-wrap: balance; }
+.chapter__sub { text-wrap: balance; }
+.chapter__sub-line { display: block; }
+.chapter--stacked .chapter__sub { max-width: none; line-height: 1.9; }
+.chapter--pinned .chapter__sub { font-size: var(--step-0); max-width: none; }
+
+/* Four pins, two a side, as she drew it: the outer pair cropped by the
+   edge of the panel, the inner pair overlapping them a little lower. */
+@media (min-width: 52rem) {
+  .chapter--pinned-4 .chapter__pin { width: clamp(128px, 13.5vw, 210px); bottom: auto; right: auto; }
+  .chapter--pinned-4 .chapter__pin--1 { left: -2.5%; top: 5%;  transform: rotate(-5deg); }
+  .chapter--pinned-4 .chapter__pin--2 { left: 9.5%;  top: 18%; transform: rotate(4deg); }
+  .chapter--pinned-4 .chapter__pin--3 { left: 76%;   top: 7%;  transform: rotate(-4deg); }
+  .chapter--pinned-4 .chapter__pin--4 { left: 88.5%; top: 20%; transform: rotate(3deg); }
+}
+@media (max-width: 51.999rem) {
+  /* On a phone the outer pair carries it: one left, one right. */
+  .chapter--pinned-4 .chapter__pin--2,
+  .chapter--pinned-4 .chapter__pin--3 { display: none; }
+  .chapter--pinned-4 .chapter__pin--4 {
+    width: 40vw;
+    right: 5%;
+    top: 0;
+    transform: rotate(6deg);
+  }
+}
+
+/* --- Packages ------------------------------------------------------------
+   The price is the thing she wants seen: the figure large in the display
+   face, the cadence small beside it. The Signature gets a call-out box
+   like The Setup, in the color of its own tab, and the tab takes the
+   light pink she drew. The note under the cards keeps its line breaks. */
+#packages .block .price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding-block: 0.12em 0.2em;
+  line-height: 1;
+}
+.price__amount {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.5rem, 2.1rem + 0.9vw, 3rem);
+  line-height: 0.95;
+}
+#packages .block .cadence { font-size: var(--step--1); letter-spacing: 0.04em; }
+.block--featured-coral {
+  border-color: var(--coral);
+  box-shadow: inset 0 3px 0 0 var(--coral);
+}
+.block__tab--coral { background: var(--blush); color: var(--navy); }
+.packages__note-line { display: block; }
+
+/* --- Pin examples ----------------------------------------------------------
+   Her note: the lattice faded right back at the top so it stops competing
+   with the words, and brought in at the bottom where it fades up behind
+   the pins. */
+.act--lat-ends { --panel-lattice-opacity: 0.13; }
+.act--lat-ends::after {
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.38) 0, rgba(0, 0, 0, 0.3) 9%, transparent 24%, transparent 56%, #000 100%);
+          mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.38) 0, rgba(0, 0, 0, 0.3) 9%, transparent 24%, transparent 56%, #000 100%);
+}
+
+/* The row of pins could only be moved with a trackpad or a finger: a
+   mouse wheel scrolls the page, the scrollbar is hidden, and there was
+   nothing to click. Two arrows under the row, and the row can be
+   dragged with the mouse. */
+.strip-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+}
+.strip-nav .swipe-cue { margin: 0; }
+.strip-nav__buttons { display: none; gap: 0.5rem; margin-left: auto; }
+.act--overflowing .strip-nav__buttons { display: flex; }
+@media (hover: none) { .act--overflowing .strip-nav__buttons { display: none; } }
+.strip-nav__btn {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  font: inherit;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--navy);
+  background: transparent;
+  border: 1px solid var(--navy);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 220ms var(--ease-soft), color 220ms var(--ease-soft);
+}
+.strip-nav__btn:hover { background: var(--navy); color: #fff; }
+.strip-nav__btn[disabled] { opacity: 0.3; cursor: default; background: transparent; color: var(--navy); }
+@media (hover: hover) {
+  .act--overflowing .strip { cursor: grab; }
+  .act--overflowing .strip.is-dragging { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+  .strip img { -webkit-user-drag: none; user-select: none; }
+}
+
+/* --- Stats: "you need to know" in bold; the three figures on the band
+       in white, as she drew them --- */
+#pinterest-stats h2 .mark { font-weight: 700; }
+.stats__band .stat__value { color: #fff; }
+
+/* --- Questions: the button she asked for inside an answer --- */
+.faq__cta { margin: 0; padding-bottom: var(--sp-3); }
+
+/* --- Hook: her heading stacks as she drew it, no word left alone --- */
+#why-pinterest .statement { text-wrap: balance; }
+
+/* --- Contact: three paragraphs at one size, and the words sitting
+       right up against the box, as she drew it: the pair is centered on
+       the screen with a narrow gap between them --- */
+#contact .act__lead .lede { margin-bottom: var(--sp-3); font-size: clamp(1.1rem, 0.9rem + 0.55vw, 1.3rem); }
+#contact .act__lead h2 + .lede { margin-top: var(--sp-3); }
+#contact .act__lead h2,
+#contact .act__lead .lede { text-wrap: balance; }
+@media (min-width: 64rem) {
+  #contact .act__inner {
+    grid-template-columns: minmax(0, 33rem) minmax(0, 26rem);
+    justify-content: center;
+    column-gap: clamp(1.75rem, 3vw, 2.75rem);
+  }
+  #contact .act__lead p { max-width: none; }
+}
+
 /* --- Hero height steps -----------------------------------------------
    These sit after the mockup block on purpose: they have the same
    specificity as the hero rules above and must come later to win. A
@@ -1867,7 +2053,11 @@ summary::after { color: var(--navy); opacity: 0.65; }
   .act--hero h1 { font-size: clamp(2.2rem, 1rem + 2.6vw, 3.4rem); }
   #top .act__lead .lede:not(:last-of-type) { margin-bottom: 4px; }
   #top .act__lead .lede { font-size: var(--step-0); line-height: 1.5; }
-  #top .lede--ask { font-size: 1.6rem; }
+  /* Three classes deep on purpose: the paragraph rule above has the same
+     weight, and without this the two questions dropped to paragraph size
+     on a short screen. She wants them between the headline and the
+     paragraph. */
+  #top .act__lead .lede--ask { font-size: 1.6rem; line-height: 1.12; }
   #top .lede:not(.lede--ask) + .lede--ask { margin-top: var(--sp-2); }
 }
 /* A 1366x768 or 1280x720 laptop is the tightest real case. */
@@ -1875,7 +2065,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
   .act--hero { padding-block: 14px; }
   .act--hero h1 { font-size: clamp(1.9rem, 0.8rem + 2.1vw, 2.7rem); }
   #top .act__lead .lede:not(:last-of-type) { margin-bottom: 2px; }
-  #top .lede--ask { font-size: 1.3rem; }
+  #top .act__lead .lede--ask { font-size: 1.35rem; }
   #top .lede--ask:last-of-type { margin-bottom: var(--sp-2); }
   .act--hero .actions { margin-top: var(--sp-2); }
 }

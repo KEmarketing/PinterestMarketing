@@ -1,6 +1,9 @@
 ---
 import { resolveUrl } from '../../utils.mjs';
 const { data, bookingLabel } = Astro.props;
+/* Each line of the note is its own line on the page, so the second
+   sentence starts fresh instead of leaving one word stranded. */
+const noteLines = String(data.note ?? '').split(/\n+/).map((l) => l.trim()).filter(Boolean);
 ---
 <section class="act act--wide" id="packages">
   <div class="wrap act__inner">
@@ -16,11 +19,11 @@ const { data, bookingLabel } = Astro.props;
 
     <div class="stack">
       {data.items.map((p) => (
-        <article class:list={['block', p.featured && 'block--featured', p.tab && 'block--tabbed']}>
+        <article class:list={['block', p.featured && 'block--featured', p.featured && p.tabTone === 'coral' && 'block--featured-coral', p.tab && 'block--tabbed']}>
           {p.tab && <span class:list={['block__tab', p.tabTone === 'coral' && 'block__tab--coral']}>{p.tab}</span>}
           <h3>{p.name}</h3>
           <p class="price">
-            {p.price}
+            <span class="price__amount">{p.price}</span>
             {p.cadence && <span class="cadence"> {p.cadence}</span>}
           </p>
           {p.summary && <p>{p.summary}</p>}
@@ -35,6 +38,10 @@ const { data, bookingLabel } = Astro.props;
       <a class="btn" href={resolveUrl('BOOKING_URL')}>{data.ctaLabel ?? bookingLabel}</a>
     </div>
 
-    {data.note && <p class="packages__note">{data.note}</p>}
+    {noteLines.length > 0 && (
+      <p class="packages__note">
+        {noteLines.map((l) => <span class="packages__note-line">{l}</span>)}
+      </p>
+    )}
   </div>
 </section>

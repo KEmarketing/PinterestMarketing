@@ -4,7 +4,7 @@
    phone it is a swipe, which is also how Pinterest itself is read. */
 const { data } = Astro.props;
 ---
-<section class="act act--showcase act--lat-band-top" id="pin-examples">
+<section class="act act--showcase act--lat-ends" id="pin-examples">
   <div class="wrap act__inner">
     <h2>{data.heading}</h2>
   </div>
@@ -23,9 +23,17 @@ const { data } = Astro.props;
     ))}
   </div>
   <div class="wrap">
-    <p class="swipe-cue">
-      <span>Scroll to see more</span>
-      <span class="swipe-cue__arrow" aria-hidden="true">&rarr;</span>
-    </p>
+    <div class="strip-nav">
+      <p class="swipe-cue">
+        <span>Scroll to see more</span>
+        <span class="swipe-cue__arrow" aria-hidden="true">&rarr;</span>
+      </p>
+      {/* A mouse wheel only scrolls up and down, so on a desktop without
+          a trackpad there was no way to move the row. These do it. */}
+      <div class="strip-nav__buttons">
+        <button class="strip-nav__btn" type="button" data-strip-dir="-1" aria-label="Show earlier pin designs">&larr;</button>
+        <button class="strip-nav__btn" type="button" data-strip-dir="1" aria-label="Show more pin designs">&rarr;</button>
+      </div>
+    </div>
   </div>
 </section>

@@ -5,7 +5,8 @@ urlPath: "index"
 draft: false
 
 hero:
-  heading: "Great Pinterest marketing moves your audience from **inspiration to action**"
+  headingLead: "Pinterest Marketing:"
+  heading: "Moving your audience from **INSPIRATION** to **ACTION!**"
   subheading: |-
     The audience you're trying to reach is already on Pinterest searching for ideas, solutions, and products.
 
@@ -15,14 +16,11 @@ hero:
   cta:
     label: "Book a discovery call to know more"
     url: "BOOKING_URL"
-  secondaryCta:
-    label: "See the packages"
-    url: "#packages"
   image: "/images/hero-1.webp"
   imageAlt: "Kandace Emory working at her laptop"
 
 hook:
-  heading: "How I get you noticed on Pinterest!"
+  heading: "How to get noticed on Pinterest!"
   sub: "This is where I come in..."
   body: "I do the research to know what will get you seen. Then I work to create a strategic, data-driven Pinterest marketing system tailored to your brand which can:"
   bullets:
@@ -63,19 +61,24 @@ packages:
   heading: "Packages"
   intro: "All packages can be tailored to meet your custom marketing needs."
   ctaLabel: "Book a discovery call to get started!"
-  note: "*Services including scheduled posts are all done through Tailwind. Clients required to set up their own account with Tailwind."
+  note: |-
+    *Services including scheduled posts are all done through Tailwind.
+    Clients required to set up their own account with Tailwind.
   items:
-    - name: "The Audit"
-      price: "$99"
+    - name: "The Setup"
+      price: "$699"
       cadence: "one time"
-      summary: "Best if you'd like a full analysis of your Pinterest account to see what's working and needs improvement before you spend anything else."
+      summary: "Start here if you don't have a Pinterest business account and you want it built right from the beginning."
       features:
-        - "45 to 60 minute recorded analysis of your full Pinterest account"
-        - "Recording is yours to keep"
-        - "Written recommendations with action steps"
-        - "Two weeks of email support while you implement"
-        - "30 minute follow-up call at the end"
-      featured: false
+        - "Support confirming your domain"
+        - "In-depth keyword research for your brand and niche"
+        - "Full profile and bio optimization with call to action"
+        - "10 to 15 boards created and optimized"
+        - "Five branded pin templates"
+        - "30 days of fresh pins created and scheduled*"
+        - "First month analytics review with insights and recommendations"
+      featured: true
+      tab: "New to Pinterest"
     - name: "The Clean Up"
       price: "$629"
       cadence: "one time"
@@ -95,29 +98,25 @@ packages:
       cadence: "monthly"
       tab: "Management"
       tabTone: "coral"
-      summary: "Monthly marketing and Pinterest maintenance simply handled for you. No minimum commitment, though I do recommend giving this 3 to 4 months to see best results from your Pinterest marketing strategy."
+      summary: "All your Pinterest marketing and management simply handled for you! (I always recommend 3-4 months to see best results.)"
       features:
         - "Everything in the Setup package ongoing monthly, plus:"
         - "30 fresh pins created and scheduled monthly"
         - "6 to 8 video pins where they suit your content"
         - "Monthly Pinterest and Google analytics reporting"
         - "Ongoing trend recommendations"
-      featured: false
-
-    - name: "The Setup"
-      price: "$699"
-      cadence: "one time"
-      summary: "Start here if you don't have a Pinterest business account and you want it built right from the beginning."
-      features:
-        - "Support confirming your domain"
-        - "In-depth keyword research for your brand and niche"
-        - "Full profile and bio optimization with call to action"
-        - "10 to 15 boards created and optimized"
-        - "Five branded pin templates"
-        - "30 days of fresh pins created and scheduled*"
-        - "First month analytics review with insights and recommendations"
       featured: true
-      tab: "New to Pinterest"
+    - name: "The Audit"
+      price: "$99"
+      cadence: "one time"
+      summary: "Best if you'd like a full analysis of your Pinterest account to see what is working and what needs improvement."
+      features:
+        - "45 to 60 minute recorded analysis of your full Pinterest account"
+        - "Recording is yours to keep"
+        - "Written recommendations with action steps"
+        - "Two weeks of email support while you implement"
+        - "30 minute follow-up call at the end"
+      featured: false
 work:
   heading: "Pin examples"
   intro: "Pin templates and designs are always customized to your brand and optimized for best performance on Pinterest."
@@ -164,7 +163,7 @@ testimonials:
       imageAlt: "Michelle Leek"
 
 process:
-  heading: "This is where it starts!"
+  heading: "Success Starts Here"
   ctaLabel: "Book a discovery call"
   steps:
     - heading: "Discovery Call"
@@ -177,6 +176,9 @@ process:
 faq:
   heading: "Questions"
   items:
+    - question: "Can you take on ALL my Pinterest management and marketing needs?"
+      answer: "Yes, that's exactly what I do. As a Pinterest manager I handle everything from profile setup and optimization, to building out your boards and descriptions, creating and scheduling all your pins, managing analytics and trend reports, and so much more!"
+      ctaLabel: "Book a free discovery call to learn more!"
     - question: "What do I need in place before we start?"
       answer: "Preferably a website or a platform with something on it worth sending people to: products, blog posts, digital products or listings."
     - question: "How long until I see results with my Pinterest?"
@@ -185,8 +187,6 @@ faq:
       answer: "No, I offer month to month contracts, or we can tailor a contract to span over a period of time that makes sense for you and your business marketing goals."
     - question: "Do you offer paid-ad marketing strategies?"
       answer: "Possibly in the future, but as of right now I use organic marketing methods for all my Pinterest marketing services."
-    - question: "Can you take on ALL my Pinterest management and marketing needs?"
-      answer: "Yes, that's exactly what I do. As a Pinterest manager I handle everything from profile setup and optimization, to building out your boards and descriptions, creating and scheduling all your pins, managing analytics and trend reports, and so much more. Book a free discovery call to learn more!"
 
 stats:
   heading: "Pinterest stats **you need to know**"
@@ -211,13 +211,23 @@ stats:
 chapters:
   - line: "Is Pinterest marketing right for you?"
     sub: "Keep scrolling to know for sure."
+    pins:
+      - "/images/pin-1.webp"
+      - "/images/pin-6.webp"
+      - "/images/pin-3.webp"
+      - "/images/pin-4.webp"
   - line: "How do you get started?"
-    sub: "Whether you're new to Pinterest or have an existing profile, it all starts here: **Three steps, and the first one is a conversation.**"
+    sub: "Whether you're new to Pinterest or have an existing profile, it all starts here:"
   - line: "Packages and pricing"
-    sub: "Upfront pricing, no pressure sales and no long-term contracts."
+    sub: |-
+      Upfront pricing
+      No pressure sales
+      No long-term contracts
 
 signup:
+  show: true
   url: ""
+  headerLabel: "Join my email list"
   buttonLabel: "Keep me in the loop"
 
 contact:

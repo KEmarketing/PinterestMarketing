@@ -19,6 +19,8 @@ const pages = defineCollection({
 
     /* --- hero --- */
     hero: z.object({
+      /* an optional first line, set darker and on its own line */
+      headingLead: z.string().optional(),
       heading: z.string(),
       subheading: z.string(),
       cta: linkGroup,
@@ -129,25 +131,34 @@ const pages = defineCollection({
     /* --- faq --- */
     faq: z.object({
       heading: z.string(),
-      items: z.array(z.object({ question: z.string(), answer: z.string() })).default([]),
+      items: z.array(z.object({
+        question: z.string(),
+        answer: z.string(),
+        /* optional booking button under the answer */
+        ctaLabel: z.string().optional(),
+      })).default([]),
     }),
 
     /* --- chapter breaks between acts --- */
     chapters: z.array(z.object({
       line: z.string(),
       sub: z.string().optional(),
+      /* pin designs shown either side of the line: two or four */
+      pins: z.array(z.string()).default([]),
     })).default([]),
 
     /* --- email signup ---
        Her closing screen is the email list invitation. The words for it
-       live in `closing`; this group holds only the link and the button
-       text. The button renders only when `url` holds something, so the
-       screen is complete while she is still choosing an email platform
-       and the button appears the moment a link is pasted in. It is a
-       link out, not a wired integration, so any platform that gives her
-       a hosted signup page works. */
+       live in `closing`; this group holds the switch, the link and the
+       button text. `show` turns both email list buttons on or off, so
+       they can stay hidden until she has picked an email platform. It
+       is a link out, not a wired integration, so any platform that
+       gives her a hosted signup page works. */
     signup: z.object({
+      /* one switch for both email list buttons (header and last screen) */
+      show: z.boolean().default(true),
       url: z.string().optional(),
+      headerLabel: z.string().optional(),
       buttonLabel: z.string().optional(),
     }).optional(),
 

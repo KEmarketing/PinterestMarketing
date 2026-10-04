@@ -45,10 +45,11 @@ const chapter = (i) => d.chapters?.[i];
   <Hook data={d.hook} />
   <Explainer data={d.explainer} />
 
-  {/* The first break carries two of her pins. Just the one break: the
-      point is a burst of her own colour, and three of them would be a
-      pattern rather than a moment. */}
-  {chapter(0) && <Chapter data={chapter(0)} pins={(d.work?.images ?? []).filter((_, i) => i === 0 || i === 3)} />}
+  {/* The first break carries her pins, two a side as she drew it. Just
+      the one break: the point is a burst of her own color, and three of
+      them would be a pattern rather than a moment. Which pins is a list
+      on the break itself in the CMS. */}
+  {chapter(0) && <Chapter data={chapter(0)} />}
 
   {/* ACT TWO: is this you */}
   <WhoFor data={d.whoFor} />

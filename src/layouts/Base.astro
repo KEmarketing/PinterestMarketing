@@ -7,6 +7,17 @@ import '../styles/components.css';
 const { title, description, page, path = '/' } = Astro.props;
 const canonical = new URL(path, SITE.url).href;
 
+/* The email list. One switch in the CMS shows or hides both buttons
+   (this one and the one on the last screen). With the switch on and no
+   link pasted in yet, this button scrolls to the email list screen at
+   the bottom of the page; once there is a link it opens that instead. */
+const signup = page?.signup ?? {};
+const signupOn = signup.show !== false;
+const signupUrl = String(signup.url ?? '').trim();
+const signupHref = signupUrl || '#book';
+const signupAttrs = signupUrl ? { target: '_blank', rel: 'noopener' } : {};
+const signupHeaderLabel = String(signup.headerLabel ?? '').trim() || 'Join my email list';
+
 /* ---------------------------------------------------------------
    Structured data. This is the bulk of the AEO/GEO work: answer
    engines lean on it heavily, and it costs nothing to serve.
@@ -117,20 +128,26 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
-      <div class="wrap">
-        {/* Her actual logo, lifted off its white background so the paper
-            shows through. It already contains her name, so there is no
-            wordmark set beside it: the accessible name carries it instead. */}
+      <div class="wrap site-header__bar">
+        {/* Her layout: three links, the logo in the middle, two links and
+            the email list button. The logo is first in the markup so it
+            leads on a phone, where the bar stacks. */}
         <a class="wordmark" href="/" aria-label={`${SITE.name}, back to top`}>
-          <img class="wordmark__mark" src="/marks/logo-ke-wordmark.webp" alt={SITE.name} width="536" height="206" />
+          <img class="wordmark__mark" src="/marks/logo-ke-horizontal.webp" alt={SITE.name} width="1040" height="160" />
         </a>
 
-        <nav class="site-nav" aria-label="Sections of this page">
+        <nav class="site-nav site-nav--left" aria-label="Sections of this page">
           <a href="#how-pinterest-works">Why Pinterest</a>
           <a href="#packages">Services</a>
           <a href="#pin-examples">Portfolio</a>
+        </nav>
+
+        <nav class="site-nav site-nav--right" aria-label="More sections of this page">
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
+          {signupOn && (
+            <a class="site-nav__join" href={signupHref} {...signupAttrs}>{signupHeaderLabel}</a>
+          )}
         </nav>
       </div>
     </header>
@@ -273,6 +290,57 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
         window.addEventListener('resize', check);
         window.addEventListener('load', check);
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(check);
+      })();
+    </script>
+
+    <script is:inline>
+      /* Moving a sideways row with a mouse. A wheel scrolls the page, not
+         the row, and the row hides its scrollbar, so on a desktop with a
+         plain mouse the pins past the edge could not be reached at all.
+         The two arrows under the row move it most of a screen at a time,
+         and the row can be dragged. Touch and trackpads are untouched. */
+      (function () {
+        var buttons = document.querySelectorAll('.strip-nav__btn');
+        for (var i = 0; i < buttons.length; i++) {
+          (function (btn) {
+            var act = btn.closest('.act');
+            var row = act && act.querySelector('.strip');
+            if (!row) return;
+            var dir = Number(btn.getAttribute('data-strip-dir')) || 1;
+            btn.addEventListener('click', function () {
+              row.scrollBy({ left: dir * row.clientWidth * 0.7, behavior: 'smooth' });
+            });
+            function state() {
+              var max = row.scrollWidth - row.clientWidth;
+              btn.disabled = dir < 0 ? row.scrollLeft <= 2 : row.scrollLeft >= max - 2;
+            }
+            row.addEventListener('scroll', state, { passive: true });
+            window.addEventListener('resize', state);
+            window.addEventListener('load', state);
+            state();
+          })(buttons[i]);
+        }
+
+        var rows = document.querySelectorAll('.strip');
+        for (var j = 0; j < rows.length; j++) {
+          (function (row) {
+            var startX = 0, startLeft = 0, down = false;
+            row.addEventListener('pointerdown', function (e) {
+              if (e.pointerType !== 'mouse' || e.button !== 0) return;
+              if (row.scrollWidth <= row.clientWidth + 4) return;
+              down = true; startX = e.clientX; startLeft = row.scrollLeft;
+            });
+            window.addEventListener('pointermove', function (e) {
+              if (!down) return;
+              var dx = e.clientX - startX;
+              if (Math.abs(dx) > 3) row.classList.add('is-dragging');
+              row.scrollLeft = startLeft - dx;
+            });
+            function end() { down = false; row.classList.remove('is-dragging'); }
+            window.addEventListener('pointerup', end);
+            window.addEventListener('pointercancel', end);
+          })(rows[j]);
+        }
       })();
     </script>
 

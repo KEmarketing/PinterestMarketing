@@ -10,15 +10,23 @@
    the holder becomes a real row in the panel's grid and it has to land
    underneath the copy. */
 import { emphasise } from '../../utils.mjs';
-const { data, pins = [] } = Astro.props;
+const { data } = Astro.props;
+const pins = data.pins ?? [];
+/* A small line typed on several lines stays on several lines: her
+   packages break stacks three short promises. */
+const subLines = String(data.sub ?? '').split(/\n+/).map((l) => l.trim()).filter(Boolean);
 ---
-<div class:list={['chapter', pins.length > 0 && 'chapter--pinned']}>
+<div class:list={['chapter', pins.length > 0 && 'chapter--pinned', pins.length > 2 && 'chapter--pinned-4', subLines.length > 1 && 'chapter--stacked']}>
   <p class="chapter__line" set:html={emphasise(data.line)} />
-  {data.sub && <p class="chapter__sub" set:html={emphasise(data.sub)} />}
+  {subLines.length > 0 && (
+    <p class="chapter__sub">
+      {subLines.map((l) => <span class="chapter__sub-line" set:html={emphasise(l)} />)}
+    </p>
+  )}
   {pins.length > 0 && (
     <div class="chapter__pins" aria-hidden="true">
       {pins.map((p, i) => (
-        <img class={`chapter__pin chapter__pin--${i + 1}`} src={p.src} alt="" width="400" height="600" loading="lazy" />
+        <img class={`chapter__pin chapter__pin--${i + 1}`} src={p} alt="" width="400" height="600" loading="lazy" />
       ))}
     </div>
   )}

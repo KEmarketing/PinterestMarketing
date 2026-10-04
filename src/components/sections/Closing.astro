@@ -2,8 +2,10 @@
 import Fronds from '../Fronds.astro';
 const { data, signup } = Astro.props;
 const paras = String(data.body ?? '').split(/\n\s*\n/).filter(Boolean);
-/* The button is the email list signup. No link in the CMS yet, no
-   button: her words stand on their own until she pastes one in. */
+/* The button is the email list signup. One switch in the CMS shows or
+   hides it (and the one in the header). It is built and waiting for her
+   link: until one is pasted in it has nowhere to go, so it stays put. */
+const on = signup?.show !== false;
 const url = String(signup?.url ?? '').trim();
 const label = String(signup?.buttonLabel ?? '').trim() || 'Keep me in the loop';
 ---
@@ -14,9 +16,11 @@ const label = String(signup?.buttonLabel ?? '').trim() || 'Keep me in the loop';
   <div class="wrap act__inner">
     <h2 class="statement">{data.heading}</h2>
     {paras.map((para) => <p class="statement__body">{para}</p>)}
-    {url && (
+    {on && (
       <div class="actions">
-        <a class="btn btn--mint btn--caps" href={url} target="_blank" rel="noopener">{label}</a>
+        {url
+          ? <a class="btn btn--mint btn--caps" href={url} target="_blank" rel="noopener">{label}</a>
+          : <a class="btn btn--mint btn--caps" href="#book">{label}</a>}
       </div>
     )}
     {data.signoff && <p class="closing__signoff">{data.signoff}</p>}

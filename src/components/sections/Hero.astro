@@ -15,7 +15,12 @@ const isAsk = (p) => /\?\s*$/.test(p);
   <Fronds corner="br" scale={4.0} tone="deep" opacity={0.55} delay={1.1} />
   <div class="wrap act__inner">
     <div class="act__lead">
-      <h1 set:html={emphasise(data.heading)} />
+      {/* Her headline opens with a short first line in the deeper ink,
+          on a line of its own, then the statement. */}
+      <h1>
+        {data.headingLead && <span class="h1__lead">{data.headingLead}</span>}
+        <span set:html={emphasise(data.heading)} />
+      </h1>
       {lede.map((para) => <p class:list={['lede', isAsk(para) && 'lede--ask']}>{para}</p>)}
       <div class="actions">
         <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>

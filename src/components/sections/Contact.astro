@@ -7,8 +7,8 @@ const { data } = Astro.props;
   <div class="wrap act__inner">
     <div class="act__lead">
       <h2>{data.heading}</h2>
-      {String(data.body ?? '').split(/\n\s*\n/).filter(Boolean).map((para, i) => (
-        <p class={i === 0 ? 'lede' : undefined}>{para}</p>
+      {String(data.body ?? '').split(/\n\s*\n/).filter(Boolean).map((para) => (
+        <p class="lede">{para}</p>
       ))}
     </div>
     <div class="act__body">

@@ -20,6 +20,7 @@ content:
         label: Top of the page
         type: object
         fields:
+          - { name: headingLead, label: "First line of the headline (darker, on its own line)", type: string }
           - { name: heading, label: Headline, type: string }
           - { name: subheading, label: Supporting line, type: text }
           - name: cta
@@ -77,7 +78,7 @@ content:
           - { name: heading, label: Heading, type: string }
           - { name: intro, label: Intro line, type: text }
           - { name: ctaLabel, label: Button text, type: string }
-          - { name: note, label: Note under the packages, type: text }
+          - { name: note, label: Note under the packages, type: text, description: "Each line you type here shows as its own line." }
           - name: items
             label: Package
             type: object
@@ -177,6 +178,7 @@ content:
             fields:
               - { name: question, label: Question, type: string }
               - { name: answer, label: Answer, type: text }
+              - { name: ctaLabel, label: "Booking button under the answer (leave empty for none)", type: string }
 
       - name: chapters
         label: Chapter breaks
@@ -185,18 +187,21 @@ content:
         description: "The short full-width moments between sections. Three of them."
         fields:
           - { name: line, label: Big line, type: string }
-          - { name: sub, label: Small line under it, type: string }
+          - { name: sub, label: Small line under it, type: text, description: "Each line you type here shows as its own line." }
+          - { name: pins, label: "Pin designs beside the line (two or four)", type: image, list: true }
 
       - name: signup
         label: Email list button
         type: object
-        description: "The last screen of the page invites people onto your email list. Paste your signup link below and the button appears there. While it is empty the words show but there is no button."
+        description: "Your email list has two buttons: one at the top of every screen and one on the last screen. The switch below shows or hides both. Paste your signup link in when you have one."
         fields:
+          - { name: show, label: Show the email list buttons, type: boolean, default: true, description: "Turn this off to hide both buttons until your email list is ready." }
           - name: url
             label: Signup link
             type: string
             description: "The web address of the signup page from your email platform. It has to be a page people can open, not embed code."
-          - { name: buttonLabel, label: Button text, type: string }
+          - { name: headerLabel, label: Button text at the top of the page, type: string }
+          - { name: buttonLabel, label: Button text on the last screen, type: string }
 
       - name: contact
         label: Contact
