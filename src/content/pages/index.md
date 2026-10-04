@@ -14,7 +14,7 @@ hero:
 
     And if you are, are you getting noticed?
   cta:
-    label: "Book a discovery call to know more"
+    label: "Book a discovery call to know more!"
     url: "BOOKING_URL"
   image: "/images/hero-1.webp"
   imageAlt: "Kandace Emory working at her laptop"

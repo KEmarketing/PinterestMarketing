@@ -24,7 +24,6 @@ const pages = defineCollection({
       heading: z.string(),
       subheading: z.string(),
       cta: linkGroup,
-      secondaryCta: linkGroup.optional(),
       image: z.string().optional(),
       imageAlt: z.string().optional(),
     }),

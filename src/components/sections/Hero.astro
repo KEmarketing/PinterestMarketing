@@ -24,9 +24,6 @@ const isAsk = (p) => /\?\s*$/.test(p);
       {lede.map((para) => <p class:list={['lede', isAsk(para) && 'lede--ask']}>{para}</p>)}
       <div class="actions">
         <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
-        {data.secondaryCta && (
-          <a class="btn" href={resolveUrl(data.secondaryCta.url)}>{data.secondaryCta.label}</a>
-        )}
       </div>
     </div>
     {data.image && (

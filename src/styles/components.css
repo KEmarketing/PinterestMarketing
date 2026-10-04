@@ -2043,39 +2043,47 @@ summary::after { color: var(--navy); opacity: 0.65; }
   #contact .act__lead p { max-width: none; }
 }
 
-/* --- Hero height steps -----------------------------------------------
-   These sit after the mockup block on purpose: they have the same
-   specificity as the hero rules above and must come later to win. A
-   short laptop screen brings the headline, the lede and the question
-   pair down a step each so the buttons stay above the fold. */
-@media (min-width: 64rem) and (max-height: 960px) {
-  .act--hero { padding-block: clamp(var(--sp-3), 3.4vh, var(--sp-5)); }
-  .act--hero .act__lead h1 + .lede { margin-top: var(--sp-2); }
-  .act--hero .act__lead .lede { margin-bottom: var(--sp-2); }
-  .act--hero .actions { margin-top: var(--sp-3); }
+/* --- Hero, to her mockup ----------------------------------------------
+   Measured off her Canva file (1610 px wide) and expressed in vw, so the
+   hero keeps her proportions at every desktop width. Headline on four
+   lines at a 95px pitch across 52% of the screen; lede at 26px with her
+   open leading; the question pair at 53px; buttons 65px tall; the photo
+   36% wide at 3:4. No height step: on a short laptop the
+   hero is taller than the window and holds at the bottom until it has
+   been read, which is her layout. */
+@media (min-width: 64rem) {
+  .act--hero { padding: 3.1vw 0 5.8vw; min-height: 0; }
+  .act--hero .act__inner {
+    max-width: none;
+    padding-inline: 3.2vw 5.6vw;
+    grid-template-columns: 52.7fr 36.3fr;
+    column-gap: 2.2vw;
+    align-items: start;
+  }
+  .act--hero h1 {
+    font-size: 5.9vw;
+    line-height: 1.0;
+    margin: 0 0 2.6vw;
+    max-width: none;
+  }
+  .act--hero .act__lead h1 + .lede { margin-top: 0; }
+  #top .act__lead .lede:not(.lede--ask) {
+    font-size: 1.6vw;
+    line-height: 1.72;
+    max-width: 37.5vw;
+    margin: 0 0 2.9vw;
+  }
+  #top .lede:not(.lede--ask) + .lede--ask { margin-top: 0; }
+  #top .act__lead .lede--ask {
+    font-size: 3.3vw;
+    line-height: 1.26;
+    margin: 0;
+  }
+  #top .lede--ask + .lede--ask { margin-top: 0; }
+  #top .act__lead .lede--ask:last-of-type { margin-bottom: 0; }
+  .act--hero .actions { margin-top: 5.3vw; gap: 1.5vw; }
+  .act--hero .btn { font-size: 1.3vw; padding: 0.9vw 2.6vw; }
+  .act--hero .act__figure { align-self: start; margin-top: 1.2vw; }
+  .act--hero .act__figure .arch { width: 100%; max-width: none; }
+  .act--hero .act__figure .headshot { aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 20%; }
 }
-@media (min-width: 64rem) and (max-height: 880px) {
-  .act--hero h1 { font-size: clamp(2.5rem, 1.1rem + 3vw, 4rem); }
-}
-@media (min-width: 64rem) and (max-height: 820px) {
-  .act--hero { padding-block: var(--sp-3); }
-  .act--hero h1 { font-size: clamp(2.2rem, 1rem + 2.6vw, 3.4rem); }
-  #top .act__lead .lede:not(:last-of-type) { margin-bottom: 4px; }
-  #top .act__lead .lede { font-size: var(--step-0); line-height: 1.5; }
-  /* Three classes deep on purpose: the paragraph rule above has the same
-     weight, and without this the two questions dropped to paragraph size
-     on a short screen. She wants them between the headline and the
-     paragraph. */
-  #top .act__lead .lede--ask { font-size: 1.6rem; line-height: 1.12; }
-  #top .lede:not(.lede--ask) + .lede--ask { margin-top: var(--sp-2); }
-}
-/* A 1366x768 or 1280x720 laptop is the tightest real case. */
-@media (min-width: 64rem) and (max-height: 780px) {
-  .act--hero { padding-block: 14px; }
-  .act--hero h1 { font-size: clamp(1.9rem, 0.8rem + 2.1vw, 2.7rem); }
-  #top .act__lead .lede:not(:last-of-type) { margin-bottom: 2px; }
-  #top .act__lead .lede--ask { font-size: 1.35rem; }
-  #top .lede--ask:last-of-type { margin-bottom: var(--sp-2); }
-  .act--hero .actions { margin-top: var(--sp-2); }
-}
-

@@ -29,12 +29,6 @@ content:
             fields:
               - { name: label, label: Button text, type: string }
               - { name: url, label: Button link, type: string, description: "Type BOOKING_URL to use your Acuity link." }
-          - name: secondaryCta
-            label: Second button (optional)
-            type: object
-            fields:
-              - { name: label, label: Button text, type: string }
-              - { name: url, label: Button link, type: string }
           - { name: image, label: Photo, type: image }
           - { name: imageAlt, label: Photo description, type: string }
 
