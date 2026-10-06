@@ -1643,15 +1643,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
   padding-bottom: 0.3em;
   border-bottom: 0;
   margin-bottom: var(--sp-3);
-  /* her note: a lighter cream or white here. White alone is 1.5:1 on the
-     mint, so the letters carry a soft navy edge that keeps them legible
-     without going back to a dark line. */
-  color: #fff;
-  text-shadow:
-    0 0 1px var(--navy),
-    0 0 2px var(--navy),
-    0 0 3px rgba(69, 95, 118, 0.9),
-    0 1px 7px rgba(69, 95, 118, 0.45);
+  /* tried in white per her note; too faint on the mint, so it stays navy */
 }
 /* the rule runs wider than the words, as she drew it */
 #why-pinterest .statement__sub::after {
@@ -1660,7 +1652,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
   left: -16%; right: -16%; bottom: 0;
   height: 2px;
   background: #fff;
-  box-shadow: 0 0 2px var(--navy), 0 1px 5px rgba(69, 95, 118, 0.45);
+  box-shadow: 0 1px 3px rgba(69, 95, 118, 0.35);
 }
 .act--centred .statement__body { font-size: var(--step-1); font-weight: 400; max-width: 68ch; text-wrap: balance; margin-bottom: var(--sp-3); color: var(--ink); }
 .act--centred .statement__list { gap: 0.6rem; align-items: center; margin-top: 0; max-width: none; }
