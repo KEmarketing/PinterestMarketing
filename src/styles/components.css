@@ -2043,51 +2043,71 @@ summary::after { color: var(--navy); opacity: 0.65; }
   #contact .act__lead p { max-width: none; }
 }
 
-/* --- Hero, to her mockup ----------------------------------------------
-   Measured off her Canva file (1610 x 977) and expressed in one unit,
-   --hu, which is 1% of the screen width until the screen is too short
-   for the layout, and then shrinks so the whole hero fits between the
-   header and the bottom of the window. The proportions never change;
-   the block scales as one piece and sits centered. */
+/* --- Hero, to her mockup, fitted to the window -------------------------
+   Her Canva file (1610 x 977) sets the proportions of the type: headline
+   5.9 units, lede 1.6, the question pair 3.3, button 1.3, with the
+   headline column 52.7 units wide. Three things decide the unit here:
+
+   1. The photo is sized by the window: it stands the full height below
+      the header less 5% breathing room top and bottom, at her 3:4, and
+      never wider than 34% of the screen.
+   2. The text takes the width that is left, and the unit is the larger
+      type that still fits that width at her 52.7-unit measure AND fits
+      the height with the words alone (about 49 units of type).
+   3. Her gaps between the blocks take whatever height is left over,
+      between a quarter of her gaps and all of them, so on a short
+      window the whitespace closes up before the type shrinks, but the
+      blocks never touch.
+
+   The result reads like her mockup, is as large as the window allows,
+   and the whole hero sits inside the first screen. */
 @media (min-width: 64rem) {
   .act--hero {
-    /* her layout is about 65 units tall; 66 leaves a hair of slack for line rounding */
-    --hu: min(1vw, calc((100svh - var(--header-h, 98px)) / 66));
-    padding: calc(3.1 * var(--hu)) 0 calc(5.8 * var(--hu));
-    min-height: calc(100svh - var(--header-h, 98px));
+    --avail: calc(100svh - var(--header-h, 98px));
+    --pad: calc(var(--avail) * 0.05);
+    --room: calc(var(--avail) - 2 * var(--pad));
+    --pw: min(calc(var(--room) * 0.75), 34vw);
+    --colw: calc(92vw - var(--pw));
+    /* 66 rather than her 52.7 across: her headline line "inspiration to
+       action" is lowercase, Kandace's "from INSPIRATION" is caps and
+       wider, and this keeps it to four lines like hers. */
+    --tu: min(calc(var(--colw) / 66), calc(var(--room) / 52));
+    /* the height left for gaps once the type is placed, capped at her gaps */
+    --slack: clamp(calc(5 * var(--tu)), calc(var(--room) - 49 * var(--tu)), calc(19.7 * var(--tu)));
+    padding: var(--pad) 0;
+    min-height: var(--avail);
   }
   .act--hero .act__inner {
-    max-width: calc(100 * var(--hu));
-    margin-inline: auto;
-    padding-inline: calc(3.2 * var(--hu)) calc(5.6 * var(--hu));
-    grid-template-columns: 52.7fr 36.3fr;
-    column-gap: calc(2.2 * var(--hu));
-    align-items: start;
+    max-width: none;
+    padding-inline: 4vw;
+    grid-template-columns: minmax(0, 1fr) var(--pw);
+    column-gap: 4vw;
+    align-items: center;
   }
   .act--hero h1 {
-    font-size: calc(5.9 * var(--hu));
+    font-size: calc(5.9 * var(--tu));
     line-height: 1.0;
-    margin: 0 0 calc(2.6 * var(--hu));
+    margin: 0 0 calc(var(--slack) * 2.6 / 19.7);
     max-width: none;
   }
   .act--hero .act__lead h1 + .lede { margin-top: 0; }
   #top .act__lead .lede:not(.lede--ask) {
-    font-size: calc(1.6 * var(--hu));
+    font-size: calc(1.6 * var(--tu));
     line-height: 1.72;
-    max-width: calc(37.5 * var(--hu));
-    margin: 0 0 calc(2.9 * var(--hu));
+    max-width: calc(37.5 * var(--tu));
+    margin: 0 0 calc(var(--slack) * 2.9 / 19.7);
   }
   #top .lede:not(.lede--ask) + .lede--ask { margin-top: 0; }
   #top .act__lead .lede--ask {
-    font-size: calc(3.3 * var(--hu));
+    font-size: calc(3.3 * var(--tu));
     line-height: 1.26;
     margin: 0;
   }
   #top .lede--ask + .lede--ask { margin-top: 0; }
   #top .act__lead .lede--ask:last-of-type { margin-bottom: 0; }
-  .act--hero .actions { margin-top: calc(5.3 * var(--hu)); gap: calc(1.5 * var(--hu)); }
-  .act--hero .btn { font-size: calc(1.3 * var(--hu)); padding: calc(0.9 * var(--hu)) calc(2.6 * var(--hu)); }
-  .act--hero .act__figure { align-self: start; margin-top: calc(1.2 * var(--hu)); }
-  .act--hero .act__figure .arch { width: 100%; max-width: none; }
+  .act--hero .actions { margin-top: calc(var(--slack) * 5.3 / 19.7); gap: calc(1.5 * var(--tu)); }
+  .act--hero .btn { font-size: calc(1.3 * var(--tu)); padding: calc(0.9 * var(--tu)) calc(2.6 * var(--tu)); }
+  .act--hero .act__figure { align-self: center; margin: 0; }
+  .act--hero .act__figure .arch { width: var(--pw); max-width: none; }
   .act--hero .act__figure .headshot { aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 20%; }
 }
