@@ -2048,16 +2048,17 @@ summary::after { color: var(--navy); opacity: 0.65; }
    5.9 units, lede 1.6, the question pair 3.3, button 1.3, with the
    headline column 52.7 units wide. Three things decide the unit here:
 
-   1. The photo is sized by the window: it stands the full height below
-      the header less 5% breathing room top and bottom, at her 3:4, and
+   1. The photo is sized by the window: a little shorter than the text,
+      as in her file, centered on it, at her 3:4, and
       never wider than 34% of the screen.
    2. The text takes the width that is left, and the unit is the larger
       type that still fits that width at her 52.7-unit measure AND fits
       the height with the words alone (about 49 units of type).
-   3. Her gaps between the blocks take whatever height is left over,
-      between a quarter of her gaps and all of them, so on a short
-      window the whitespace closes up before the type shrinks, but the
-      blocks never touch.
+   3. The text runs the full height of the room, headline at the top
+      and button at the bottom, and her gaps between the blocks take
+      the height left over (never less than a quarter of her gaps), so
+      on a short window the whitespace closes up before the type
+      shrinks, and the blocks never touch.
 
    The result reads like her mockup, is as large as the window allows,
    and the whole hero sits inside the first screen. */
@@ -2066,14 +2067,16 @@ summary::after { color: var(--navy); opacity: 0.65; }
     --avail: calc(100svh - var(--header-h, 98px));
     --pad: calc(var(--avail) * 0.05);
     --room: calc(var(--avail) - 2 * var(--pad));
-    --pw: min(calc(var(--room) * 0.75), 34vw);
+    /* the photo stands a little shorter than the text, as in her file */
+    --ph: calc(var(--room) * 0.92);
+    --pw: min(calc(var(--ph) * 0.75), 34vw);
     --colw: calc(92vw - var(--pw));
     /* 66 rather than her 52.7 across: her headline line "inspiration to
        action" is lowercase, Kandace's "from INSPIRATION" is caps and
        wider, and this keeps it to four lines like hers. */
-    --tu: min(calc(var(--colw) / 66), calc(var(--room) / 52));
+    --tu: min(calc(var(--colw) / 66), calc(var(--room) / 54));
     /* the height left for gaps once the type is placed, capped at her gaps */
-    --slack: clamp(calc(5 * var(--tu)), calc(var(--room) - 49 * var(--tu)), calc(19.7 * var(--tu)));
+    --slack: calc(5 * var(--tu)); /* the floor: a quarter of her gaps; the rest is shared below */
     padding: var(--pad) 0;
     min-height: var(--avail);
   }
@@ -2091,6 +2094,13 @@ summary::after { color: var(--navy); opacity: 0.65; }
     max-width: none;
   }
   .act--hero .act__lead h1 + .lede { margin-top: 0; }
+  /* the text runs the full height of the room: headline at the top,
+     button at the bottom, her gaps between */
+  .act--hero .act__lead { display: flex; flex-direction: column; min-height: var(--room); }
+  /* leftover height is shared out in her ratios, 2.6 : 2.9 : 5.3 */
+  .act--hero h1 { flex: 2.6 0 auto; }
+  #top .act__lead .lede:not(.lede--ask) { flex: 2.9 0 auto; }
+  #top .act__lead .lede--ask:last-of-type { flex: 5.3 0 auto; }
   #top .act__lead .lede:not(.lede--ask) {
     font-size: calc(1.6 * var(--tu));
     line-height: 1.72;
@@ -2104,8 +2114,8 @@ summary::after { color: var(--navy); opacity: 0.65; }
     margin: 0;
   }
   #top .lede--ask + .lede--ask { margin-top: 0; }
-  #top .act__lead .lede--ask:last-of-type { margin-bottom: 0; }
-  .act--hero .actions { margin-top: calc(var(--slack) * 5.3 / 19.7); gap: calc(1.5 * var(--tu)); }
+  #top .act__lead .lede--ask:last-of-type { margin-bottom: calc(var(--slack) * 5.3 / 19.7); }
+  .act--hero .actions { margin-top: 0; gap: calc(1.5 * var(--tu)); }
   .act--hero .btn { font-size: calc(1.3 * var(--tu)); padding: calc(0.9 * var(--tu)) calc(2.6 * var(--tu)); }
   .act--hero .act__figure { align-self: center; margin: 0; }
   .act--hero .act__figure .arch { width: var(--pw); max-width: none; }
