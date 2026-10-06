@@ -2104,10 +2104,12 @@ summary::after { color: var(--navy); opacity: 0.65; }
   /* the text runs the full height of the room: headline at the top,
      button at the bottom, her gaps between */
   .act--hero .act__lead { display: flex; flex-direction: column; min-height: var(--room); }
-  /* leftover height is shared out in her ratios, 2.6 : 2.9 : 5.3 */
+  /* leftover height is shared out in her ratios, with part of the last gap moved below the button */
   .act--hero h1 { flex: 2.6 0 auto; }
   #top .act__lead .lede:not(.lede--ask) { flex: 2.9 0 auto; }
-  #top .act__lead .lede--ask:last-of-type { flex: 5.3 0 auto; }
+  #top .act__lead .lede--ask:last-of-type { flex: 3.2 0 auto; }
+  /* the leftover sits under the button, so the button rides a little higher */
+  .act--hero .act__lead::after { content: ''; flex: 2.1 0 0; }
   /* the lede runs the width of the column rather than her narrow measure */
   #top .act__lead .lede:not(.lede--ask) {
     font-size: calc(1.9 * var(--tu));
