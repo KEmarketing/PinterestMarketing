@@ -1649,8 +1649,9 @@ summary::after { color: var(--navy); opacity: 0.65; }
   color: #fff;
   text-shadow:
     0 0 1px var(--navy),
-    0 0 2px rgba(69, 95, 118, 0.85),
-    0 1px 6px rgba(69, 95, 118, 0.35);
+    0 0 2px var(--navy),
+    0 0 3px rgba(69, 95, 118, 0.9),
+    0 1px 7px rgba(69, 95, 118, 0.45);
 }
 /* the rule runs wider than the words, as she drew it */
 #why-pinterest .statement__sub::after {
@@ -1659,6 +1660,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
   left: -16%; right: -16%; bottom: 0;
   height: 2px;
   background: #fff;
+  box-shadow: 0 0 2px var(--navy), 0 1px 5px rgba(69, 95, 118, 0.45);
 }
 .act--centred .statement__body { font-size: var(--step-1); font-weight: 400; max-width: 68ch; text-wrap: balance; margin-bottom: var(--sp-3); color: var(--ink); }
 .act--centred .statement__list { gap: 0.6rem; align-items: center; margin-top: 0; max-width: none; }
@@ -1676,6 +1678,18 @@ summary::after { color: var(--navy); opacity: 0.65; }
   color: var(--navy);
   clip-path: polygon(1% 8%, 99% 0%, 100% 90%, 98% 100%, 2% 96%, 0% 14%);
 }
+/* clip-path cuts a box-shadow off with the box, so the shadow lives on a
+   wrapper pseudo-element behind each pill, shaped the same way */
+.act--centred .statement__list li { position: relative; clip-path: none; background: none; }
+.act--centred .statement__list li::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255, 255, 255, 0.95);
+  clip-path: polygon(1% 8%, 99% 0%, 100% 90%, 98% 100%, 2% 96%, 0% 14%);
+}
+.act--centred .statement__list li { filter: drop-shadow(0 6px 10px rgba(69, 95, 118, 0.22)); }
 .act--centred .statement__list li::before { content: none; }
 
 /* --- Why Pinterest (image 4): wide intro, coral underline, coral line ---- */
