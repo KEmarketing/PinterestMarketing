@@ -1652,7 +1652,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
   height: 2px;
   background: #fff;
 }
-.act--centred .statement__body { font-size: var(--step-1); font-weight: 400; max-width: 56ch; margin-bottom: var(--sp-3); color: var(--ink); }
+.act--centred .statement__body { font-size: var(--step-1); font-weight: 400; max-width: 68ch; text-wrap: balance; margin-bottom: var(--sp-3); color: var(--ink); }
 .act--centred .statement__list { gap: 0.6rem; align-items: center; margin-top: 0; max-width: none; }
 @media (min-width: 48rem) { .act--centred .statement__list li { white-space: nowrap; } }
 @media (max-width: 47.999rem) {
