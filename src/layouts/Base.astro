@@ -1,4 +1,5 @@
 ---
+import FrondShapes from '../components/FrondShapes.astro';
 import { SITE } from '../site.config.mjs';
 import '../styles/fonts.css';
 import '../styles/tokens.css';
@@ -125,6 +126,7 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
   </head>
 
   <body>
+    <FrondShapes />
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
@@ -434,20 +436,29 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
           }
           return null;
         }
-        var els = document.querySelectorAll(SEL);
+        /* All the writes first, then all the reads, so the page lays out
+           three times in total rather than once per element. */
+        var els = document.querySelectorAll(SEL), tied = [];
         for (var i = 0; i < els.length; i++) {
           var el = els[i];
           if (el.querySelector('h1, h2, h3, h4, p, li, ul, ol')) continue;
           if (el.textContent.replace(/\s+/g, ' ').trim().split(' ').length < 4) continue;
           var undo = tie(el);
-          if (!undo) continue;
-          var after = lonely(el);
-          if (!after) continue;
-          undo();
-          /* Holding the pair stranded a word higher up. Keep the natural
-             wrap unless it is worse. */
-          if (lonely(el) > after) tie(el);
+          if (undo) tied.push({ el: el, undo: undo, after: 0 });
         }
+        var suspect = [];
+        for (var a = 0; a < tied.length; a++) {
+          tied[a].after = lonely(tied[a].el);
+          if (tied[a].after) suspect.push(tied[a]);
+        }
+        for (var b = 0; b < suspect.length; b++) suspect[b].undo();
+        /* Holding the pair stranded a word higher up. Keep the natural
+           wrap unless it is worse. */
+        var retie = [];
+        for (var c2 = 0; c2 < suspect.length; c2++) {
+          if (lonely(suspect[c2].el) > suspect[c2].after) retie.push(suspect[c2].el);
+        }
+        for (var d2 = 0; d2 < retie.length; d2++) tie(retie[d2]);
       })();
     </script>
 
@@ -456,7 +467,7 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
         <div class="site-footer__brand">
           {/* Her stacked wordmark, which already carries the name, so there
               is no typeset name beside it. */}
-          <img class="site-footer__wordmark" src="/marks/logo-ke-wordmark.webp" alt={SITE.name} width="536" height="206" />
+          <img class="site-footer__wordmark" src="/marks/logo-ke-wordmark.webp" alt={SITE.name} width="536" height="206" loading="lazy" />
         </div>
 
         <nav class="site-footer__nav" aria-label="Sections of this page, footer">

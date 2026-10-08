@@ -29,7 +29,7 @@ const isAsk = (p) => /\?\s*$/.test(p);
     {data.image && (
       <div class="act__figure">
         <span class="arch">
-          <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" />
+          <img class="headshot" src={data.image} alt={data.imageAlt ?? ''} width="426" height="496" fetchpriority="high" decoding="async" />
         </span>
       </div>
     )}
