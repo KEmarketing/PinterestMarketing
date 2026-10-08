@@ -17,7 +17,7 @@ const noteLines = String(data.note ?? '').split(/\n+/).map((l) => l.trim()).filt
       <span class="swipe-cue__arrow" aria-hidden="true">&rarr;</span>
     </p>
 
-    <div class="stack">
+    <div class="stack" role="region" aria-label="Packages" tabindex="0">
       {data.items.map((p) => (
         <article class:list={['block', p.featured && 'block--featured', p.featured && p.tabTone === 'coral' && 'block--featured-coral', p.tab && 'block--tabbed']}>
           {p.tab && <span class:list={['block__tab', p.tabTone === 'coral' && 'block__tab--coral']}>{p.tab}</span>}

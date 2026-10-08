@@ -2229,3 +2229,29 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
   #about .act__body p, #about .act__body .lede { font-size: 1.05rem; }
   #about .act__body p { margin-bottom: var(--sp-2); }
 }
+
+/* --- Accessibility pass ------------------------------------------------
+   Larger hit areas on the footer links without moving anything: the
+   padding grows the target and the negative margin gives it back.
+   The packages row can take keyboard focus, so it shows a ring. */
+.site-footer__nav a,
+.site-footer__reach a,
+.site-footer p a {
+  padding-block: 0.45em;
+  margin-block: -0.45em;
+}
+#packages .stack:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
+/* On a phone the smallest reading text in the contact box, the closing
+   and the footer comes up to the size it already has on a desktop. The
+   package and step text keeps its size, since changing it would change
+   how those screens sit. */
+@media (max-width: 51.999rem) {
+  #contact .reach__body,
+  #contact .reach .contact-note,
+  #contact .contact-list,
+  #contact .contact-list a,
+  #book.act--closing .statement__body,
+  #book .btn,
+  .site-footer,
+  .site-footer__nav a { font-size: 0.9rem; }
+}
