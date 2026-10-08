@@ -2275,3 +2275,7 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 /* Plain wrapping here, so it breaks after "where to" the way hers does. */
 #book.act--closing .closing__signoff { margin-top: 2.3rem; line-height: 2; max-width: 34em; text-wrap: wrap; }
 @media (min-width: 64rem) { #book.act--closing .act__inner { margin-top: 4vh; } }
+
+/* The note under the stats runs the full width of the stats grid, as in
+   her mockup, rather than stopping at a reading measure. */
+#pinterest-stats .stats__note { max-width: none; }

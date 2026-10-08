@@ -478,7 +478,11 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
         var els = document.querySelectorAll(SEL), tied = [];
         for (var i = 0; i < els.length; i++) {
           var el = els[i];
-          if (el.querySelector('h1, h2, h3, h4, p, li, ul, ol')) continue;
+          /* Innermost blocks only. A list item that holds its own smaller
+             pieces (the stats) is left to those pieces, because two passes
+             over the same text undo each other out of order and doubled
+             the last words. */
+          if (el.querySelector(SEL)) continue;
           if (el.textContent.replace(/\s+/g, ' ').trim().split(' ').length < 4) continue;
           var undo = tie(el);
           if (undo) tied.push({ el: el, undo: undo, after: 0 });
