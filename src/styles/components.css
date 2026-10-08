@@ -2255,3 +2255,12 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
   .site-footer,
   .site-footer__nav a { font-size: 0.9rem; }
 }
+
+/* --- Closing, spaced to her mockup: air under the heading, a clear gap
+   between the first line and the invitation, the button close under
+   it, and the sign-off standing apart below. */
+#book.act--closing .statement { margin-bottom: var(--sp-4); }
+#book.act--closing .statement__body { margin-bottom: 0; }
+#book.act--closing .statement__body + .statement__body { margin-top: 3.5em; }
+#book.act--closing .actions { margin-top: var(--sp-3); }
+#book.act--closing .closing__signoff { margin-top: var(--sp-5); }

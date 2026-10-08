@@ -364,6 +364,45 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
     </script>
 
     <script is:inline>
+      /* In-page links. Every screen is sticky, so once you are past one it
+         sits pinned behind the screens after it, and the browser's own
+         jump-to-anchor measures it where it is stuck: already "on screen",
+         so nothing moves. From the footer that made every link a dud.
+         This works out where each screen starts in the page from the
+         heights of the screens before it, and scrolls there. */
+      (function () {
+        var header = document.querySelector('.site-header');
+        function startOf(el) {
+          var act = el.closest ? el.closest('.act') : null;
+          if (!act) return null;
+          var y = 0, n = act.parentElement.firstElementChild;
+          while (n && n !== act) {
+            var cs = getComputedStyle(n);
+            y += n.offsetHeight + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
+            n = n.nextElementSibling;
+          }
+          var own = getComputedStyle(act);
+          y += parseFloat(own.marginTop) || 0;
+          var parent = act.parentElement, top = 0;
+          while (parent) { top += parent.offsetTop || 0; parent = parent.offsetParent; }
+          var hh = header ? header.offsetHeight : 0;
+          return Math.max(0, top + y - hh);
+        }
+        document.addEventListener('click', function (e) {
+          var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+          if (!a || a.getAttribute('href').length < 2) return;
+          var el = document.getElementById(a.getAttribute('href').slice(1));
+          if (!el) return;
+          var y = startOf(el);
+          if (y === null) return;
+          e.preventDefault();
+          window.scrollTo({ top: y, behavior: 'smooth' });
+          if (history.pushState) history.pushState(null, '', a.getAttribute('href'));
+        });
+      })();
+    </script>
+
+    <script is:inline>
       /* No word left alone on a line. The last two words of every heading,
          paragraph, list item, button and short line are held together so a
          line never ends with one stranded word. Each change is measured: if
