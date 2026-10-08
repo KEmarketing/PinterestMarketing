@@ -133,6 +133,7 @@ content:
         label: How it works
         type: object
         fields:
+          - { name: kicker, label: Small line above the heading, type: string }
           - { name: heading, label: Heading, type: string }
           - { name: aside, label: Small line by the heading, type: string }
           - { name: ctaLabel, label: Button text, type: string }

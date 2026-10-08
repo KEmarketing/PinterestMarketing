@@ -8,6 +8,7 @@ const { data } = Astro.props;
 <section class="act act--steps act--lat-edge-right" id="how-it-works">
   <div class="wrap act__inner">
     <div class="act__lead">
+      {data.kicker && <p class="act__kicker">{data.kicker}</p>}
       <h2>{data.heading}</h2>
       {data.aside && <p class="act__aside-note">{data.aside}</p>}
     </div>

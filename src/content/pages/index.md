@@ -163,6 +163,7 @@ testimonials:
       imageAlt: "Michelle Leek"
 
 process:
+  kicker: "The process"
   heading: "Success Starts Here"
   ctaLabel: "Book a discovery call"
   steps:

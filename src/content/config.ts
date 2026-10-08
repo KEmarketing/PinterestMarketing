@@ -110,6 +110,7 @@ const pages = defineCollection({
 
     /* --- process --- */
     process: z.object({
+      kicker: z.string().optional(),
       heading: z.string(),
       ctaLabel: z.string().optional(),
       aside: z.string().optional(),
