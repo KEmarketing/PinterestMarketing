@@ -2259,8 +2259,19 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 /* --- Closing, spaced to her mockup: air under the heading, a clear gap
    between the first line and the invitation, the button close under
    it, and the sign-off standing apart below. */
-#book.act--closing .statement { margin-bottom: var(--sp-4); }
-#book.act--closing .statement__body { margin-bottom: 0; }
-#book.act--closing .statement__body + .statement__body { margin-top: 3.5em; }
-#book.act--closing .actions { margin-top: var(--sp-3); }
-#book.act--closing .closing__signoff { margin-top: var(--sp-5); }
+/* Measured from her mockup and scaled from its width to the site's.
+   Body text at the site's small size with generous leading (line pitch
+   twice the type), the sign-off at its size with the same leading and a
+   measure that breaks it after "where to", and a small button. The
+   gaps, cap to cap: heading to first line 21px, first line to the
+   paragraph 44px, the button tight under the paragraph at 17px as one
+   group, then 47px down to the sign-off. The block sits a touch below
+   center, as hers does. */
+#book.act--closing .statement { margin-bottom: 0.75rem; }
+#book.act--closing .statement__body { line-height: 2; max-width: 58ch; margin-bottom: 0; }
+#book.act--closing .statement__body + .statement__body { margin-top: 1.7em; }
+#book.act--closing .actions { margin-top: 0.45rem; }
+#book.act--closing .btn { font-size: 0.75rem; line-height: 1.2; padding: 0.85rem 1.6rem; min-height: 42px; }
+/* Plain wrapping here, so it breaks after "where to" the way hers does. */
+#book.act--closing .closing__signoff { margin-top: 2.3rem; line-height: 2; max-width: 34em; text-wrap: wrap; }
+@media (min-width: 64rem) { #book.act--closing .act__inner { margin-top: 4vh; } }
