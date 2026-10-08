@@ -954,7 +954,12 @@ summary::after { color: var(--navy); opacity: 0.65; }
   .act__lead--row { display: grid; grid-template-columns: minmax(0, 4.6fr) minmax(0, 6.4fr);
                     column-gap: clamp(2.5rem, 5.5vw, 6rem); align-items: end; }
   .act__lead--row h2, .act__lead--row .lede { margin-bottom: 0; }
-  #packages .stack { grid-template-columns: repeat(4, 1fr); gap: var(--sp-3); }
+  /* Even columns that can shrink: with plain 1fr the widest price row set a
+     column's minimum, the others squeezed, and the row ran a few pixels
+     past its box on a small laptop, which switched the swipe cue on over
+     the New to Pinterest tab. */
+  #packages .stack { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-3); }
+  #packages .block .price { flex-wrap: wrap; }
   #packages .block { padding: var(--sp-3); }
   #packages .block h3 { font-size: var(--step-0); letter-spacing: 0.06em; text-transform: uppercase; }
   #packages .block ul { font-size: var(--step--1); }
@@ -2195,4 +2200,11 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
    word alone in the middle; a touch smaller there and it sits on two. */
 @media (max-width: 51.999rem) {
   .chapter__line { font-size: min(var(--step-4), 7.4vw); max-width: none; }
+}
+
+/* On a small laptop the four columns are narrow enough that the Setup
+   price broke onto two lines while its neighbors stayed on one; the
+   figure eases down a little there so all four price bands match. */
+@media (min-width: 52rem) and (max-width: 71.999rem) {
+  #packages .price__amount { font-size: clamp(2rem, 1.1rem + 1.5vw, 2.7rem); }
 }
