@@ -363,6 +363,94 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
       })();
     </script>
 
+    <script is:inline>
+      /* No word left alone on a line. The last two words of every heading,
+         paragraph, list item, button and short line are held together so a
+         line never ends with one stranded word. Each change is measured: if
+         holding the pair together strands a different word on the line
+         above, the element is put back the way it was. Runs once, before
+         first paint, on the text as served. */
+      (function () {
+        var SEL = 'h1, h2, h3, h4, p, li, dd, dt, blockquote, figcaption, summary, .btn, .chapter__sub-line, .packages__note-line, .stat__label, .stat__note';
+        var SP = /[ \t\n\r]/;
+        function textNodes(el) {
+          var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), out = [], n;
+          while ((n = w.nextNode())) out.push(n);
+          return out;
+        }
+        /* How many lines of this element hold a single word. */
+        function lonely(el) {
+          var r = document.createRange(), rows = {}, nodes = textNodes(el);
+          for (var i = 0; i < nodes.length; i++) {
+            var t = nodes[i].nodeValue, re = /\S+/g, m;
+            while ((m = re.exec(t))) {
+              r.setStart(nodes[i], m.index); r.setEnd(nodes[i], m.index + m[0].length);
+              var rects = r.getClientRects();
+              if (!rects.length) continue;
+              var y = Math.round(rects[rects.length - 1].top / 4);
+              rows[y] = (rows[y] || 0) + 1;
+            }
+          }
+          var count = 0, lines = 0;
+          for (var k in rows) { lines++; if (rows[k] === 1) count++; }
+          return lines > 1 ? count : 0;
+        }
+        /* Hold the last two words together; returns a function that puts
+           the element back, or null when there was nothing to do. */
+        function tie(el) {
+          var nodes = textNodes(el), seenWord = false;
+          /* Inside a flex or grid box a wrapping span would become a box
+             of its own, so there the pair is tied with a no-break space. */
+          var d = getComputedStyle(el).display, boxy = /flex|grid/.test(d);
+          for (var k = nodes.length - 1; k >= 0; k--) {
+            var node = nodes[k], t = node.nodeValue;
+            for (var c = t.length - 1; c >= 0; c--) {
+              if (!SP.test(t.charAt(c))) { seenWord = true; continue; }
+              if (!seenWord) continue;
+              if (c > 0 && !SP.test(t.charAt(c - 1)) && boxy) {
+                node.nodeValue = t.slice(0, c) + '\u00A0' + t.slice(c + 1);
+                return function () { node.nodeValue = t; };
+              }
+              if (c > 0 && !SP.test(t.charAt(c - 1))) {
+                /* Both words live in this node: wrap the pair so it cannot
+                   break, not even at a hyphen. */
+                var s0 = c - 1;
+                while (s0 > 0 && !SP.test(t.charAt(s0 - 1))) s0--;
+                var span = document.createElement('span');
+                span.style.whiteSpace = 'nowrap';
+                span.appendChild(document.createTextNode(t.slice(s0)));
+                node.nodeValue = t.slice(0, s0);
+                node.parentNode.insertBefore(span, node.nextSibling);
+                return function () { span.parentNode.removeChild(span); node.nodeValue = t; };
+              }
+              if (c === 0) {
+                /* The space opens this node; the word before it is in an
+                   earlier node, so tie across the boundary. */
+                node.nodeValue = ' ' + t.slice(1);
+                return function () { node.nodeValue = t; };
+              }
+              return null;
+            }
+          }
+          return null;
+        }
+        var els = document.querySelectorAll(SEL);
+        for (var i = 0; i < els.length; i++) {
+          var el = els[i];
+          if (el.querySelector('h1, h2, h3, h4, p, li, ul, ol')) continue;
+          if (el.textContent.replace(/\s+/g, ' ').trim().split(' ').length < 4) continue;
+          var undo = tie(el);
+          if (!undo) continue;
+          var after = lonely(el);
+          if (!after) continue;
+          undo();
+          /* Holding the pair stranded a word higher up. Keep the natural
+             wrap unless it is worse. */
+          if (lonely(el) > after) tie(el);
+        }
+      })();
+    </script>
+
     <footer class="site-footer">
       <div class="wrap site-footer__inner">
         <div class="site-footer__brand">
