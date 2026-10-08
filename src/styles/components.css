@@ -2208,3 +2208,24 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 @media (min-width: 52rem) and (max-width: 71.999rem) {
   #packages .price__amount { font-size: clamp(2rem, 1.1rem + 1.5vw, 2.7rem); }
 }
+
+/* --- About, to her mockup: the portrait and its button run the same
+   height as the words beside them, top to bottom, with everything on
+   one screen. The arch takes whatever height the text column has, less
+   the button, and the photo fills it. */
+@media (min-width: 64rem) {
+  #about .act__inner { align-items: stretch; }
+  #about .act__figure { display: flex; flex-direction: column; justify-items: stretch; }
+  #about .act__figure .arch { flex: 1 1 auto; min-height: 0; display: flex; }
+  #about .arch .headshot { height: 100%; object-fit: cover; object-position: 50% 20%; }
+  #about .about__cta { flex: 0 0 auto; }
+}
+/* On a shorter screen the padding gives way first, then the bio type eases
+   down a little, so the whole screen still fits below the header. */
+@media (min-width: 64rem) and (max-height: 56rem) {
+  #about.act { padding-block: clamp(1.5rem, 5vh, var(--sp-6)); }
+}
+@media (min-width: 64rem) and (max-height: 50rem) {
+  #about .act__body p, #about .act__body .lede { font-size: 1.05rem; }
+  #about .act__body p { margin-bottom: var(--sp-2); }
+}
