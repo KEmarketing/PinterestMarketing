@@ -14,7 +14,7 @@
   --leaf: #8EC07B;
   --blush: #FFD1C1;
   --coral: #FFA384;
-  --coral-deep: #B44520;    /* her coral deepened, approved for text on light panels: passes 4.5:1 on all of them */
+  --coral-deep: var(--coral-text); /* the site's established deeper coral, approved for text on light panels */
   --coral-ink: #D83600;     /* derived: coral darkened to pass AA on white */
   --coral-text: #C43100;    /* derived: coral for body-size text on her blush and cream panels (4.7:1) */
   --gold: #EDD776;
