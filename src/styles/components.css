@@ -2281,3 +2281,93 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 /* The note under the stats runs the full width of the stats grid, as in
    her mockup, rather than stopping at a reading measure. */
 #pinterest-stats .stats__note { max-width: none; }
+
+/* --- Phone header: one slim row with a menu -------------------------
+   Kandace asked for the frozen header to take less of a phone screen.
+   The logo sits left, a menu button right, and the section links and the
+   email list button drop down below the bar when it is opened. On larger
+   screens the button is hidden and the links sit in the bar as before. */
+.menu-toggle { display: none; }
+.site-menu { display: contents; }
+
+@media (max-width: 51.999rem) {
+  .site-header { padding: 0.55rem 0; }
+  .site-header__bar {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: var(--sp-2);
+  }
+  .wordmark { flex: 0 1 auto; justify-content: flex-start; }
+  .wordmark__mark { width: min(210px, 56vw); }
+
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    padding: 0 0.2rem 0 0.6rem;
+    border: 0;
+    background: none;
+    color: var(--navy);
+    font: inherit;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .menu-toggle__bars { position: relative; display: block; width: 22px; height: 14px; }
+  .menu-toggle__bars span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 0.25s var(--ease-soft, ease), opacity 0.2s ease;
+  }
+  .menu-toggle__bars span:nth-child(1) { top: 0; }
+  .menu-toggle__bars span:nth-child(2) { top: 6px; }
+  .menu-toggle__bars span:nth-child(3) { top: 12px; }
+  .site-header.is-open .menu-toggle__bars span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .site-header.is-open .menu-toggle__bars span:nth-child(2) { opacity: 0; }
+  .site-header.is-open .menu-toggle__bars span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .menu-toggle:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  /* The dropdown hangs below the bar, over the page, so opening it does
+     not change the header's height or move the screens beneath. */
+  .site-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 0.25rem var(--gutter) 1.1rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    box-shadow: 0 18px 30px -24px rgba(30, 44, 58, 0.45);
+  }
+  .site-header.is-open .site-menu { display: block; }
+  .site-menu .site-nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .site-menu .site-nav a {
+    display: block;
+    padding: 0.95rem 0;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--rule);
+  }
+  .site-menu .site-nav a:hover,
+  .site-menu .site-nav a:focus-visible { border-bottom-color: var(--rule); color: var(--navy); }
+  .site-menu .site-nav a.site-nav__join {
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+    text-align: center;
+    border-bottom: 0;
+  }
+}
+@media (max-width: 51.999rem) and (prefers-reduced-motion: reduce) {
+  .menu-toggle__bars span { transition: none; }
+}

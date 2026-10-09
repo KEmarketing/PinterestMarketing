@@ -136,6 +136,14 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
           <img class="wordmark__mark" src="/marks/logo-ke-horizontal-navy.webp" alt={SITE.name} width="922" height="143" />
         </a>
 
+        {/* On a phone the links fold into a menu behind this button, so the
+            frozen header is one slim row. Hidden on larger screens. */}
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+          <span class="menu-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="menu-toggle__label">Menu</span>
+        </button>
+
+        <div class="site-menu" id="site-menu">
         <nav class="site-nav site-nav--left" aria-label="Sections of this page">
           <a href="#how-pinterest-works">Why Pinterest</a>
           <a href="#packages">Services</a>
@@ -149,8 +157,39 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
             <a class="site-nav__join" href={signupHref} {...signupAttrs}>{signupHeaderLabel}</a>
           )}
         </nav>
+        </div>
       </div>
     </header>
+
+    <script is:inline>
+      /* The phone menu: opens and closes from the button, and closes again
+         when a link is chosen, on Escape, or on a tap outside it. */
+      (function () {
+        var header = document.querySelector('.site-header');
+        var btn = header && header.querySelector('.menu-toggle');
+        var menu = document.getElementById('site-menu');
+        if (!btn || !menu) return;
+        function set(open) {
+          header.classList.toggle('is-open', open);
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+        btn.addEventListener('click', function () {
+          set(btn.getAttribute('aria-expanded') !== 'true');
+        });
+        menu.addEventListener('click', function (e) {
+          if (e.target.closest && e.target.closest('a')) set(false);
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && header.classList.contains('is-open')) { set(false); btn.focus(); }
+        });
+        document.addEventListener('click', function (e) {
+          if (header.classList.contains('is-open') && !header.contains(e.target)) set(false);
+        });
+        window.addEventListener('resize', function () {
+          if (window.matchMedia('(min-width: 52rem)').matches) set(false);
+        });
+      })();
+    </script>
 
     <main id="main">
       <slot />
