@@ -2441,19 +2441,99 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 #about .act__body h2 { color: var(--coral-deep); }
 #who-its-for .act__body .ticks li::before { background: var(--coral-deep); }
 
-/* --- It's perfect for: the left side, to her mockup ------------------
-   The list in her navy rather than the near-black ink. On a desktop the
-   whole left side (heading, its mint rule and the list) scales up as one
-   until the last line sits on the same line as the bottom of the booking
-   button. The right column's height changes with the screen width, so a
-   short script in the section sets the scale; --wf is 1 without it. */
+/* It's perfect for: the list in her navy (the desktop layout is built to
+   her mockup further down). */
 #who-its-for .act__lead .ticks li { color: var(--navy); }
+
+/* --- It's perfect for: built to Kandace's mockup -----------------------
+   Every size and gap below is measured off her mockup as a share of her
+   panel's width (1u = 1% of it), so on a desktop the screen is her
+   drawing at any size: the coral is the approved deeper coral, the only
+   change from it. 1u is 1% of this section's width, or less on a short,
+   wide window so it always fits under the header. */
 @media (min-width: 64rem) {
-  #who-its-for .act__lead h2 { font-size: calc(clamp(2.15rem, 1.7rem + 2vw, 3.4rem) * var(--wf, 1)); margin-bottom: calc(var(--sp-2) * var(--wf, 1)); }
-  #who-its-for .act__lead .ticks li { font-size: calc(clamp(1.25rem, 1rem + 0.9vw, 1.7rem) * var(--wf, 1)); white-space: nowrap; }
-  /* Her left column runs close to the mint divider, so the gap before it is
-     tighter than the site's other two-column screens; and the last line
-     carries no padding below it, so the section does not grow. */
-  #who-its-for .act__inner { column-gap: 2.5vw; }
-  #who-its-for .act__lead .ticks li:last-child { padding-bottom: 0; margin-bottom: -0.35em; }
+  #who-its-for { container-type: inline-size; }
+  #who-its-for .act__inner {
+    --u: min(1cqw, calc((100svh - var(--header-h, 98px) - 2 * var(--sp-6)) / 38));
+    display: grid;
+    grid-template-columns: calc(27.09 * var(--u)) calc(33.29 * var(--u));
+    column-gap: calc(2.36 * var(--u));
+    align-items: start;
+    width: calc(62.74 * var(--u));
+    max-width: none;
+    margin-inline: auto;
+    padding: 0;
+  }
+
+  /* left: heading with its mint underline, then the navy list */
+  #who-its-for .act__lead h2 {
+    display: block;
+    font-size: calc(4.75 * var(--u));
+    font-weight: 400;
+    line-height: 1;
+    margin: 0;
+    padding: 0 0 calc(1.04 * var(--u)) calc(0.53 * var(--u));
+    border-bottom: max(3px, calc(0.21 * var(--u))) solid var(--mint);
+    max-width: none;
+    white-space: nowrap;
+  }
+  #who-its-for .act__lead .ticks { margin: calc(0.68 * var(--u)) 0 0; }
+  #who-its-for .act__lead .ticks li {
+    font-size: calc(2.11 * var(--u));
+    line-height: 1.33;
+    padding: calc(1.22 * var(--u)) 0 calc(1.22 * var(--u)) calc(1.76 * var(--u));
+    white-space: nowrap;
+    color: var(--navy);
+  }
+  #who-its-for .act__lead .ticks li:last-child { padding-bottom: 0; margin-bottom: 0; }
+  #who-its-for .act__lead .ticks li::before {
+    width: calc(0.56 * var(--u)); height: calc(0.56 * var(--u));
+    left: calc(0.05 * var(--u)); top: calc(1.22 * var(--u) + 0.58em);
+  }
+
+  /* right: the mint divider, coral heading on two lines, coral list,
+     the underlined note, the mint rule and the button */
+  #who-its-for .act__body {
+    border-left: max(3px, calc(0.26 * var(--u))) solid var(--mint);
+    padding-left: calc(2.19 * var(--u));
+    max-width: none;
+  }
+  #who-its-for .whofor__needs-heading {
+    font-size: calc(2.78 * var(--u));
+    font-weight: 500;
+    line-height: 1.35;
+    max-width: calc(24.5 * var(--u));
+    margin: calc(0.25 * var(--u)) 0 calc(0.6 * var(--u)) calc(0.43 * var(--u));
+    text-wrap: wrap;
+  }
+  #who-its-for .act__body .ticks { margin: 0; }
+  #who-its-for .act__body .ticks li {
+    font-size: calc(1.70 * var(--u));
+    line-height: 1.72;
+    margin: 0;
+    padding: 0 0 0 calc(2.46 * var(--u));
+  }
+  #who-its-for .act__body .ticks li::before {
+    width: calc(0.42 * var(--u)); height: calc(0.42 * var(--u));
+    left: calc(0.97 * var(--u)); top: 0.74em;
+  }
+  #who-its-for .whofor__footnote {
+    font-size: calc(1.74 * var(--u));
+    line-height: 1.16;
+    margin: calc(1.27 * var(--u)) 0 0 calc(0.27 * var(--u));
+    padding-bottom: calc(2.0 * var(--u));
+    border-bottom: max(3px, calc(0.32 * var(--u))) solid var(--mint);
+    margin-left: 0;
+    padding-left: calc(0.27 * var(--u));
+    text-wrap: wrap;
+    max-width: none;
+  }
+  #who-its-for .whofor__actions { margin: calc(1.55 * var(--u)) 0 0 calc(0.33 * var(--u)); }
+  #who-its-for .whofor__actions .btn {
+    width: calc(29.98 * var(--u));
+    min-height: 0;
+    height: calc(4.65 * var(--u));
+    padding: 0;
+    font-size: calc(1.78 * var(--u));
+  }
 }
