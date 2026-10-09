@@ -2371,3 +2371,16 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 @media (max-width: 51.999rem) and (prefers-reduced-motion: reduce) {
   .menu-toggle__bars span { transition: none; }
 }
+
+/* Kandace's test: the three strips on the hook screen in her light pink
+   (#FFD1C1, --blush) to see if the navy words stand out more. */
+#why-pinterest .statement__list li::after { background: var(--blush); }
+
+/* The strips' words sit centered in the strip. On a phone, where the
+   longer two wrap, the lines balance, so the last reads "Transform content
+   into" over "long-term leads and revenue". */
+.act--centred .statement__list li { text-align: center; }
+.nobreak { white-space: nowrap; }
+@media (max-width: 47.999rem) {
+  .act--centred .statement__list li { text-wrap: balance; }
+}

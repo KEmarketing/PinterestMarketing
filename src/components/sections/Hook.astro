@@ -18,7 +18,11 @@ const { data } = Astro.props;
     <p class="statement__body">{data.body}</p>
     {data.bullets.length > 0 && (
       <ul class="statement__list">
-        {data.bullets.map((b) => <li>{b}</li>)}
+        {/* A hyphenated word (long-term) never splits across the two lines
+            of a strip on a phone. */}
+        {data.bullets.map((b) => (
+          <li>{String(b).split(/(\S+-\S+)/).map((part) => /\S+-\S+/.test(part) ? <span class="nobreak">{part}</span> : part)}</li>
+        ))}
       </ul>
     )}
   </div>
