@@ -2384,3 +2384,6 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 @media (max-width: 47.999rem) {
   .act--centred .statement__list li { text-wrap: balance; }
 }
+/* The rule under "This is where I come in..." in the same light pink, so
+   it ties to the strips below it. */
+#why-pinterest .statement__sub::after { background: var(--blush); }
