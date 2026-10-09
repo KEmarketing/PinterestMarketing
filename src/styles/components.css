@@ -2425,3 +2425,35 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 @media (min-width: 52rem) and (max-width: 63.999rem) {
   .chapter--pinned:not(.chapter--pinned-4) .chapter__pin { height: 86%; top: 7%; }
 }
+
+/* --- Kandace's deeper coral, approved for readability -----------------
+   Every bit of coral TEXT on a light panel takes the deeper shade of her
+   coral; coral fills, rules and the frames around photos keep her light
+   coral as drawn. */
+#how-pinterest-works .lede .mark:not(.mark--line),
+#who-its-for .whofor__needs-heading,
+#who-its-for .act__body .ticks li,
+.whofor__footnote,
+.act--steps .act__kicker,
+.stepcard h3,
+#pinterest-stats h2 .mark,
+#pinterest-stats .stats__note,
+#about .act__body h2 { color: var(--coral-deep); }
+#who-its-for .act__body .ticks li::before { background: var(--coral-deep); }
+
+/* --- It's perfect for: the left side, to her mockup ------------------
+   The list in her navy rather than the near-black ink. On a desktop the
+   whole left side (heading, its mint rule and the list) scales up as one
+   until the last line sits on the same line as the bottom of the booking
+   button. The right column's height changes with the screen width, so a
+   short script in the section sets the scale; --wf is 1 without it. */
+#who-its-for .act__lead .ticks li { color: var(--navy); }
+@media (min-width: 64rem) {
+  #who-its-for .act__lead h2 { font-size: calc(clamp(2.15rem, 1.7rem + 2vw, 3.4rem) * var(--wf, 1)); margin-bottom: calc(var(--sp-2) * var(--wf, 1)); }
+  #who-its-for .act__lead .ticks li { font-size: calc(clamp(1.25rem, 1rem + 0.9vw, 1.7rem) * var(--wf, 1)); white-space: nowrap; }
+  /* Her left column runs close to the mint divider, so the gap before it is
+     tighter than the site's other two-column screens; and the last line
+     carries no padding below it, so the section does not grow. */
+  #who-its-for .act__inner { column-gap: 2.5vw; }
+  #who-its-for .act__lead .ticks li:last-child { padding-bottom: 0; margin-bottom: -0.35em; }
+}
