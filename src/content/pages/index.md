@@ -12,7 +12,7 @@ hero:
 
     But are you there?
 
-    And if you are, are you getting noticed?
+    And are you getting noticed?
   cta:
     label: "Book a discovery call to know more!"
     url: "BOOKING_URL"
