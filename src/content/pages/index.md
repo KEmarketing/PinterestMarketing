@@ -218,9 +218,7 @@ chapters:
     sub: "Keep scrolling to know for sure."
     pins:
       - "/images/pin-1.webp"
-      - "/images/pin-6.webp"
-      - "/images/pin-3.webp"
-      - "/images/pin-4.webp"
+      - "/images/pin-8.webp"
   - line: "How do you get started?"
     sub: "Whether you're new to Pinterest or have an existing profile, it all starts here:"
   - line: "Packages and pricing"

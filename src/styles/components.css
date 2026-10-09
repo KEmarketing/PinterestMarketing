@@ -2387,3 +2387,41 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 /* The rule under "This is where I come in..." in the same light pink, so
    it ties to the strips below it. */
 #why-pinterest .statement__sub::after { background: var(--blush); }
+
+/* --- The pinned break, to Kandace's two-pin mockup ---------------------
+   Two large pins, one each side, fully on the page left to right and
+   running off the top and bottom of the band because they are enlarged.
+   Her tilt: the left pin leans left at the top, the right pin leans right,
+   about ten degrees each. The band and the heading take her proportions
+   (the band about four times as wide as it is tall, the heading line a
+   little over a third of the width) so the pins have room beside it. */
+@media (min-width: 52rem) {
+  .chapter--pinned:not(.chapter--pinned-4) {
+    min-height: max(300px, 25.25vw);
+    padding-block: var(--sp-4);
+  }
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__line { font-size: max(2.1rem, 4.1vw); }
+  /* The small line wraps to two even lines when it would be wider than the
+     heading, as hers does, and never leaves a word alone. */
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__sub { max-width: max(35vw, 25rem); margin-inline: auto; text-wrap: balance; }
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin {
+    width: auto;
+    height: 112%;
+    top: -6%;
+    bottom: auto;
+  }
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin--1 { left: 7.6%; right: auto; transform: rotate(-10deg); }
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin--2 { right: 8.1%; left: auto; transform: rotate(10deg); }
+}
+
+/* On a smaller laptop the pins sit a little closer to the edges, so they
+   keep clear of the words. */
+@media (min-width: 52rem) and (max-width: 79.999rem) {
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin--1 { left: 3.5%; }
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin--2 { right: 4%; }
+}
+/* A tablet held sideways is too narrow for pins large enough to crop, so
+   there they sit whole inside the band, still tilted her way. */
+@media (min-width: 52rem) and (max-width: 63.999rem) {
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin { height: 86%; top: 7%; }
+}
