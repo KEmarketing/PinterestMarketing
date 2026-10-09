@@ -2087,7 +2087,9 @@ summary::after { color: var(--navy); opacity: 0.65; }
 @media (min-width: 64rem) {
   .act--hero {
     --avail: calc(100svh - var(--header-h, 98px));
-    --pad: calc(var(--avail) * 0.05);
+    /* Kandace asked for more of a border around the hero, with everything
+       drawn in a little: twice the air top and bottom and at the sides. */
+    --pad: calc(var(--avail) * 0.10);
     --room: calc(var(--avail) - 2 * var(--pad));
     /* the photo stands a little shorter than the text, as in her file */
     /* the photo stands at 88% of the height below the header, a little
@@ -2095,10 +2097,10 @@ summary::after { color: var(--navy); opacity: 0.65; }
        short, wide window it may open up to about 5:6 so the photo stays
        large; never past 36% of the screen */
     --ph: calc(var(--room) * 0.97);
-    --pw: min(calc(var(--ph) * 0.9), 36vw);
+    --pw: min(calc(var(--ph) * 0.9), 33vw);
     /* the type unit is measured against the earlier, narrower photo so the
        headline does not move when the photo grows */
-    --colw: calc(92vw - min(calc(var(--room) * 0.69), 34vw));
+    --colw: calc(84vw - min(calc(var(--room) * 0.69), 31vw));
     /* 66 rather than her 52.7 across: her headline line "inspiration to
        action" is lowercase, Kandace's "from INSPIRATION" is caps and
        wider, and this keeps it to four lines like hers. */
@@ -2110,7 +2112,7 @@ summary::after { color: var(--navy); opacity: 0.65; }
   }
   .act--hero .act__inner {
     max-width: none;
-    padding-inline: 4vw;
+    padding-inline: 8vw;
     grid-template-columns: minmax(0, 1fr) var(--pw);
     column-gap: 4vw;
     align-items: center;
