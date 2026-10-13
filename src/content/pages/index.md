@@ -148,7 +148,7 @@ about:
 
     Today, I use that experience to help businesses grow their visibility and website traffic on Pinterest, so they can spend more time doing what they love.
   bullets: []
-  image: "/images/about-2.webp"
+  image: "/images/about-5.webp"
   imageAlt: "Kandace Emory"
   ctaLabel: "Book a call with Kandace"
 
