@@ -2537,3 +2537,15 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
     font-size: calc(1.78 * var(--u));
   }
 }
+
+/* It's perfect for: the left side runs the full height of the mint divider,
+   as in her mockup. The heading's capitals start level with the top of the
+   divider (a hair above it, as she drew it) and the last line sits on its
+   bottom; the list breathes a little more to fill the height, with the type
+   and widths unchanged. */
+@media (min-width: 64rem) {
+  #who-its-for .act__lead { margin-top: calc(-1.35 * var(--u)); }
+  #who-its-for .act__lead .ticks li { padding-block: calc(var(--wf-pad, 1.405) * var(--u)); }
+  #who-its-for .act__lead .ticks li:last-child { padding-bottom: 0; }
+  #who-its-for .act__lead .ticks li::before { top: calc(var(--wf-pad, 1.405) * var(--u) + 0.58em); }
+}
