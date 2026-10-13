@@ -2545,7 +2545,7 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
    and widths unchanged. */
 @media (min-width: 64rem) {
   #who-its-for .act__lead { margin-top: calc(-1.35 * var(--u)); }
-  #who-its-for .act__lead .ticks li { padding-block: calc(var(--wf-pad, 1.405) * var(--u)); }
+  #who-its-for .act__lead .ticks li { padding-block: calc(var(--wf-pad, 1.391) * var(--u)); }
   #who-its-for .act__lead .ticks li:last-child { padding-bottom: 0; }
-  #who-its-for .act__lead .ticks li::before { top: calc(var(--wf-pad, 1.405) * var(--u) + 0.58em); }
+  #who-its-for .act__lead .ticks li::before { top: calc(var(--wf-pad, 1.391) * var(--u) + 0.58em); }
 }
