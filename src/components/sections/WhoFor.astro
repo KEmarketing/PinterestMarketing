@@ -32,3 +32,48 @@ const { data } = Astro.props;
     </div>
   </div>
 </section>
+
+<script is:inline>
+  /* Lines the bottom of the last item's letters up with the bottom of the
+     booking button exactly, at whatever size the page is viewed, by fine
+     tuning the list's spacing. The stylesheet gets it within a pixel or so;
+     this removes the last bit of rounding. Desktop only, where the two
+     columns sit side by side. */
+  (function () {
+    var s = document.getElementById('who-its-for');
+    if (!s) return;
+    var lead = s.querySelector('.act__lead');
+    var btn = s.querySelector('.whofor__actions .btn');
+    var items = lead && lead.querySelectorAll('.ticks li');
+    if (!lead || !btn || !items || !items.length) return;
+    var last = items[items.length - 1];
+    var mark = document.createElement('span');
+    mark.setAttribute('aria-hidden', 'true');
+    mark.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline;';
+    var wide = window.matchMedia('(min-width: 64rem)');
+    var probe = document.createElement('div');
+    probe.style.cssText = 'position:absolute;visibility:hidden;width:calc(100 * var(--u));height:0;';
+    function fit() {
+      lead.style.removeProperty('--wf-pad');
+      if (!wide.matches) return;
+      last.appendChild(mark);
+      s.querySelector('.act__inner').appendChild(probe);
+      var u = probe.getBoundingClientRect().width / 100;
+      probe.remove();
+      if (!u) { mark.remove(); return; }
+      var pad = parseFloat(getComputedStyle(lead).getPropertyValue('--wf-pad')) || 1.391;
+      for (var i = 0; i < 3; i++) {
+        var gap = mark.getBoundingClientRect().top - btn.getBoundingClientRect().bottom;
+        if (Math.abs(gap) < 0.25) break;
+        pad -= gap / (11 * u);
+        lead.style.setProperty('--wf-pad', pad.toFixed(4));
+      }
+      mark.remove();
+    }
+    fit();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    window.addEventListener('load', fit);
+    var t;
+    window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(fit, 120); });
+  })();
+</script>
