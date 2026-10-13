@@ -2551,4 +2551,4 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 }
 /* The optical lift Kandace's screen needed: the last line sits a hair
    (about 3px on a laptop) above the button's edge, so it reads as level. */
-@media (min-width: 64rem) { #who-its-for .act__lead { --wf-lift: 0.25; } }
+@media (min-width: 64rem) { #who-its-for .act__lead { --wf-lift: 0.17; } }
