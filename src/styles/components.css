@@ -2552,3 +2552,19 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 /* The optical lift Kandace's screen needed: the last line sits a hair
    (about 3px on a laptop) above the button's edge, so it reads as level. */
 @media (min-width: 64rem) { #who-its-for .act__lead { --wf-lift: 0.17; } }
+
+/* The two pins at her size: measured off her mockup they are 20% of the
+   band's width each (they were 21%), with the same centers as hers. Still
+   cropped top and bottom. */
+@media (min-width: 52rem) {
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin { height: 105.2%; top: -2.6%; }
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin--1 { left: 8.28%; }
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin--2 { right: 9.58%; }
+}
+@media (min-width: 52rem) and (max-width: 79.999rem) {
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin--1 { left: 4.06%; }
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin--2 { right: 4.56%; }
+}
+@media (min-width: 52rem) and (max-width: 63.999rem) {
+  .chapter--pinned:not(.chapter--pinned-4) .chapter__pin { height: 86%; top: 7%; }
+}
