@@ -2568,3 +2568,10 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 @media (min-width: 52rem) and (max-width: 63.999rem) {
   .chapter--pinned:not(.chapter--pinned-4) .chapter__pin { height: 86%; top: 7%; }
 }
+
+/* About: all of the text in her navy, as Kandace asked. */
+#about .act__kicker,
+#about .act__body h2,
+#about .act__body p,
+#about .act__body .lede,
+#about .act__body .ticks li { color: var(--navy); }
