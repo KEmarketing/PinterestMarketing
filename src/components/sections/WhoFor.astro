@@ -63,7 +63,10 @@ const { data } = Astro.props;
       if (!u) { mark.remove(); return; }
       var pad = parseFloat(getComputedStyle(lead).getPropertyValue('--wf-pad')) || 1.391;
       for (var i = 0; i < 3; i++) {
-        var gap = mark.getBoundingClientRect().top - btn.getBoundingClientRect().bottom;
+        /* --wf-lift (in u) raises the line a touch above the button's
+           edge, the optical correction that makes it read as level */
+        var lift = (parseFloat(getComputedStyle(lead).getPropertyValue('--wf-lift')) || 0) * u;
+        var gap = mark.getBoundingClientRect().top - (btn.getBoundingClientRect().bottom - lift);
         if (Math.abs(gap) < 0.25) break;
         pad -= gap / (11 * u);
         lead.style.setProperty('--wf-pad', pad.toFixed(4));
