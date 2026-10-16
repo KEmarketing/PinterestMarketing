@@ -1,314 +1,717 @@
 # The editor Kandace uses (Pages CMS). Three things show in its menu:
-# the guide, the page itself, and site settings.
+# the guide, the page itself, and site settings. Every box says where
+# on the page it shows.
 
 media:
   input: public/images
   output: /images
-  categories: [image]
-  extensions: [jpg, jpeg, png, webp, avif, gif]
+  categories:
+  - image
+  extensions:
+  - jpg
+  - jpeg
+  - png
+  - webp
+  - avif
+  - gif
   rename: safe
-
 content:
-  - name: guide
-    label: "Start here: how to edit your site"
-    type: file
-    path: cms/guide.md
+- name: guide
+  label: 'Start here: how to edit your site'
+  type: file
+  path: cms/guide.md
+  fields:
+  - name: body
+    label: false
+    type: rich-text
+    readonly: true
+    options:
+      format: markdown
+      switcher: false
+      media: false
+- name: page
+  label: Your page
+  type: file
+  path: src/content/pages/index.md
+  fields:
+  - name: title
+    label: Title in Google
+    type: string
+    required: true
+    description: Not shown on the page itself. It's the blue link people click in Google and the name
+      on the browser tab. Best under 60 characters.
+  - name: metaDescription
+    label: Description in Google
+    type: text
+    required: true
+    description: Not shown on the page itself. It's the gray text under your title in Google. Around 150
+      characters.
+  - name: urlPath
+    type: string
+    hidden: true
+  - name: draft
+    type: boolean
+    hidden: true
+  - name: hero
+    label: 1. Top of the page
+    type: object
     fields:
-      - name: body
-        label: false
-        type: rich-text
-        readonly: true
-        options:
-          format: markdown
-          switcher: false
-          media: false
-
-  - name: page
-    label: Your page
-    type: file
-    path: src/content/pages/index.md
-    fields:
-      - name: title
-        label: Title in Google
+    - name: headingLead
+      label: First line of the headline (darker, on its own line)
+      type: string
+      description: 'Where it shows: the first line of the big headline, on its own line and a little darker
+        ("Pinterest Marketing:").'
+    - name: heading
+      label: Headline
+      type: string
+      required: true
+      description: 'Where it shows: the rest of the big headline, under the first line. Put **two stars**
+        around words to give them the coral highlight.'
+    - name: subheading
+      label: Supporting text
+      type: text
+      required: true
+      description: 'Where it shows: the text under the headline. Leave an empty line between paragraphs.
+        A paragraph that ends in a question mark becomes one of the big italic questions.'
+    - name: cta
+      label: Main button
+      type: object
+      fields:
+      - name: label
+        label: Button text
         type: string
         required: true
-        description: "The blue link people see in Google and the name on the browser tab. Best kept under 60 characters."
-      - name: metaDescription
-        label: Description in Google
+        description: The words on the button.
+      - name: url
+        label: Button link
+        type: string
+        required: true
+        description: Where the button goes. Type BOOKING_URL to use your booking link from Site settings.
+      description: 'Where it shows: the navy button under the text.'
+    - name: image
+      label: Photo
+      type: image
+      description: 'Where it shows: the photo in the coral arch on the right (under the text on phones).'
+    - name: imageAlt
+      label: Photo description
+      type: string
+      description: Not shown. A few words describing the photo, for screen readers and Google.
+    description: 'The very first screen: the big headline and text on the left, your photo on the right.'
+  - name: hook
+    label: 2. How to get noticed
+    type: object
+    fields:
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: the big centered heading at the top of the mint screen. Put **two
+        stars** around words to give them the coral highlight.'
+    - name: sub
+      label: Small line under the heading
+      type: string
+      description: 'Where it shows: the smaller line under the heading, with the thin line beneath it
+        ("This is where I come in...").'
+    - name: body
+      label: Text
+      type: text
+      required: true
+      description: 'Where it shows: the centered paragraph under that small line.'
+    - name: bullets
+      label: The three strips
+      type: string
+      list: true
+      description: 'Where it shows: the light pink strips at the bottom, one strip per item, in this order.'
+    description: The mint screen right after the top of the page, with everything centered.
+  - name: explainer
+    label: 3. Why Pinterest
+    type: object
+    fields:
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: the heading at the top left.'
+    - name: body
+      label: Text
+      type: text
+      required: true
+      description: 'Where it shows: the paragraph under the heading. Put __two underscores__ around words
+        to underline them in coral, or **two stars** to make them stand out.'
+    - name: points
+      label: Point
+      type: object
+      list: true
+      fields:
+      - name: heading
+        label: Heading
+        type: string
+        required: true
+        description: 'Where it shows: the bold title at the top of the card.'
+      - name: body
+        label: Text
         type: text
         required: true
-        description: "The gray text under your title in Google. Around 150 characters."
-      - { name: urlPath, type: string, hidden: true }
-      - { name: draft, type: boolean, hidden: true }
-
-      - name: hero
-        label: "1. Top of the page"
-        type: object
-        fields:
-          - { name: headingLead, label: "First line of the headline (darker, on its own line)", type: string }
-          - name: heading
-            label: Headline
-            type: string
-            required: true
-            description: "Put **two stars** around words to give them the coral highlight, like **ACTION!**"
-          - { name: subheading, label: Supporting text, type: text, required: true, description: "Leave an empty line between paragraphs. A paragraph that ends in a question mark is set in the large italic style." }
-          - name: cta
-            label: Main button
-            type: object
-            fields:
-              - { name: label, label: Button text, type: string, required: true }
-              - { name: url, label: Button link, type: string, required: true, description: "Type BOOKING_URL to use your booking link from Site settings." }
-          - { name: image, label: Photo, type: image }
-          - { name: imageAlt, label: Photo description, type: string, description: "A few words describing the photo, for people using screen readers and for Google." }
-
-      - name: hook
-        label: "2. How to get noticed"
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string, required: true, description: "Put **two stars** around words to highlight them in coral." }
-          - { name: sub, label: Small line under the heading, type: string }
-          - { name: body, label: Text, type: text, required: true }
-          - { name: bullets, label: The three strips, type: string, list: true }
-
-      - name: explainer
-        label: "3. Why Pinterest"
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string, required: true }
-          - name: body
-            label: Text
-            type: text
-            required: true
-            description: "Put __two underscores__ around words to underline them in coral, or **two stars** to make them bold."
-          - name: points
-            label: Point
-            type: object
-            list: true
-            fields:
-              - { name: heading, label: Heading, type: string, required: true }
-              - { name: body, label: Text, type: text, required: true }
-
-      - name: chapters
-        label: "Big navy breaks (between sections)"
-        type: object
-        list: true
-        description: "The full-width navy moments. The first sits after Why Pinterest, the second after It's perfect for, the third before Packages."
-        fields:
-          - { name: line, label: Big line, type: string, required: true }
-          - { name: sub, label: Small line under it, type: text, description: "Each line you type here shows as its own line." }
-          - { name: pins, label: "Pin designs beside the line (two, or leave empty for none)", type: image, list: true }
-
-      - name: whoFor
-        label: "4. It's perfect for"
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: intro, label: "Line under the heading (optional, empty for now)", type: text }
-          - { name: items, label: "Left list (navy)", type: string, list: true }
-          - { name: needsHeading, label: "Right side heading (coral)", type: string }
-          - { name: needs, label: "Right side list (coral)", type: string, list: true }
-          - { name: footnote, label: Underlined line, type: text }
-          - { name: ctaLabel, label: Button text, type: string, description: "The button opens your booking link." }
-
-      - name: process
-        label: "5. The process (three steps)"
-        type: object
-        fields:
-          - { name: kicker, label: Small line above the heading, type: string }
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: aside, label: "Small line beside the heading (optional, empty for now)", type: string }
-          - name: steps
-            label: Step
-            type: object
-            list: true
-            fields:
-              - { name: heading, label: Step title, type: string, required: true }
-              - { name: body, label: Step text, type: text, required: true }
-          - { name: ctaLabel, label: Button text, type: string, description: "The button opens your booking link." }
-
-      - name: packages
-        label: "6. Packages"
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: intro, label: Intro line, type: text }
-          - name: items
-            label: Package
-            type: object
-            list: true
-            fields:
-              - { name: name, label: Package name, type: string, required: true }
-              - { name: price, label: Price, type: string, required: true, description: "Type it the way it should show, like $699" }
-              - { name: cadence, label: "How often (like one time, or monthly)", type: string }
-              - { name: summary, label: Who it suits, type: text }
-              - { name: features, label: "What's included", type: string, list: true }
-              - { name: featured, label: Highlight this one, type: boolean }
-              - { name: tab, label: "Tab above the card (leave empty for none)", type: string }
-              - { name: tabTone, label: Tab color, type: select, options: { values: [navy, coral] } }
-          - { name: ctaLabel, label: Button text, type: string, description: "The button opens your booking link." }
-          - { name: note, label: Note under the packages, type: text, description: "Each line you type here shows as its own line." }
-
-      - name: testimonials
-        label: "7. Testimonials"
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string, required: true }
-          - name: items
-            label: Testimonial
-            type: object
-            list: true
-            fields:
-              - { name: quote, label: What they said, type: text, required: true }
-              - { name: name, label: Their name, type: string, required: true }
-              - { name: role, label: Their business or role, type: string }
-              - { name: image, label: "Their photo (optional, square works best)", type: image }
-              - { name: imageAlt, label: Photo description, type: string }
-
-      - name: work
-        label: "8. Pin examples"
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: intro, label: Intro line, type: text }
-          - name: images
-            label: Pin
-            type: object
-            list: true
-            fields:
-              - { name: src, label: "Pin image (tall, 2:3, like 1000 x 1500)", type: image, required: true }
-              - { name: alt, label: "What the pin says or shows", type: string, required: true, description: "For people using screen readers and for Google." }
-
-      - name: stats
-        label: "9. Pinterest stats"
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string, required: true, description: "Put **two stars** around words to highlight them in coral." }
-          - name: items
-            label: Stat in the navy band
-            type: object
-            list: true
-            description: "Three fit the band neatly."
-            fields:
-              - { name: value, label: The number, type: string, required: true }
-              - { name: label, label: What it means, type: string, required: true }
-          - name: highlight
-            label: Big coral stat under the band
-            type: object
-            fields:
-              - { name: value, label: The number, type: string, description: "Leave empty to hide it." }
-              - { name: label, label: What it means, type: string }
-          - { name: body, label: Paragraph at the bottom, type: text }
-
-      - name: about
-        label: "10. About you"
-        type: object
-        fields:
-          - { name: kicker, label: Small line above your name, type: string }
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: body, label: Text, type: text, required: true, description: "Leave an empty line between paragraphs." }
-          - { name: bullets, label: "Background points (optional, empty for now)", type: string, list: true }
-          - { name: image, label: Photo, type: image }
-          - { name: imageAlt, label: Photo description, type: string }
-          - { name: ctaLabel, label: Button text under the photo, type: string, description: "The button opens your booking link." }
-
-      - name: faq
-        label: "11. Questions"
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string, required: true }
-          - name: items
-            label: Question
-            type: object
-            list: true
-            fields:
-              - { name: question, label: Question, type: string, required: true }
-              - { name: answer, label: Answer, type: text, required: true }
-              - { name: ctaLabel, label: "Booking button under the answer (leave empty for none)", type: string }
-
-      - name: contact
-        label: "12. Contact"
-        type: object
-        description: "Your email address and Facebook link are set once, in Site settings."
-        fields:
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: body, label: Text, type: text, required: true, description: "Leave an empty line between paragraphs." }
-          - name: cta
-            label: Button
-            type: object
-            fields:
-              - { name: label, label: Button text, type: string, required: true }
-              - { name: url, label: Button link, type: string, required: true, description: "Type BOOKING_URL to use your booking link from Site settings." }
-          - { name: boxHeading, label: Heading inside the box, type: string }
-          - { name: boxBody, label: Line inside the box, type: text }
-          - { name: responseNote, label: How fast you reply, type: string }
-
-      - name: closing
-        label: "13. Bottom of the page"
-        type: object
-        description: "The last screen. Its email list button is set up under Email list."
-        fields:
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: body, label: Text, type: text, required: true, description: "Leave an empty line between paragraphs." }
-          - { name: signoff, label: Last line, type: string }
-
-      - name: signup
-        label: "Email list"
-        type: object
-        description: "Your email list has two buttons: one at the top of every screen and one on the last screen. The switch shows or hides both."
-        fields:
-          - { name: show, label: Show the email list buttons, type: boolean, description: "Turn this off to hide both buttons until your email list is ready." }
-          - name: url
-            label: Signup link
-            type: string
-            description: "The web address of the signup page from your email platform. It has to be a page people can open, not embed code. While this is empty, the buttons scroll to the last screen."
-          - { name: headerLabel, label: Button text at the top of the page, type: string }
-          - { name: buttonLabel, label: Button text on the last screen, type: string }
-
-  - name: settings
-    label: Site settings
-    type: file
-    path: src/data/site.json
+        description: 'Where it shows: the text inside the card, under its title.'
+      description: 'Where it shows: the white cards under the paragraph, left to right in this order.'
+    description: The screen with the three white cards.
+  - name: chapters
+    label: Big navy breaks (between sections)
+    type: object
+    list: true
+    description: 'The full-width navy bands between sections, in this order: the first after Why Pinterest,
+      the second after It''s perfect for, the third just before Packages.'
     fields:
-      - { name: booking, label: Booking link, type: string, required: true, description: "Your Acuity link. Every booking button on the page uses it." }
-      - { name: email, label: Email address, type: string, required: true, description: "Shows in the Contact box and the footer." }
-      - { name: facebook, label: Facebook page link, type: string, required: true, description: "Used in the Contact box and the footer." }
-      - name: nav
-        label: Menu links
-        type: object
-        description: "The words in the menu at the top and in the footer."
-        fields:
-          - { name: whyPinterest, label: "Goes to Why Pinterest", type: string, required: true }
-          - { name: services, label: "Goes to Packages", type: string, required: true }
-          - { name: portfolio, label: "Goes to Pin examples", type: string, required: true }
-          - { name: about, label: "Goes to About", type: string, required: true }
-          - { name: contact, label: "Goes to Contact", type: string, required: true }
-      - name: labels
-        label: Small labels
-        type: object
-        fields:
-          - { name: packagesSwipe, label: "Swipe hint on the packages (phones)", type: string, required: true }
-          - { name: scrollMore, label: "Scroll hint on testimonials and pin examples", type: string, required: true }
-          - { name: contactFacebook, label: "Facebook link text in the Contact box", type: string, required: true }
-          - { name: footerFacebook, label: "Facebook link text in the footer", type: string, required: true }
-      - { name: footerNote, label: Small print in the footer, type: text }
-      - name: pinterest
-        label: Your Pinterest profile link
+    - name: line
+      label: Big line
+      type: string
+      required: true
+      description: 'Where it shows: the big line in the middle of the navy band. Put **two stars** around
+        words to give them the coral highlight.'
+    - name: sub
+      label: Small line under it
+      type: text
+      description: 'Where it shows: the smaller line under the big line. Each line you type shows as its
+        own line.'
+    - name: pins
+      label: Pin designs beside the line (two, or leave empty for none)
+      type: image
+      list: true
+      description: 'Where it shows: pin images tilted on either side of the band. Add two, or leave it
+        empty for none.'
+  - name: whoFor
+    label: 4. It's perfect for
+    type: object
+    fields:
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: the big heading at the top left, with the mint line under it ("It''s
+        perfect for:").'
+    - name: intro
+      label: Line under the heading (optional, empty for now)
+      type: text
+      description: 'Optional, empty for now. Where it shows: a line under the heading, above the left
+        list.'
+    - name: items
+      label: Left list (navy)
+      type: string
+      list: true
+      description: 'Where it shows: the navy list on the left, one item per line, in this order.'
+    - name: needsHeading
+      label: Right side heading (coral)
+      type: string
+      description: 'Where it shows: the coral heading at the top of the right side, beside the mint divider
+        line.'
+    - name: needs
+      label: Right side list (coral)
+      type: string
+      list: true
+      description: 'Where it shows: the coral list on the right, under that heading.'
+    - name: footnote
+      label: Underlined line
+      type: text
+      description: 'Where it shows: the underlined coral line under the right list, above the mint line.'
+    - name: ctaLabel
+      label: Button text
+      type: string
+      description: 'Where it shows: the words on the mint button at the bottom right. The button opens
+        your booking link.'
+    description: The light pink screen with the two lists side by side.
+  - name: process
+    label: 5. The process (three steps)
+    type: object
+    fields:
+    - name: kicker
+      label: Small line above the heading
+      type: string
+      description: 'Where it shows: the small coral capital-letter line above the heading ("THE PROCESS").'
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: the big heading, centered above the cards.'
+    - name: aside
+      label: Small line beside the heading (optional, empty for now)
+      type: string
+      description: 'Optional, empty for now. Where it shows: a small line under the heading, above the
+        cards.'
+    - name: steps
+      label: Step
+      type: object
+      list: true
+      fields:
+      - name: heading
+        label: Step title
         type: string
-        description: "Like https://www.pinterest.com/yourname/. It isn't shown on the page; it tells Google and AI tools that your Pinterest and this site belong to the same business."
-      - name: otherProfiles
-        label: Your other profile links (Instagram, LinkedIn and so on)
+        required: true
+        description: 'Where it shows: the coral title at the top of the card, under its number.'
+      - name: body
+        label: Step text
+        type: text
+        required: true
+        description: 'Where it shows: the text inside the card, under its title.'
+      description: 'Where it shows: the white cards, numbered 01, 02, 03 in this order.'
+    - name: ctaLabel
+      label: Button text
+      type: string
+      description: 'Where it shows: the words on the navy button under the cards. The button opens your
+        booking link.'
+    description: The screen with the three numbered white cards (01, 02, 03).
+  - name: packages
+    label: 6. Packages
+    type: object
+    fields:
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: the big heading at the top left ("Packages").'
+    - name: intro
+      label: Intro line
+      type: text
+      description: 'Where it shows: the line beside the heading.'
+    - name: items
+      label: Package
+      type: object
+      list: true
+      fields:
+      - name: name
+        label: Package name
+        type: string
+        required: true
+        description: 'Where it shows: the bold capital-letter name at the top of the card.'
+      - name: price
+        label: Price
+        type: string
+        required: true
+        description: 'Where it shows: the large price in the mint band under the name. Type it the way
+          it should show, like $699.'
+      - name: cadence
+        label: How often (like one time, or monthly)
+        type: string
+        description: 'Where it shows: the small capital words next to the price ("ONE TIME", "MONTHLY").'
+      - name: summary
+        label: Who it suits
+        type: text
+        description: 'Where it shows: the short paragraph under the price band.'
+      - name: features
+        label: What's included
         type: string
         list: true
-        description: "Same idea: not shown on the page, it connects your profiles to this site for Google and AI tools."
-      - name: shareImage
-        label: Share picture
+        description: 'Where it shows: the bulleted list at the bottom of the card, one item per line.'
+      - name: featured
+        label: Highlight this one
+        type: boolean
+        description: 'Gives the card the highlighted look: a colored outline matching its tab color.'
+      - name: tab
+        label: Tab above the card (leave empty for none)
+        type: string
+        description: 'Where it shows: the small colored tab sitting on top of the card (like "NEW TO PINTEREST").
+          Leave empty for none.'
+      - name: tabTone
+        label: Tab color
+        type: select
+        options:
+          values:
+          - navy
+          - coral
+        description: The color of that tab (and of the outline, if the card is highlighted).
+      description: 'Where it shows: the package cards, left to right in this order (on phones, swipe sideways
+        through them).'
+    - name: ctaLabel
+      label: Button text
+      type: string
+      description: 'Where it shows: the words on the navy button under the cards. The button opens your
+        booking link.'
+    - name: note
+      label: Note under the packages
+      type: text
+      description: 'Where it shows: the small print at the very bottom, under the button (the Tailwind
+        note). Each line you type shows as its own line.'
+    description: The pricing screen with the package cards.
+  - name: testimonials
+    label: 7. Testimonials
+    type: object
+    fields:
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: the heading at the top left.'
+    - name: items
+      label: Testimonial
+      type: object
+      list: true
+      fields:
+      - name: quote
+        label: What they said
+        type: text
+        required: true
+        description: 'Where it shows: the review itself, the larger text at the top of each review.'
+      - name: name
+        label: Their name
+        type: string
+        required: true
+        description: 'Where it shows: in small capital letters under the review, next to the photo.'
+      - name: role
+        label: Their business or role
+        type: string
+        description: 'Where it shows: right after the name, after a comma.'
+      - name: image
+        label: Their photo (optional, square works best)
         type: image
-        description: "The picture that shows when someone shares your link in a text or on Facebook or LinkedIn. Make it 1200 x 630."
-      - name: verification
-        label: Ownership codes
-        type: object
-        description: "Paste the code (or the whole tag) that Google, Bing or Pinterest gives you to prove the site is yours. The guide walks you through it. Leave these in place once they're working."
-        fields:
-          - { name: google, label: Google Search Console code, type: string }
-          - { name: bing, label: Bing Webmaster Tools code, type: string }
-          - { name: pinterest, label: Pinterest claim code, type: string }
+        description: 'Where it shows: the small round photo beside the name. Optional. Square photos work
+          best.'
+      - name: imageAlt
+        label: Photo description
+        type: string
+        description: Not shown. A few words describing the photo, for screen readers and Google.
+      description: 'Where it shows: the reviews, left to right in this order.'
+    description: The mint screen with the scrolling reviews.
+  - name: work
+    label: 8. Pin examples
+    type: object
+    fields:
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: the heading at the top left ("Pin examples").'
+    - name: intro
+      label: Intro line
+      type: text
+      description: 'Where it shows: the line in the mint band under the heading.'
+    - name: images
+      label: Pin
+      type: object
+      list: true
+      fields:
+      - name: src
+        label: Pin image (tall, 2:3, like 1000 x 1500)
+        type: image
+        required: true
+        description: The pin image. Tall, in the 2:3 Pinterest shape, like 1000 x 1500.
+      - name: alt
+        label: What the pin says or shows
+        type: string
+        required: true
+        description: Not shown. What the pin says or shows, for screen readers and Google.
+      description: 'Where it shows: the scrolling row of pins, left to right in this order.'
+    description: The screen with the scrolling row of your pin designs.
+  - name: stats
+    label: 9. Pinterest stats
+    type: object
+    fields:
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: the heading above the navy band. Put **two stars** around words to
+        give them the coral highlight.'
+    - name: items
+      label: Stat in the navy band
+      type: object
+      list: true
+      description: 'Where it shows: the numbers in the navy band, left to right in this order. Three fit
+        the band neatly.'
+      fields:
+      - name: value
+        label: The number
+        type: string
+        required: true
+        description: 'Where it shows: the large white number.'
+      - name: label
+        label: What it means
+        type: string
+        required: true
+        description: 'Where it shows: the small bold white words under the number.'
+    - name: highlight
+      label: Big coral stat under the band
+      type: object
+      fields:
+      - name: value
+        label: The number
+        type: string
+        description: The large coral number. Leave empty to hide this line.
+      - name: label
+        label: What it means
+        type: string
+        description: The coral words to the right of the number.
+      description: 'Where it shows: the big coral number under the band, with its words to the right.'
+    - name: body
+      label: Paragraph at the bottom
+      type: text
+      description: 'Where it shows: the bold navy paragraph at the bottom.'
+    description: The light pink screen with the navy band of numbers.
+  - name: about
+    label: 10. About you
+    type: object
+    fields:
+    - name: kicker
+      label: Small line above your name
+      type: string
+      description: 'Where it shows: the small capital-letter line above your name ("FOUNDER & OWNER").'
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: your name, the large heading.'
+    - name: body
+      label: Text
+      type: text
+      required: true
+      description: 'Where it shows: your bio, under your name. Leave an empty line between paragraphs.
+        The first paragraph is the opening one.'
+    - name: bullets
+      label: Background points (optional, empty for now)
+      type: string
+      list: true
+      description: 'Optional, empty for now. Where it shows: a short list under your bio.'
+    - name: image
+      label: Photo
+      type: image
+      description: 'Where it shows: your photo, in the coral arch on the left.'
+    - name: imageAlt
+      label: Photo description
+      type: string
+      description: Not shown. A few words describing the photo, for screen readers and Google.
+    - name: ctaLabel
+      label: Button text under the photo
+      type: string
+      description: 'Where it shows: the words on the coral button under your photo. The button opens your
+        booking link.'
+    description: The pale yellow screen with your photo on the left and your bio on the right.
+  - name: faq
+    label: 11. Questions
+    type: object
+    fields:
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: the heading on the left ("Questions").'
+    - name: items
+      label: Question
+      type: object
+      list: true
+      fields:
+      - name: question
+        label: Question
+        type: string
+        required: true
+        description: 'Where it shows: the bold line people click to open the answer.'
+      - name: answer
+        label: Answer
+        type: text
+        required: true
+        description: 'Where it shows: the text that appears when the question is opened.'
+      - name: ctaLabel
+        label: Booking button under the answer (leave empty for none)
+        type: string
+        description: 'Where it shows: a navy booking button under the answer. Leave empty for none.'
+      description: 'Where it shows: the questions on the right, top to bottom in this order.'
+    description: The mint screen with the questions that open and close.
+  - name: contact
+    label: 12. Contact
+    type: object
+    description: The screen with the words on the left and the white box and button on the right.
+    fields:
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: the big heading on the left, with the mint line under it.'
+    - name: body
+      label: Text
+      type: text
+      required: true
+      description: 'Where it shows: the paragraphs under the heading on the left. Leave an empty line
+        between paragraphs.'
+    - name: cta
+      label: Button
+      type: object
+      fields:
+      - name: label
+        label: Button text
+        type: string
+        required: true
+        description: The words on the button.
+      - name: url
+        label: Button link
+        type: string
+        required: true
+        description: Where the button goes. Type BOOKING_URL to use your booking link from Site settings.
+      description: 'Where it shows: the navy button under the white box.'
+    - name: boxHeading
+      label: Heading inside the box
+      type: string
+      description: 'Where it shows: the bold italic line at the top of the white box ("Not ready for a
+        call?").'
+    - name: boxBody
+      label: Line inside the box
+      type: text
+      description: 'Where it shows: the italic line under it, inside the box.'
+    - name: responseNote
+      label: How fast you reply
+      type: string
+      description: 'Where it shows: the small italic line under that, inside the box ("I usually reply
+        within one business day."). Your email and Facebook links below it come from Site settings.'
+  - name: closing
+    label: 13. Bottom of the page
+    type: object
+    description: The last navy screen, just above the footer.
+    fields:
+    - name: heading
+      label: Heading
+      type: string
+      required: true
+      description: 'Where it shows: the big mint heading at the top of the navy screen.'
+    - name: body
+      label: Text
+      type: text
+      required: true
+      description: 'Where it shows: the white paragraphs under the heading, above the button. Leave an
+        empty line between paragraphs.'
+    - name: signoff
+      label: Last line
+      type: string
+      description: 'Where it shows: the italic line under the button.'
+  - name: signup
+    label: Email list
+    type: object
+    description: 'Your email list has two buttons: the mint one at the top right of every screen (in the
+      menu on phones) and the one on the last navy screen. The switch shows or hides both.'
+    fields:
+    - name: show
+      label: Show the email list buttons
+      type: boolean
+      description: Turn this off to hide both buttons until your email list is ready.
+    - name: url
+      label: Signup link
+      type: string
+      description: The web address of the signup page from your email platform. It has to be a page people
+        can open, not embed code. While this is empty, the buttons scroll down to the last screen.
+    - name: headerLabel
+      label: Button text at the top of the page
+      type: string
+      description: 'Where it shows: the words on the mint button at the top right of every screen.'
+    - name: buttonLabel
+      label: Button text on the last screen
+      type: string
+      description: 'Where it shows: the words on the mint button on the last navy screen.'
+- name: settings
+  label: Site settings
+  type: file
+  path: src/data/site.json
+  fields:
+  - name: booking
+    label: Booking link
+    type: string
+    required: true
+    description: Your Acuity link. Every booking button on the page uses it.
+  - name: email
+    label: Email address
+    type: string
+    required: true
+    description: 'Where it shows: in the white box in Contact and in the footer.'
+  - name: facebook
+    label: Facebook page link
+    type: string
+    required: true
+    description: 'Where it shows: the Facebook links in the white box in Contact and in the footer.'
+  - name: nav
+    label: Menu links
+    type: object
+    description: 'Where it shows: the words in the menu at the top of every screen and in the footer.'
+    fields:
+    - name: whyPinterest
+      label: Goes to Why Pinterest
+      type: string
+      required: true
+      description: The menu link that jumps to Why Pinterest.
+    - name: services
+      label: Goes to Packages
+      type: string
+      required: true
+      description: The menu link that jumps to Packages.
+    - name: portfolio
+      label: Goes to Pin examples
+      type: string
+      required: true
+      description: The menu link that jumps to Pin examples.
+    - name: about
+      label: Goes to About
+      type: string
+      required: true
+      description: The menu link that jumps to About.
+    - name: contact
+      label: Goes to Contact
+      type: string
+      required: true
+      description: The menu link that jumps to Contact.
+  - name: labels
+    label: Small labels
+    type: object
+    fields:
+    - name: packagesSwipe
+      label: Swipe hint on the packages (phones)
+      type: string
+      required: true
+      description: 'Where it shows: above the package cards on phones, with an arrow.'
+    - name: scrollMore
+      label: Scroll hint on testimonials and pin examples
+      type: string
+      required: true
+      description: 'Where it shows: under the reviews and under the pin examples, with an arrow.'
+    - name: contactFacebook
+      label: Facebook link text in the Contact box
+      type: string
+      required: true
+      description: 'Where it shows: the Facebook link text in the white box in Contact.'
+    - name: footerFacebook
+      label: Facebook link text in the footer
+      type: string
+      required: true
+      description: 'Where it shows: the Facebook link text in the footer.'
+    description: The small hint words around the page.
+  - name: footerNote
+    label: Small print in the footer
+    type: text
+    description: 'Where it shows: the small print at the very bottom of the footer, above the copyright
+      line.'
+  - name: pinterest
+    label: Your Pinterest profile link
+    type: string
+    description: Like https://www.pinterest.com/yourname/. It isn't shown on the page; it tells Google
+      and AI tools that your Pinterest and this site belong to the same business.
+  - name: otherProfiles
+    label: Your other profile links (Instagram, LinkedIn and so on)
+    type: string
+    list: true
+    description: 'Same idea: not shown on the page, it connects your profiles to this site for Google
+      and AI tools.'
+  - name: shareImage
+    label: Share picture
+    type: image
+    description: The picture that shows when someone shares your link in a text or on Facebook or LinkedIn.
+      Make it 1200 x 630.
+  - name: verification
+    label: Ownership codes
+    type: object
+    description: Paste the code (or the whole tag) that Google, Bing or Pinterest gives you to prove the
+      site is yours. The guide walks you through it. Leave these in place once they're working.
+    fields:
+    - name: google
+      label: Google Search Console code
+      type: string
+      description: Not shown on the page. Paste the code here, Save, then click Verify on the other site.
+    - name: bing
+      label: Bing Webmaster Tools code
+      type: string
+      description: Not shown on the page. Paste the code here, Save, then click Verify on the other site.
+    - name: pinterest
+      label: Pinterest claim code
+      type: string
+      description: Not shown on the page. Paste the code here, Save, then click Verify on the other site.
