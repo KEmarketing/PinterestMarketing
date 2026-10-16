@@ -198,20 +198,14 @@ stats:
   items:
     - value: "80B+"
       label: "Monthly searches"
-      note: "That's a lot of opportunity for your products and brands to be discovered!"
     - value: "640M+"
       label: "Monthly active users"
-      note: "People in over 180 countries use Pinterest to discover, plan, shop, and take action."
     - value: "96%"
       label: "of top searches are unbranded"
-      note: "This gives you an opening to be discovered by people who may not know your brand."
-    - value: "80%"
-      label: "of weekly Pinners feel inspired by the shopping experience"
-    - value: "50%"
-      label: "of Pinterest's global audience is Gen Z"
-    - value: "39%"
-      label: "of consumers have used Pinterest as a search engine"
-  body: "Pinterest isn't simply a place to post pretty pictures. It's a powerful discovery platform where 640 million people search for ideas, discover brands and make purchasing decisions."
+  highlight:
+    value: "50%"
+    label: "of Pinterest's global audience is Gen Z"
+  body: "Pinterest is more than pretty pictures! It's a powerful discovery platform where 640 million people search for ideas, discover brands and make purchasing decisions."
 
 chapters:
   - line: "Is Pinterest marketing right for you?"

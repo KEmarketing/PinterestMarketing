@@ -2592,3 +2592,98 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 @media (min-width: 64rem) {
   #book.act--closing .act__inner { zoom: 1.15; }
 }
+
+/* --- Pinterest stats, built to her simplified mockup ------------------
+   Every size and position below is measured off her mockup as a share of
+   its width (1u = 1% of it), so on a desktop the screen is her drawing at
+   any size; on a short, wide window 1u shrinks so it all fits under the
+   header. The coral is the approved deeper coral. */
+.stats__highlight { margin: var(--sp-4) 0 0; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.6em; row-gap: 0.2em; }
+.stats__highlight-value {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3rem, 2.2rem + 3vw, 4.5rem);
+  line-height: 1;
+  color: var(--coral-deep);
+}
+.stats__highlight-label { font-size: var(--step-1, 1.25rem); color: var(--coral-deep); line-height: 1.3; }
+#pinterest-stats .stats__note { color: var(--navy); font-weight: 700; }
+.stats__band .stat__value { font-variant-numeric: lining-nums; }
+
+@media (min-width: 64rem) {
+  #pinterest-stats {
+    container-type: inline-size;
+    --su: min(1cqw, calc((100svh - var(--header-h, 98px)) / 63.64));
+    padding-block: 0;
+    justify-content: center;
+  }
+  #pinterest-stats .wrap,
+  #pinterest-stats .act__inner,
+  #pinterest-stats .stats__band .wrap {
+    width: calc(100 * var(--su));
+    max-width: none;
+    margin-inline: auto;
+    padding: 0;
+  }
+  /* heading: baseline at 16.45u, text starting 5.69u in */
+  #pinterest-stats > .act__inner:not(.act__inner--after-band) { padding: calc(var(--st-head-top, 13.2) * var(--su)) 0 0 calc(5.69 * var(--su)); }
+  #pinterest-stats h2 {
+    font-size: calc(3.97 * var(--su));
+    line-height: 1;
+    margin: 0;
+    max-width: none;
+    white-space: nowrap;
+  }
+  /* the navy band: 13.71u deep, top at 20.43u */
+  #pinterest-stats .stats__band {
+    margin-top: calc(var(--st-band-gap, 3.18) * var(--su));
+    height: calc(13.71 * var(--su));
+    padding: 0;
+    box-sizing: border-box;
+  }
+  #pinterest-stats .stats__band .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, calc(27.08 * var(--su)));
+    gap: 0;
+    margin: 0;
+    padding: calc(var(--st-num-top, 3.08) * var(--su)) 0 0 calc(6.25 * var(--su));
+  }
+  #pinterest-stats .stats__band .stat { gap: 0; }
+  #pinterest-stats .stats__band .stat__value { font-size: calc(5.35 * var(--su)); line-height: 1; }
+  #pinterest-stats .stats__band .stat__label {
+    font-size: calc(1.41 * var(--su));
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: calc(var(--st-label-gap, 0.86) * var(--su));
+    max-width: calc(26 * var(--su));
+    color: #fff;
+  }
+  /* the big coral figure and its line, on one baseline at 42.0u */
+  #pinterest-stats .act__inner--after-band { padding: 0 0 0 calc(5.69 * var(--su)); }
+  #pinterest-stats .stats__highlight {
+    margin: calc(var(--st-hl-top, 2.63) * var(--su)) 0 0;
+    flex-wrap: nowrap;
+    column-gap: calc(1.87 * var(--su));
+  }
+  #pinterest-stats .stats__highlight-value { font-size: calc(6.5 * var(--su)); }
+  #pinterest-stats .stats__highlight-label { font-size: calc(2.24 * var(--su)); font-weight: 400; line-height: 1; white-space: nowrap; }
+  /* the paragraph: two lines, breaking after "640", 2.415u apart */
+  #pinterest-stats .stats__note {
+    font-size: calc(1.65 * var(--su));
+    line-height: 1.4636;
+    max-width: calc(73.2 * var(--su));
+    margin: calc(var(--st-para-top, 3.48) * var(--su)) 0 0;
+    padding-bottom: calc(var(--st-bottom, 12.06) * var(--su));
+    text-wrap: wrap;
+  }
+}
+/* Phones and tablets: the same pieces, stacked, kept compact so the
+   screen stays close to one phone's height. */
+@media (max-width: 63.999rem) {
+  #pinterest-stats .stats__band { padding-block: var(--sp-3); }
+  #pinterest-stats .stats__band .stats { row-gap: var(--sp-3); }
+  #pinterest-stats .stats__band .stat__value { font-size: clamp(2.2rem, 1.8rem + 2vw, 2.8rem); }
+  #pinterest-stats .stats__highlight { margin-top: var(--sp-3); }
+  #pinterest-stats .stats__highlight-value { font-size: clamp(2.8rem, 2.2rem + 2.5vw, 3.6rem); }
+  #pinterest-stats .stats__note { margin-top: var(--sp-2); }
+}

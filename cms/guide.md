@@ -97,7 +97,12 @@ The heading, the intro line, and each **Pin** (the image and what the pin says o
 
 ### 9. Pinterest stats
 
-The heading (two stars for coral), each **Stat** (the number, what it means, and an optional extra line), and the paragraph under the grid. Six stats fill the grid neatly. Pinterest updates its numbers every year or so, so check them against Pinterest's own newsroom or business site about once a year.
+- **Heading** (two stars for coral).
+- **Stat in the navy band:** each has the number and what it means. Three fit the band neatly.
+- **Big coral stat under the band:** the number and its line. Leave the number empty to hide it.
+- **Paragraph at the bottom.**
+
+Pinterest updates its numbers every year or so, so check them against Pinterest's own newsroom or business site about once a year.
 
 ### 10. About you
 

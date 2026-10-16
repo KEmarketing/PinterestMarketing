@@ -184,15 +184,20 @@ content:
         fields:
           - { name: heading, label: Heading, type: string, required: true, description: "Put **two stars** around words to highlight them in coral." }
           - name: items
-            label: Stat
+            label: Stat in the navy band
             type: object
             list: true
-            description: "Six fills the grid neatly."
+            description: "Three fit the band neatly."
             fields:
               - { name: value, label: The number, type: string, required: true }
               - { name: label, label: What it means, type: string, required: true }
-              - { name: note, label: Extra line under it, type: text }
-          - { name: body, label: Paragraph under the grid, type: text }
+          - name: highlight
+            label: Big coral stat under the band
+            type: object
+            fields:
+              - { name: value, label: The number, type: string, description: "Leave empty to hide it." }
+              - { name: label, label: What it means, type: string }
+          - { name: body, label: Paragraph at the bottom, type: text }
 
       - name: about
         label: "10. About you"

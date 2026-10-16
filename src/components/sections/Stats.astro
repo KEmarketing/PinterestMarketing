@@ -2,29 +2,26 @@
 import Fronds from '../Fronds.astro';
 import { emphasise } from '../../utils.mjs';
 const { data } = Astro.props;
-/* Her mockup: the top row of three sits on a navy band that runs the
-   full width of the screen; the bottom three sit on the blush. */
-const top = data.items.slice(0, 3);
-const rest = data.items.slice(3);
+/* Her simplified mockup: the heading, a navy band of three figures that
+   runs the full width of the screen, one big coral figure with its line
+   beside it, and a short paragraph. */
+const band = data.items ?? [];
+const hl = data.highlight;
 ---
-{/* Six figures in a 3 x 2 grid, as she asked. The numbers carry the panel,
-    so they are set in the display face at heading scale and the label under
-    each one stays small enough that the eye reads the figure first. */}
 <section class="act act--stats act--lat-edge-left" id="pinterest-stats">
   <Fronds corner="tr" scale={2.2} tone="deep" opacity={0.28} delay={1.2} />
   <Fronds corner="br" scale={3.8} tone="deep" opacity={0.42} delay={2.4} />
   <div class="wrap act__inner">
     <h2 set:html={emphasise(data.heading)} />
   </div>
-  {top.length > 0 && (
+  {band.length > 0 && (
     <div class="stats__band">
       <div class="wrap">
         <ul class="stats stats--top">
-          {top.map((s) => (
+          {band.map((s) => (
             <li class="stat">
               <span class="stat__value">{s.value}</span>
               <span class="stat__label">{s.label}</span>
-              {s.note && <span class="stat__note">{s.note}</span>}
             </li>
           ))}
         </ul>
@@ -32,16 +29,11 @@ const rest = data.items.slice(3);
     </div>
   )}
   <div class="wrap act__inner act__inner--after-band">
-    {rest.length > 0 && (
-      <ul class="stats stats--rest">
-        {rest.map((s) => (
-          <li class="stat">
-            <span class="stat__value">{s.value}</span>
-            <span class="stat__label">{s.label}</span>
-            {s.note && <span class="stat__note">{s.note}</span>}
-          </li>
-        ))}
-      </ul>
+    {hl?.value && (
+      <p class="stats__highlight">
+        <span class="stats__highlight-value">{hl.value}</span>
+        {hl.label && <span class="stats__highlight-label">{hl.label}</span>}
+      </p>
     )}
     {data.body && <p class="stats__note" set:html={emphasise(data.body)} />}
   </div>

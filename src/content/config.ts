@@ -140,6 +140,11 @@ const pages = defineCollection({
         label: z.string(),
         note: z.string().optional(),
       })).default([]),
+      /* the big coral figure under the band */
+      highlight: z.object({
+        value: z.string().optional(),
+        label: z.string().optional(),
+      }).optional(),
       body: z.string().optional(),
     }).optional(),
 
