@@ -246,8 +246,6 @@ contact:
   cta:
     label: "Let's talk Pinterest!"
     url: "BOOKING_URL"
-  email: "kandace.pinmarketing@gmail.com"
-  facebook: "https://www.facebook.com/kandacepinterestmarketing/"
   responseNote: "I usually reply within one business day."
 
 closing:

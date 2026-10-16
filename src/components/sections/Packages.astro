@@ -1,5 +1,6 @@
 ---
 import { resolveUrl } from '../../utils.mjs';
+import { SITE } from '../../site.config.mjs';
 const { data, bookingLabel } = Astro.props;
 /* Each line of the note is its own line on the page, so the second
    sentence starts fresh instead of leaving one word stranded. */
@@ -13,7 +14,7 @@ const noteLines = String(data.note ?? '').split(/\n+/).map((l) => l.trim()).filt
     </div>
 
     <p class="swipe-cue">
-      <span>Swipe for all options</span>
+      <span>{SITE.labels.packagesSwipe}</span>
       <span class="swipe-cue__arrow" aria-hidden="true">&rarr;</span>
     </p>
 

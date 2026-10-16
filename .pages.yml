@@ -1,227 +1,288 @@
+# The editor Kandace uses (Pages CMS). Three things show in its menu:
+# the guide, the page itself, and site settings.
+
 media:
   input: public/images
   output: /images
+  categories: [image]
+  extensions: [jpg, jpeg, png, webp, avif, gif]
+  rename: safe
 
 content:
-  - name: pages
-    label: Pages
-    type: collection
-    path: src/content/pages
-    filename: '{fields.urlPath}.md'
-    view:
-      fields: [title, urlPath, draft]
+  - name: guide
+    label: "Start here: how to edit your site"
+    type: file
+    path: cms/guide.md
     fields:
-      - { name: title, label: Page title (shows in Google), type: string }
-      - { name: metaDescription, label: Search description, type: text, description: "Around 150 characters. This is the grey text under your title in Google." }
-      - { name: urlPath, label: Web address, type: string, description: "Use 'index' for the main page. Anything else becomes yoursite.com/that-word." }
-      - { name: draft, label: Hide this page, type: boolean, default: false }
+      - name: body
+        label: false
+        type: rich-text
+        readonly: true
+        options:
+          format: markdown
+          switcher: false
+          media: false
+
+  - name: page
+    label: Your page
+    type: file
+    path: src/content/pages/index.md
+    fields:
+      - name: title
+        label: Title in Google
+        type: string
+        required: true
+        description: "The blue link people see in Google and the name on the browser tab. Best kept under 60 characters."
+      - name: metaDescription
+        label: Description in Google
+        type: text
+        required: true
+        description: "The gray text under your title in Google. Around 150 characters."
+      - { name: urlPath, type: string, hidden: true }
+      - { name: draft, type: boolean, hidden: true }
 
       - name: hero
-        label: Top of the page
+        label: "1. Top of the page"
         type: object
         fields:
           - { name: headingLead, label: "First line of the headline (darker, on its own line)", type: string }
-          - { name: heading, label: Headline, type: string }
-          - { name: subheading, label: Supporting line, type: text }
+          - name: heading
+            label: Headline
+            type: string
+            required: true
+            description: "Put **two stars** around words to give them the coral highlight, like **ACTION!**"
+          - { name: subheading, label: Supporting text, type: text, required: true, description: "Leave an empty line between paragraphs. A paragraph that ends in a question mark is set in the large italic style." }
           - name: cta
             label: Main button
             type: object
             fields:
-              - { name: label, label: Button text, type: string }
-              - { name: url, label: Button link, type: string, description: "Type BOOKING_URL to use your Acuity link." }
+              - { name: label, label: Button text, type: string, required: true }
+              - { name: url, label: Button link, type: string, required: true, description: "Type BOOKING_URL to use your booking link from Site settings." }
           - { name: image, label: Photo, type: image }
-          - { name: imageAlt, label: Photo description, type: string }
+          - { name: imageAlt, label: Photo description, type: string, description: "A few words describing the photo, for people using screen readers and for Google." }
 
       - name: hook
-        label: The problem you solve
+        label: "2. How to get noticed"
         type: object
         fields:
-          - { name: heading, label: Heading, type: string }
+          - { name: heading, label: Heading, type: string, required: true, description: "Put **two stars** around words to highlight them in coral." }
           - { name: sub, label: Small line under the heading, type: string }
-          - { name: body, label: Text, type: text }
-          - { name: bullets, label: What it can do for them, type: string, list: true }
+          - { name: body, label: Text, type: text, required: true }
+          - { name: bullets, label: The three strips, type: string, list: true }
 
       - name: explainer
-        label: Why Pinterest
+        label: "3. Why Pinterest"
         type: object
         fields:
-          - { name: heading, label: Heading, type: string }
-          - { name: body, label: Text, type: text }
+          - { name: heading, label: Heading, type: string, required: true }
+          - name: body
+            label: Text
+            type: text
+            required: true
+            description: "Put __two underscores__ around words to underline them in coral, or **two stars** to make them bold."
           - name: points
-            label: Points
+            label: Point
             type: object
             list: true
             fields:
-              - { name: heading, label: Heading, type: string }
-              - { name: body, label: Text, type: text }
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: body, label: Text, type: text, required: true }
+
+      - name: chapters
+        label: "Big navy breaks (between sections)"
+        type: object
+        list: true
+        description: "The full-width navy moments. The first sits after Why Pinterest, the second after It's perfect for, the third before Packages."
+        fields:
+          - { name: line, label: Big line, type: string, required: true }
+          - { name: sub, label: Small line under it, type: text, description: "Each line you type here shows as its own line." }
+          - { name: pins, label: "Pin designs beside the line (two, or leave empty for none)", type: image, list: true }
 
       - name: whoFor
-        label: Who this is for
+        label: "4. It's perfect for"
         type: object
         fields:
-          - { name: heading, label: Heading, type: string }
-          - { name: intro, label: Intro line, type: text }
-          - { name: items, label: List, type: string, list: true }
-          - { name: footnote, label: Closing line, type: text }
-          - { name: ctaLabel, label: Button text, type: string }
-
-      - name: packages
-        label: Packages
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string }
-          - { name: intro, label: Intro line, type: text }
-          - { name: ctaLabel, label: Button text, type: string }
-          - { name: note, label: Note under the packages, type: text, description: "Each line you type here shows as its own line." }
-          - name: items
-            label: Package
-            type: object
-            list: true
-            fields:
-              - { name: name, label: Package name, type: string }
-              - { name: price, label: Price, type: string }
-              - { name: cadence, label: "How often (e.g. one time, per month)", type: string }
-              - { name: summary, label: Who it suits, type: text }
-              - { name: features, label: What's included, type: string, list: true }
-              - { name: featured, label: Highlight this one, type: boolean, default: false }
-              - { name: tab, label: "Tab above the card (leave empty for none)", type: string }
-              - { name: tabTone, label: Tab color, type: select, options: { values: [navy, coral] } }
-
-      - name: work
-        label: Pin examples
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string }
-          - { name: intro, label: Intro line, type: text }
-          - name: images
-            label: Pin image
-            type: object
-            list: true
-            fields:
-              - { name: src, label: Image, type: image }
-              - { name: alt, label: Image description, type: string }
-
-      - name: about
-        label: About you
-        type: object
-        fields:
-          - { name: kicker, label: Small line above your name, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: body, label: Text, type: text }
-          - { name: bullets, label: Background points, type: string, list: true }
-          - { name: image, label: Photo, type: image }
-          - { name: imageAlt, label: Photo description, type: string }
-          - { name: ctaLabel, label: Button text under the photo, type: string }
-
-      - name: testimonials
-        label: Testimonials
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string }
-          - name: items
-            label: Testimonial
-            type: object
-            list: true
-            fields:
-              - { name: quote, label: What they said, type: text }
-              - { name: name, label: Their name, type: string }
-              - { name: role, label: Their business or role, type: string }
-              - { name: image, label: Their photo (optional), type: image }
-              - { name: imageAlt, label: Photo description, type: string }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: intro, label: "Line under the heading (optional, empty for now)", type: text }
+          - { name: items, label: "Left list (navy)", type: string, list: true }
+          - { name: needsHeading, label: "Right side heading (coral)", type: string }
+          - { name: needs, label: "Right side list (coral)", type: string, list: true }
+          - { name: footnote, label: Underlined line, type: text }
+          - { name: ctaLabel, label: Button text, type: string, description: "The button opens your booking link." }
 
       - name: process
-        label: How it works
+        label: "5. The process (three steps)"
         type: object
         fields:
           - { name: kicker, label: Small line above the heading, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: aside, label: Small line by the heading, type: string }
-          - { name: ctaLabel, label: Button text, type: string }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: aside, label: "Small line beside the heading (optional, empty for now)", type: string }
           - name: steps
             label: Step
             type: object
             list: true
             fields:
-              - { name: heading, label: Step title, type: string }
-              - { name: body, label: Step text, type: text }
+              - { name: heading, label: Step title, type: string, required: true }
+              - { name: body, label: Step text, type: text, required: true }
+          - { name: ctaLabel, label: Button text, type: string, description: "The button opens your booking link." }
 
-      - name: stats
-        label: Pinterest stats
+      - name: packages
+        label: "6. Packages"
         type: object
         fields:
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: intro, label: Intro line, type: text }
+          - name: items
+            label: Package
+            type: object
+            list: true
+            fields:
+              - { name: name, label: Package name, type: string, required: true }
+              - { name: price, label: Price, type: string, required: true, description: "Type it the way it should show, like $699" }
+              - { name: cadence, label: "How often (like one time, or monthly)", type: string }
+              - { name: summary, label: Who it suits, type: text }
+              - { name: features, label: "What's included", type: string, list: true }
+              - { name: featured, label: Highlight this one, type: boolean }
+              - { name: tab, label: "Tab above the card (leave empty for none)", type: string }
+              - { name: tabTone, label: Tab color, type: select, options: { values: [navy, coral] } }
+          - { name: ctaLabel, label: Button text, type: string, description: "The button opens your booking link." }
+          - { name: note, label: Note under the packages, type: text, description: "Each line you type here shows as its own line." }
+
+      - name: testimonials
+        label: "7. Testimonials"
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string, required: true }
+          - name: items
+            label: Testimonial
+            type: object
+            list: true
+            fields:
+              - { name: quote, label: What they said, type: text, required: true }
+              - { name: name, label: Their name, type: string, required: true }
+              - { name: role, label: Their business or role, type: string }
+              - { name: image, label: "Their photo (optional, square works best)", type: image }
+              - { name: imageAlt, label: Photo description, type: string }
+
+      - name: work
+        label: "8. Pin examples"
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: intro, label: Intro line, type: text }
+          - name: images
+            label: Pin
+            type: object
+            list: true
+            fields:
+              - { name: src, label: "Pin image (tall, 2:3, like 1000 x 1500)", type: image, required: true }
+              - { name: alt, label: "What the pin says or shows", type: string, required: true, description: "For people using screen readers and for Google." }
+
+      - name: stats
+        label: "9. Pinterest stats"
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string, required: true, description: "Put **two stars** around words to highlight them in coral." }
           - name: items
             label: Stat
             type: object
             list: true
-            description: "The figures in the grid. Six of them fills the layout neatly."
+            description: "Six fills the grid neatly."
             fields:
-              - { name: value, label: The number, type: string }
-              - { name: label, label: What it means, type: string }
+              - { name: value, label: The number, type: string, required: true }
+              - { name: label, label: What it means, type: string, required: true }
               - { name: note, label: Extra line under it, type: text }
-          - { name: heading, label: Heading, type: string }
           - { name: body, label: Paragraph under the grid, type: text }
 
-      - name: faq
-        label: Questions
+      - name: about
+        label: "10. About you"
         type: object
         fields:
-          - { name: heading, label: Heading, type: string }
+          - { name: kicker, label: Small line above your name, type: string }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: body, label: Text, type: text, required: true, description: "Leave an empty line between paragraphs." }
+          - { name: bullets, label: "Background points (optional, empty for now)", type: string, list: true }
+          - { name: image, label: Photo, type: image }
+          - { name: imageAlt, label: Photo description, type: string }
+          - { name: ctaLabel, label: Button text under the photo, type: string, description: "The button opens your booking link." }
+
+      - name: faq
+        label: "11. Questions"
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string, required: true }
           - name: items
             label: Question
             type: object
             list: true
             fields:
-              - { name: question, label: Question, type: string }
-              - { name: answer, label: Answer, type: text }
+              - { name: question, label: Question, type: string, required: true }
+              - { name: answer, label: Answer, type: text, required: true }
               - { name: ctaLabel, label: "Booking button under the answer (leave empty for none)", type: string }
 
-      - name: chapters
-        label: Chapter breaks
-        type: object
-        list: true
-        description: "The short full-width moments between sections. Three of them."
-        fields:
-          - { name: line, label: Big line, type: string }
-          - { name: sub, label: Small line under it, type: text, description: "Each line you type here shows as its own line." }
-          - { name: pins, label: "Pin designs beside the line (two or four)", type: image, list: true }
-
-      - name: signup
-        label: Email list button
-        type: object
-        description: "Your email list has two buttons: one at the top of every screen and one on the last screen. The switch below shows or hides both. Paste your signup link in when you have one."
-        fields:
-          - { name: show, label: Show the email list buttons, type: boolean, default: true, description: "Turn this off to hide both buttons until your email list is ready." }
-          - name: url
-            label: Signup link
-            type: string
-            description: "The web address of the signup page from your email platform. It has to be a page people can open, not embed code."
-          - { name: headerLabel, label: Button text at the top of the page, type: string }
-          - { name: buttonLabel, label: Button text on the last screen, type: string }
-
       - name: contact
-        label: Contact
+        label: "12. Contact"
         type: object
+        description: "Your email address and Facebook link are set once, in Site settings."
         fields:
-          - { name: heading, label: Heading, type: string }
-          - { name: body, label: Text, type: text }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: body, label: Text, type: text, required: true, description: "Leave an empty line between paragraphs." }
           - name: cta
             label: Button
             type: object
             fields:
-              - { name: label, label: Button text, type: string }
-              - { name: url, label: Button link, type: string }
+              - { name: label, label: Button text, type: string, required: true }
+              - { name: url, label: Button link, type: string, required: true, description: "Type BOOKING_URL to use your booking link from Site settings." }
           - { name: boxHeading, label: Heading inside the box, type: string }
           - { name: boxBody, label: Line inside the box, type: text }
-          - { name: email, label: Email address, type: string }
-          - { name: facebook, label: Facebook page link, type: string }
           - { name: responseNote, label: How fast you reply, type: string }
 
       - name: closing
-        label: Bottom of the page
+        label: "13. Bottom of the page"
         type: object
-        description: "The last screen. The email list button is set up under Email list button."
+        description: "The last screen. Its email list button is set up under Email list."
         fields:
-          - { name: heading, label: Heading, type: string }
-          - { name: body, label: Text, type: text }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: body, label: Text, type: text, required: true, description: "Leave an empty line between paragraphs." }
           - { name: signoff, label: Last line, type: string }
 
+      - name: signup
+        label: "Email list"
+        type: object
+        description: "Your email list has two buttons: one at the top of every screen and one on the last screen. The switch shows or hides both."
+        fields:
+          - { name: show, label: Show the email list buttons, type: boolean, description: "Turn this off to hide both buttons until your email list is ready." }
+          - name: url
+            label: Signup link
+            type: string
+            description: "The web address of the signup page from your email platform. It has to be a page people can open, not embed code. While this is empty, the buttons scroll to the last screen."
+          - { name: headerLabel, label: Button text at the top of the page, type: string }
+          - { name: buttonLabel, label: Button text on the last screen, type: string }
+
+  - name: settings
+    label: Site settings
+    type: file
+    path: src/data/site.json
+    fields:
+      - { name: booking, label: Booking link, type: string, required: true, description: "Your Acuity link. Every booking button on the page uses it." }
+      - { name: email, label: Email address, type: string, required: true, description: "Shows in the Contact box and the footer." }
+      - { name: facebook, label: Facebook page link, type: string, required: true, description: "Used in the Contact box and the footer." }
+      - name: nav
+        label: Menu links
+        type: object
+        description: "The words in the menu at the top and in the footer."
+        fields:
+          - { name: whyPinterest, label: "Goes to Why Pinterest", type: string, required: true }
+          - { name: services, label: "Goes to Packages", type: string, required: true }
+          - { name: portfolio, label: "Goes to Pin examples", type: string, required: true }
+          - { name: about, label: "Goes to About", type: string, required: true }
+          - { name: contact, label: "Goes to Contact", type: string, required: true }
+      - name: labels
+        label: Small labels
+        type: object
+        fields:
+          - { name: packagesSwipe, label: "Swipe hint on the packages (phones)", type: string, required: true }
+          - { name: scrollMore, label: "Scroll hint on testimonials and pin examples", type: string, required: true }
+          - { name: contactFacebook, label: "Facebook link text in the Contact box", type: string, required: true }
+          - { name: footerFacebook, label: "Facebook link text in the footer", type: string, required: true }
+      - { name: footerNote, label: Small print in the footer, type: text }

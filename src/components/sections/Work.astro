@@ -2,6 +2,7 @@
 /* Her pin designs are the only proof she has, so this act is the one
    that owns its whole screen. Full bleed, staggered, and big: on a
    phone it is a swipe, which is also how Pinterest itself is read. */
+import { SITE } from '../../site.config.mjs';
 const { data } = Astro.props;
 ---
 <section class="act act--showcase act--lat-ends" id="pin-examples">
@@ -25,7 +26,7 @@ const { data } = Astro.props;
   <div class="wrap">
     <div class="strip-nav">
       <p class="swipe-cue">
-        <span>Scroll to see more</span>
+        <span>{SITE.labels.scrollMore}</span>
         <span class="swipe-cue__arrow" aria-hidden="true">&rarr;</span>
       </p>
       {/* A mouse wheel only scrolls up and down, so on a desktop without

@@ -2,6 +2,7 @@
 /* The reviews are a scrolling row rather than a grid, so the section
    stays one clean line whether there are two of them or ten. */
 import Fronds from '../Fronds.astro';
+import { SITE } from '../../site.config.mjs';
 const { data } = Astro.props;
 ---
 <section class="act act--wash act--testimonials act--lat-edge-right" id="testimonials">
@@ -27,7 +28,7 @@ const { data } = Astro.props;
   </div>
   <div class="wrap">
     <p class="swipe-cue">
-      <span>Scroll to see more</span>
+      <span>{SITE.labels.scrollMore}</span>
       <span class="swipe-cue__arrow" aria-hidden="true">&rarr;</span>
     </p>
   </div>

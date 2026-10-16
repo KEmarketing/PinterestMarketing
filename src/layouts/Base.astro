@@ -197,14 +197,14 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
 
         <div class="site-menu" id="site-menu">
         <nav class="site-nav site-nav--left" aria-label="Sections of this page">
-          <a href="#how-pinterest-works">Why Pinterest</a>
-          <a href="#packages">Services</a>
-          <a href="#pin-examples">Portfolio</a>
+          <a href="#how-pinterest-works">{SITE.nav.whyPinterest}</a>
+          <a href="#packages">{SITE.nav.services}</a>
+          <a href="#pin-examples">{SITE.nav.portfolio}</a>
         </nav>
 
         <nav class="site-nav site-nav--right" aria-label="More sections of this page">
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="#about">{SITE.nav.about}</a>
+          <a href="#contact">{SITE.nav.contact}</a>
           {signupOn && (
             <a class="site-nav__join" href={signupHref} {...signupAttrs}>{signupHeaderLabel}</a>
           )}
@@ -603,21 +603,21 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
         </div>
 
         <nav class="site-footer__nav" aria-label="Sections of this page, footer">
-          <a href="#how-pinterest-works">Why Pinterest</a>
-          <a href="#packages">Services</a>
-          <a href="#pin-examples">Portfolio</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="#how-pinterest-works">{SITE.nav.whyPinterest}</a>
+          <a href="#packages">{SITE.nav.services}</a>
+          <a href="#pin-examples">{SITE.nav.portfolio}</a>
+          <a href="#about">{SITE.nav.about}</a>
+          <a href="#contact">{SITE.nav.contact}</a>
         </nav>
 
         <ul class="site-footer__reach">
           <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
-          <li><a href={SITE.facebook}>Facebook</a></li>
+          <li><a href={SITE.facebook}>{SITE.labels.footerFacebook}</a></li>
         </ul>
       </div>
 
       <div class="wrap site-footer__fine">
-        <p>Not affiliated with or endorsed by Pinterest. Results vary and are not guaranteed.</p>
+        {SITE.footerNote && <p>{SITE.footerNote}</p>}
         <p>&copy; {new Date().getFullYear()} {SITE.name} &middot; Built with love by <a href="https://rootlineweb.co" rel="noopener">Rootline Web Co</a></p>
       </div>
     </footer>

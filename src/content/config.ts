@@ -1,16 +1,31 @@
 import { defineCollection, z } from 'astro:content';
 
-/* Every field here becomes an editable field in the CMS.
-   Adding a page = adding one file in src/content/pages/. */
+/* Every field here is an editable field in the CMS (.pages.yml). */
 
 const linkGroup = z.object({
   label: z.string(),
   url: z.string(),
 });
 
+/* The CMS can write an emptied field as null (a cleared photo, an
+   emptied list). Treat that the same as a field left out, so the
+   defaults below apply and a save in the CMS can never break the
+   site's publish step. */
+const dropNulls = (v: unknown): unknown => {
+  if (Array.isArray(v)) return v.filter((x) => x !== null && x !== undefined).map(dropNulls);
+  if (v && typeof v === 'object') {
+    return Object.fromEntries(
+      Object.entries(v as Record<string, unknown>)
+        .filter(([, x]) => x !== null && x !== undefined)
+        .map(([k, x]) => [k, dropNulls(x)]),
+    );
+  }
+  return v;
+};
+
 const pages = defineCollection({
   type: 'content',
-  schema: z.object({
+  schema: z.preprocess(dropNulls, z.object({
     /* --- page level --- */
     title: z.string(),
     metaDescription: z.string(),
@@ -181,7 +196,7 @@ const pages = defineCollection({
       /* the italic last line under the button */
       signoff: z.string().optional(),
     }),
-  }),
+  })),
 });
 
 export const collections = { pages };

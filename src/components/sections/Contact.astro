@@ -1,6 +1,11 @@
 ---
 import { resolveUrl } from '../../utils.mjs';
+import { SITE } from '../../site.config.mjs';
 const { data } = Astro.props;
+/* her email and Facebook page come from Site settings, the one place
+   they are kept, so the footer and this box always match */
+const email = SITE.email;
+const facebook = SITE.facebook;
 ---
 {/* Heading left, the box of ways to reach her on the right, as she asked. */}
 <section class="act act--wash act--split act--lat-band-top" id="contact">
@@ -19,11 +24,11 @@ const { data } = Astro.props;
         {data.boxBody && <p class="reach__body">{data.boxBody}</p>}
         {data.responseNote && <p class="contact-note">{data.responseNote}</p>}
         <ul class="contact-list">
-          {data.email && (
-            <li><a href={`mailto:${data.email}`}>{data.email}</a></li>
+          {email && (
+            <li><a href={`mailto:${email}`}>{email}</a></li>
           )}
-          {data.facebook && (
-            <li><a href={data.facebook}>Message on Facebook</a></li>
+          {facebook && (
+            <li><a href={facebook}>{SITE.labels.contactFacebook}</a></li>
           )}
         </ul>
       </div>

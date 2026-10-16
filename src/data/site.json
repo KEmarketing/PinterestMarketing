@@ -1,0 +1,19 @@
+{
+  "booking": "https://kandaceemorypinmarketing.as.me/schedule/5b45ab1d/appointment/94096958/calendar/14168920",
+  "email": "kandace.pinmarketing@gmail.com",
+  "facebook": "https://www.facebook.com/kandacepinterestmarketing/",
+  "nav": {
+    "whyPinterest": "Why Pinterest",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "labels": {
+    "packagesSwipe": "Swipe for all options",
+    "scrollMore": "Scroll to see more",
+    "contactFacebook": "Message on Facebook",
+    "footerFacebook": "Facebook"
+  },
+  "footerNote": "Not affiliated with or endorsed by Pinterest. Results vary and are not guaranteed."
+}
