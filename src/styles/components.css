@@ -2454,7 +2454,9 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 @media (min-width: 64rem) {
   #who-its-for { container-type: inline-size; }
   #who-its-for .act__inner {
-    --u: min(1cqw, calc((100svh - var(--header-h, 98px) - 2 * var(--sp-6)) / 38));
+    /* 0.85: Kandace asked for this screen a bit smaller on desktop, all of
+       it together, so her layout is drawn at 85% of the size it was */
+    --u: calc(0.85 * min(1cqw, calc((100svh - var(--header-h, 98px) - 2 * var(--sp-6)) / 38)));
     display: grid;
     grid-template-columns: calc(27.09 * var(--u)) calc(33.29 * var(--u));
     column-gap: calc(2.36 * var(--u));
