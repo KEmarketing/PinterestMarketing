@@ -1,5 +1,5 @@
 ---
-import { resolveUrl } from '../../utils.mjs';
+import { resolveUrl, paragraphs, linesHtml, blockHtml } from '../../utils.mjs';
 import { SITE } from '../../site.config.mjs';
 const { data } = Astro.props;
 /* her email and Facebook page come from Site settings, the one place
@@ -12,8 +12,8 @@ const facebook = SITE.facebook;
   <div class="wrap act__inner">
     <div class="act__lead">
       <h2>{data.heading}</h2>
-      {String(data.body ?? '').split(/\n\s*\n/).filter(Boolean).map((para) => (
-        <p class="lede">{para}</p>
+      {paragraphs(data.body).map((para) => (
+        <p class="lede" set:html={linesHtml(para)} />
       ))}
     </div>
     <div class="act__body">
@@ -21,7 +21,7 @@ const facebook = SITE.facebook;
           the two links; the button sits under the box, the box's width. */}
       <div class="reach reach--end">
         {data.boxHeading && <p class="reach__heading">{data.boxHeading}</p>}
-        {data.boxBody && <p class="reach__body">{data.boxBody}</p>}
+        {data.boxBody && <p class="reach__body" set:html={blockHtml(data.boxBody)} />}
         {data.responseNote && <p class="contact-note">{data.responseNote}</p>}
         <ul class="contact-list">
           {email && (

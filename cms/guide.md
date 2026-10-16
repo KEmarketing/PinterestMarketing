@@ -24,8 +24,9 @@ Everything you might want to change on your website is in this editor, and this 
 
 - **Coral highlight:** put two stars around words, like `**ACTION!**`. Works in the headline at the top, the How to get noticed heading, the stats heading and paragraph, and the big navy breaks.
 - **Coral underline:** put two underscores around words, like `__Pinterest is a search engine__`. Works in the Why Pinterest text.
-- **New paragraph:** leave an empty line between paragraphs.
-- **New line:** in boxes that say "each line shows as its own line," just press Enter.
+- **New line:** press Enter once.
+- **New paragraph:** press Enter twice, so there's an empty line between paragraphs.
+- Both work in every box that holds more than one line, and the page shows them exactly the way you typed them.
 - **Big italic questions at the top:** any paragraph in section 1 that ends with a question mark gets that style automatically.
 
 ## Lists (packages, questions, pins, stats, testimonials and more)

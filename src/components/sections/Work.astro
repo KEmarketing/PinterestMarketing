@@ -3,6 +3,7 @@
    that owns its whole screen. Full bleed, staggered, and big: on a
    phone it is a swipe, which is also how Pinterest itself is read. */
 import { SITE } from '../../site.config.mjs';
+import { blockHtml } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
 <section class="act act--showcase act--lat-ends" id="pin-examples">
@@ -13,7 +14,7 @@ const { data } = Astro.props;
       of the screen, and rules the strip above and below in the same mint. */}
   {data.intro && (
     <div class="showcase__band">
-      <div class="wrap"><p class="lede">{data.intro}</p></div>
+      <div class="wrap"><p class="lede" set:html={blockHtml(data.intro)} /></div>
     </div>
   )}
   <div class="strip" role="region" aria-label="Pin design examples" tabindex="0">

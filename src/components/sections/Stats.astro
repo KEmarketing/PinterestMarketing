@@ -1,6 +1,6 @@
 ---
 import Fronds from '../Fronds.astro';
-import { emphasise } from '../../utils.mjs';
+import { emphasise, blockHtml } from '../../utils.mjs';
 const { data } = Astro.props;
 /* Her simplified mockup: the heading, a navy band of three figures that
    runs the full width of the screen, one big coral figure with its line
@@ -35,6 +35,6 @@ const hl = data.highlight;
         {hl.label && <span class="stats__highlight-label">{hl.label}</span>}
       </p>
     )}
-    {data.body && <p class="stats__note" set:html={emphasise(data.body)} />}
+    {data.body && <p class="stats__note" set:html={blockHtml(data.body, true)} />}
   </div>
 </section>

@@ -2,7 +2,7 @@
 /* Three steps as cards rather than a column of text, which is how she
    asked for it and which reads as a sequence rather than a passage.
    Full width, so the cards get room to sit side by side. */
-import { resolveUrl } from '../../utils.mjs';
+import { resolveUrl, blockHtml } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
 <section class="act act--steps act--lat-edge-right" id="how-it-works">
@@ -19,7 +19,7 @@ const { data } = Astro.props;
             <span class="stepcard__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <div class="stepcard__box">
               <h3>{s.heading}</h3>
-              <p>{s.body}</p>
+              <p set:html={blockHtml(s.body)} />
             </div>
           </li>
         ))}

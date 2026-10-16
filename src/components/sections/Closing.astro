@@ -1,7 +1,8 @@
 ---
 import Fronds from '../Fronds.astro';
+import { paragraphs, linesHtml } from '../../utils.mjs';
 const { data, signup } = Astro.props;
-const paras = String(data.body ?? '').split(/\n\s*\n/).filter(Boolean);
+const paras = paragraphs(data.body);
 /* The button is the email list signup. One switch in the CMS shows or
    hides it (and the one in the header). It is built and waiting for her
    link: until one is pasted in it has nowhere to go, so it stays put. */
@@ -15,7 +16,7 @@ const label = String(signup?.buttonLabel ?? '').trim() || 'Keep me in the loop';
   <Fronds corner="tl" scale={2.8} tone="mint" opacity={0.42} delay={2.9} />
   <div class="wrap act__inner">
     <h2 class="statement">{data.heading}</h2>
-    {paras.map((para) => <p class="statement__body">{para}</p>)}
+    {paras.map((para) => <p class="statement__body" set:html={linesHtml(para)} />)}
     {on && (
       <div class="actions">
         {url

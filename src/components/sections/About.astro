@@ -1,8 +1,8 @@
 ---
 import Fronds from '../Fronds.astro';
-import { resolveUrl } from '../../utils.mjs';
+import { resolveUrl, paragraphs, linesHtml, blockHtml } from '../../utils.mjs';
 const { data } = Astro.props;
-const paras = String(data.body ?? '').split(/\n\s*\n/).filter(Boolean);
+const paras = paragraphs(data.body);
 ---
 {/* Portrait leads on the left, words to its right, so About does not
     repeat the hero's arrangement. */}
@@ -23,7 +23,7 @@ const paras = String(data.body ?? '').split(/\n\s*\n/).filter(Boolean);
     <div class="act__body">
       {data.kicker && <p class="act__kicker">{data.kicker}</p>}
       <h2>{data.heading}</h2>
-      {paras.map((para, i) => <p class={i === 0 ? 'lede' : undefined}>{para}</p>)}
+      {paras.map((para, i) => <p class={i === 0 ? 'lede' : undefined} set:html={linesHtml(para)} />)}
       {data.bullets.length > 0 && (
         <ul class="ticks">
           {data.bullets.map((b) => <li>{b}</li>)}

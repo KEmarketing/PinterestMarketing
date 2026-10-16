@@ -1,10 +1,13 @@
 ---
 import { SITE } from '../site.config.mjs';
+import { blockHtml } from '../utils.mjs';
 import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/components.css';
 
-const { title, description, page, path = '/' } = Astro.props;
+const { title, description: rawDescription, page, path = '/' } = Astro.props;
+/* the Google description is one line, even if Enter was pressed in its box */
+const description = String(rawDescription ?? '').replace(/\s+/g, ' ').trim();
 const canonical = new URL(path, SITE.url).href;
 const abs = (u) => new URL(u, SITE.url).href;
 const shareImage = abs(SITE.shareImage);
@@ -625,7 +628,7 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
       </div>
 
       <div class="wrap site-footer__fine">
-        {SITE.footerNote && <p>{SITE.footerNote}</p>}
+        {SITE.footerNote && <p set:html={blockHtml(SITE.footerNote)} />}
         <p>&copy; {new Date().getFullYear()} {SITE.name} &middot; Built with love by <a href="https://rootlineweb.co" rel="noopener">Rootline Web Co</a></p>
       </div>
     </footer>

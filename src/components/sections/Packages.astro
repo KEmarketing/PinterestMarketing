@@ -1,5 +1,5 @@
 ---
-import { resolveUrl } from '../../utils.mjs';
+import { resolveUrl, blockHtml } from '../../utils.mjs';
 import { SITE } from '../../site.config.mjs';
 const { data, bookingLabel } = Astro.props;
 /* Each line of the note is its own line on the page, so the second
@@ -10,7 +10,7 @@ const noteLines = String(data.note ?? '').split(/\n+/).map((l) => l.trim()).filt
   <div class="wrap act__inner">
     <div class="act__lead act__lead--row">
       <h2>{data.heading}</h2>
-      {data.intro && <p class="lede">{data.intro}</p>}
+      {data.intro && <p class="lede" set:html={blockHtml(data.intro)} />}
     </div>
 
     <p class="swipe-cue">
@@ -27,7 +27,7 @@ const noteLines = String(data.note ?? '').split(/\n+/).map((l) => l.trim()).filt
             <span class="price__amount">{p.price}</span>
             {p.cadence && <span class="cadence"> {p.cadence}</span>}
           </p>
-          {p.summary && <p>{p.summary}</p>}
+          {p.summary && <p set:html={blockHtml(p.summary)} />}
           <ul>
             {p.features.map((f) => <li>{f}</li>)}
           </ul>

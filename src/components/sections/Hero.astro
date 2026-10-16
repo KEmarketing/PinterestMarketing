@@ -1,14 +1,14 @@
 ---
 import Fronds from '../Fronds.astro';
-import { resolveUrl, emphasise } from '../../utils.mjs';
+import { resolveUrl, emphasise, paragraphs, linesHtml } from '../../utils.mjs';
 const { data } = Astro.props;
 /* One CMS textarea, blank line between paragraphs. Keeps the editing
    experience to a single field instead of subheadingA / subheadingB. */
-const lede = String(data.subheading ?? '').split(/\n\s*\n/).filter(Boolean);
+const lede = paragraphs(data.subheading);
 /* Her mockup sets the two questions apart from the statement around
    them: italic, in the display face, as a pair. A paragraph that ends
    in a question mark is one of those. */
-const isAsk = (p) => /\?\s*$/.test(p);
+const isAsk = (p) => /\?\s*$/.test(p[p.length - 1]);
 ---
 <section class="act act--pin act--hero act--lat-edge-left" id="top">
   <Fronds corner="tr" scale={2.3} tone="deep" opacity={0.34} delay={0.0} />
@@ -21,7 +21,7 @@ const isAsk = (p) => /\?\s*$/.test(p);
         {data.headingLead && <span class="h1__lead">{data.headingLead}</span>}
         <span set:html={emphasise(data.heading)} />
       </h1>
-      {lede.map((para) => <p class:list={['lede', isAsk(para) && 'lede--ask']}>{para}</p>)}
+      {lede.map((para) => <p class:list={['lede', isAsk(para) && 'lede--ask']} set:html={linesHtml(para)} />)}
       <div class="actions">
         <a class="btn" href={resolveUrl(data.cta.url)}>{data.cta.label}</a>
       </div>

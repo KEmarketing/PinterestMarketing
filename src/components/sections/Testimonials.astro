@@ -3,6 +3,7 @@
    stays one clean line whether there are two of them or ten. */
 import Fronds from '../Fronds.astro';
 import { SITE } from '../../site.config.mjs';
+import { blockHtml } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
 <section class="act act--wash act--testimonials act--lat-edge-right" id="testimonials">
@@ -16,7 +17,7 @@ const { data } = Astro.props;
   <div class="quotes" role="region" aria-label="Client reviews" tabindex="0">
     {data.items.map((t) => (
       <blockquote>
-        <p>{t.quote}</p>
+        <p set:html={blockHtml(t.quote)} />
         <footer class="quote-by">
           {t.image && (
             <img class="avatar" src={t.image} alt={t.imageAlt ?? ''} width="72" height="72" loading="lazy" />

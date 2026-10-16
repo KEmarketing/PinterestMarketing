@@ -3,14 +3,14 @@
    comparison, so it reads faster as three things side by side than as a
    passage, and on a phone it stacks into three cards you can take one
    at a time. */
-import { emphasise } from '../../utils.mjs';
+import { blockHtml } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
 <section class="act act--pin act--explainer act--lat-band-bottom" id="how-pinterest-works">
   <div class="wrap act__inner">
     <div class="act__lead">
       <h2>{data.heading}</h2>
-      <p class="lede" set:html={emphasise(data.body)} />
+      <p class="lede" set:html={blockHtml(data.body, true)} />
     </div>
     <div class="act__body">
       {data.points.length > 0 && (
@@ -18,7 +18,7 @@ const { data } = Astro.props;
           {data.points.map((p) => (
             <div class="note">
               <h3>{p.heading}</h3>
-              <p>{p.body}</p>
+              <p set:html={blockHtml(p.body)} />
             </div>
           ))}
         </div>

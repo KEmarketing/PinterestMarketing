@@ -1,6 +1,6 @@
 ---
 import Fronds from '../Fronds.astro';
-import { emphasise } from '../../utils.mjs';
+import { emphasise, blockHtml } from '../../utils.mjs';
 const { data } = Astro.props;
 ---
 {/* No body content of its own, so this act goes the other way: one
@@ -15,7 +15,7 @@ const { data } = Astro.props;
   <div class="wrap act__inner">
     <h2 class="statement" set:html={emphasise(data.heading)} />
     {data.sub && <p class="statement__sub">{data.sub}</p>}
-    <p class="statement__body">{data.body}</p>
+    <p class="statement__body" set:html={blockHtml(data.body)} />
     {data.bullets.length > 0 && (
       <ul class="statement__list">
         {/* A hyphenated word (long-term) never splits across the two lines
