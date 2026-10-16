@@ -4,13 +4,11 @@
    tags, sitemap.xml, robots.txt, llms.txt, the share image links
    and the structured data.
 
-   For now the site lives at its pages.dev address, so that is the
-   address search engines are told is the real one. On launch day,
-   when kandaceemory.com points at this site, change url to
-   'https://kandaceemory.com' and push.
+   Everything points at her real domain, kandaceemory.com. The
+   pages.dev address is only a temporary preview.
    --------------------------------------------------------------- */
 export const SITE = {
-  url: 'https://pinterestmarketing.pages.dev',   // <-- becomes https://kandaceemory.com at launch
+  url: 'https://kandaceemory.com',
   name: 'Kandace Emory Pinterest Marketing',
   shortName: 'Kandace Emory',
   email: 'kandace.pinmarketing@gmail.com',
