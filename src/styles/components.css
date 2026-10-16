@@ -2585,3 +2585,10 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
   #contact .act__inner { position: relative; left: var(--contact-x, 0px); }
   #contact .act__body { position: relative; top: var(--contact-y, 0px); }
 }
+
+/* Closing: Kandace asked for this screen a touch bigger on a laptop
+   (it was right on her tablet and phone). Everything in it grows
+   together by 15%, so her mockup's proportions and spacing hold. */
+@media (min-width: 64rem) {
+  #book.act--closing .act__inner { zoom: 1.15; }
+}
