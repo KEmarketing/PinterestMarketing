@@ -2579,8 +2579,8 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
 #about .act__body .ticks li { color: var(--navy); }
 
 /* Contact: the words and the box as one group in the middle of the
-   screen, the box and button centered up and down against the words, as
-   Kandace asked. The amounts are measured by the script in Contact.astro. */
+   screen, the box lowered so the button sits level with her last
+   paragraph, as Kandace asked. The amounts are measured by the script in Contact.astro. */
 @media (min-width: 64rem) {
   #contact .act__inner { position: relative; left: var(--contact-x, 0px); }
   #contact .act__body { position: relative; top: var(--contact-y, 0px); }

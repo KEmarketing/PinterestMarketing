@@ -41,8 +41,8 @@ const facebook = SITE.facebook;
 
 <script is:inline>
   /* Kandace asked for the words and the box to sit as one group in the
-     middle of the screen, with the box and button centered up and down
-     against the words beside them. The words are right aligned, so where
+     middle of the screen, with the box and button lowered so the button
+     sits level with her last paragraph, as in her mockup. The words are right aligned, so where
      they actually start depends on how the lines wrap at each size; this
      measures the words and the box as drawn and nudges them into place.
      Desktop only, where the two sit side by side. */
@@ -73,7 +73,19 @@ const facebook = SITE.facebook;
       var shadow = m ? Math.max(0, parseFloat(m[1])) : 0;
       var R = Math.max(b.right + shadow, btn ? btn.getBoundingClientRect().right : 0);
       var bottom = btn ? btn.getBoundingClientRect().bottom : b.bottom;
-      return { L: L, R: R, T: T, B: B, bT: b.top, bB: bottom };
+      /* the last paragraph, which the button sits level with in her mockup */
+      var ps = lead.querySelectorAll('p');
+      var lastT = Infinity, lastB = -Infinity;
+      if (ps.length) {
+        var r2 = document.createRange();
+        r2.selectNodeContents(ps[ps.length - 1]);
+        Array.prototype.forEach.call(r2.getClientRects(), function (q) {
+          if (q.width < 1) return;
+          lastT = Math.min(lastT, q.top); lastB = Math.max(lastB, q.bottom);
+        });
+      }
+      var bb = btn ? btn.getBoundingClientRect() : b;
+      return { L: L, R: R, T: T, B: B, bT: b.top, bB: bottom, lastT: lastT, lastB: lastB, btnT: bb.top, btnB: bb.bottom };
     }
     function fit() {
       inner.style.removeProperty('--contact-x');
@@ -85,7 +97,9 @@ const facebook = SITE.facebook;
         if (!isFinite(e.L)) return;
         var sec = s.getBoundingClientRect();
         x += (sec.left + sec.right) / 2 - (e.L + e.R) / 2;
-        y += (e.T + e.B) / 2 - (e.bT + e.bB) / 2;
+        y += isFinite(e.lastT)
+          ? (e.lastT + e.lastB) / 2 - (e.btnT + e.btnB) / 2
+          : (e.T + e.B) / 2 - (e.bT + e.bB) / 2;
         inner.style.setProperty('--contact-x', x.toFixed(1) + 'px');
         body.style.setProperty('--contact-y', y.toFixed(1) + 'px');
       }
