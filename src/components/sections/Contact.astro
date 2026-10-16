@@ -38,3 +38,62 @@ const facebook = SITE.facebook;
     </div>
   </div>
 </section>
+
+<script is:inline>
+  /* Kandace asked for the words and the box to sit as one group in the
+     middle of the screen, with the box and button centered up and down
+     against the words beside them. The words are right aligned, so where
+     they actually start depends on how the lines wrap at each size; this
+     measures the words and the box as drawn and nudges them into place.
+     Desktop only, where the two sit side by side. */
+  (function () {
+    var s = document.getElementById('contact');
+    if (!s) return;
+    var inner = s.querySelector('.act__inner');
+    var lead = s.querySelector('.act__lead');
+    var body = s.querySelector('.act__body');
+    var box = s.querySelector('.reach');
+    var btn = s.querySelector('.contact__actions .btn');
+    if (!inner || !lead || !body || !box) return;
+    var wide = window.matchMedia('(min-width: 64rem)');
+    function extents() {
+      var L = Infinity, T = Infinity, B = -Infinity;
+      lead.querySelectorAll('h2, p').forEach(function (el) {
+        var r = document.createRange();
+        r.selectNodeContents(el);
+        Array.prototype.forEach.call(r.getClientRects(), function (q) {
+          if (q.width < 1) return;
+          L = Math.min(L, q.left); T = Math.min(T, q.top); B = Math.max(B, q.bottom);
+        });
+      });
+      var h2 = lead.querySelector('h2');
+      if (h2) B = Math.max(B, h2.getBoundingClientRect().bottom);
+      var b = box.getBoundingClientRect();
+      var m = getComputedStyle(box).boxShadow.match(/(-?\d+(?:\.\d+)?)px\s+(-?\d+(?:\.\d+)?)px/);
+      var shadow = m ? Math.max(0, parseFloat(m[1])) : 0;
+      var R = Math.max(b.right + shadow, btn ? btn.getBoundingClientRect().right : 0);
+      var bottom = btn ? btn.getBoundingClientRect().bottom : b.bottom;
+      return { L: L, R: R, T: T, B: B, bT: b.top, bB: bottom };
+    }
+    function fit() {
+      inner.style.removeProperty('--contact-x');
+      body.style.removeProperty('--contact-y');
+      if (!wide.matches) return;
+      var x = 0, y = 0;
+      for (var i = 0; i < 2; i++) {
+        var e = extents();
+        if (!isFinite(e.L)) return;
+        var sec = s.getBoundingClientRect();
+        x += (sec.left + sec.right) / 2 - (e.L + e.R) / 2;
+        y += (e.T + e.B) / 2 - (e.bT + e.bB) / 2;
+        inner.style.setProperty('--contact-x', x.toFixed(1) + 'px');
+        body.style.setProperty('--contact-y', y.toFixed(1) + 'px');
+      }
+    }
+    fit();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    window.addEventListener('load', fit);
+    var t;
+    window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(fit, 120); });
+  })();
+</script>
