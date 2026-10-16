@@ -63,6 +63,7 @@ export async function GET() {
   L.push('## Contact', '');
   L.push(`- Book a free discovery call: ${SITE.booking}`);
   L.push(`- Email: ${SITE.email}`);
+  SITE.profiles.filter((u) => u !== SITE.facebook).forEach((u) => L.push(`- Profile: ${u}`));
   L.push(`- Facebook: ${SITE.facebook}`);
   L.push(`- Website: ${site}/`);
   L.push('');

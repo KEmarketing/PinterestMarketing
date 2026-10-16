@@ -15,5 +15,13 @@
     "contactFacebook": "Message on Facebook",
     "footerFacebook": "Facebook"
   },
-  "footerNote": "Not affiliated with or endorsed by Pinterest. Results vary and are not guaranteed."
+  "footerNote": "Not affiliated with or endorsed by Pinterest. Results vary and are not guaranteed.",
+  "pinterest": "",
+  "otherProfiles": [],
+  "shareImage": "/images/share.jpg",
+  "verification": {
+    "google": "",
+    "bing": "",
+    "pinterest": ""
+  }
 }

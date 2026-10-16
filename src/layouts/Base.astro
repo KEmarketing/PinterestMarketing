@@ -8,6 +8,11 @@ const { title, description, page, path = '/' } = Astro.props;
 const canonical = new URL(path, SITE.url).href;
 const abs = (u) => new URL(u, SITE.url).href;
 const shareImage = abs(SITE.shareImage);
+const shareExt = String(SITE.shareImage).split('.').pop().toLowerCase();
+const shareType = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', gif: 'image/gif' }[shareExt];
+/* the built-in share picture is exactly 1200 x 630; a different one she
+   uploads is left for the apps to measure */
+const shareIsDefault = SITE.shareImage === '/images/share.jpg';
 const aboutImage = page?.about?.image ? abs(page.about.image) : undefined;
 const logo = abs('/marks/logo-ke-horizontal-navy.webp');
 /* What she does, in her own words from the page, for the search and
@@ -41,7 +46,7 @@ const person = {
   name: 'Kandace Emory',
   jobTitle: 'Pinterest Marketing Manager',
   email: SITE.email,
-  sameAs: [SITE.facebook],
+  sameAs: SITE.profiles,
   url: SITE.url,
   worksFor: { '@id': `${SITE.url}/#business` },
   knowsAbout,
@@ -115,7 +120,7 @@ const graph = [
     knowsAbout,
     ...(priceRange ? { priceRange } : {}),
     address: { '@type': 'PostalAddress', addressRegion: SITE.region, addressCountry: SITE.country },
-    sameAs: [SITE.facebook],
+    sameAs: SITE.profiles,
     ...(reviews.length ? { review: reviews } : {}),
   },
   ...services,
@@ -127,7 +132,7 @@ const graph = [
     description,
     isPartOf: { '@id': `${SITE.url}/#website` },
     about: { '@id': `${SITE.url}/#business` },
-    primaryImageOfPage: { '@type': 'ImageObject', url: shareImage, width: 1200, height: 630 },
+    primaryImageOfPage: { '@type': 'ImageObject', url: shareImage, ...(shareIsDefault ? { width: 1200, height: 630 } : {}) },
     inLanguage: 'en-US',
     dateModified: new Date().toISOString(),
   },
@@ -162,9 +167,9 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:locale" content="en_US" />
     <meta property="og:image" content={shareImage} />
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    {shareType && <meta property="og:image:type" content={shareType} />}
+    {shareIsDefault && <meta property="og:image:width" content="1200" />}
+    {shareIsDefault && <meta property="og:image:height" content="630" />}
     <meta property="og:image:alt" content={SITE.shareImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -172,6 +177,9 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
     <meta name="twitter:image" content={shareImage} />
     <meta name="twitter:image:alt" content={SITE.shareImageAlt} />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    {SITE.verification.google && <meta name="google-site-verification" content={SITE.verification.google} />}
+    {SITE.verification.bing && <meta name="msvalidate.01" content={SITE.verification.bing} />}
+    {SITE.verification.pinterest && <meta name="p:domain_verify" content={SITE.verification.pinterest} />}
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>

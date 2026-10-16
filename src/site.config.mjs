@@ -25,6 +25,18 @@ export const SITE = {
   labels: settings.labels,
   footerNote: settings.footerNote,
   /* the picture shown when the link is shared (texts, Facebook, LinkedIn) */
-  shareImage: '/images/share.jpg',
+  shareImage: settings.shareImage || '/images/share.jpg',
+  /* her profiles elsewhere, so search engines and AI tools know they are her */
+  profiles: [settings.facebook, settings.pinterest, ...(settings.otherProfiles ?? [])]
+    .map((u) => String(u ?? '').trim()).filter(Boolean),
+  /* ownership codes from Google Search Console, Bing Webmaster Tools and
+     Pinterest. She can paste the whole tag or just the code. */
+  verification: Object.fromEntries(
+    Object.entries(settings.verification ?? {}).map(([k, v]) => {
+      const raw = String(v ?? '').trim();
+      const m = raw.match(/content=["']([^"']+)["']/);
+      return [k, (m ? m[1] : raw).trim()];
+    }),
+  ),
   shareImageAlt: 'Kandace Emory Pinterest Marketing: moving your audience from inspiration to action',
 };

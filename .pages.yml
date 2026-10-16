@@ -286,3 +286,24 @@ content:
           - { name: contactFacebook, label: "Facebook link text in the Contact box", type: string, required: true }
           - { name: footerFacebook, label: "Facebook link text in the footer", type: string, required: true }
       - { name: footerNote, label: Small print in the footer, type: text }
+      - name: pinterest
+        label: Your Pinterest profile link
+        type: string
+        description: "Like https://www.pinterest.com/yourname/. It isn't shown on the page; it tells Google and AI tools that your Pinterest and this site belong to the same business."
+      - name: otherProfiles
+        label: Your other profile links (Instagram, LinkedIn and so on)
+        type: string
+        list: true
+        description: "Same idea: not shown on the page, it connects your profiles to this site for Google and AI tools."
+      - name: shareImage
+        label: Share picture
+        type: image
+        description: "The picture that shows when someone shares your link in a text or on Facebook or LinkedIn. Make it 1200 x 630."
+      - name: verification
+        label: Ownership codes
+        type: object
+        description: "Paste the code (or the whole tag) that Google, Bing or Pinterest gives you to prove the site is yours. The guide walks you through it. Leave these in place once they're working."
+        fields:
+          - { name: google, label: Google Search Console code, type: string }
+          - { name: bing, label: Bing Webmaster Tools code, type: string }
+          - { name: pinterest, label: Pinterest claim code, type: string }
