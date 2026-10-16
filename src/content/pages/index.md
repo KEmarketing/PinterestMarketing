@@ -1,5 +1,5 @@
 ---
-title: "Pinterest Marketing for Brands With Content Worth Finding"
+title: "Pinterest Marketing Manager for Brands & Bloggers | Kandace Emory"
 metaDescription: "Pinterest management, setup and audits for e-commerce brands, bloggers and course creators. Turn the content you already made into traffic that keeps working."
 urlPath: "index"
 draft: false

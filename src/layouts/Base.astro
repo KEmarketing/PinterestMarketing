@@ -6,6 +6,16 @@ import '../styles/components.css';
 
 const { title, description, page, path = '/' } = Astro.props;
 const canonical = new URL(path, SITE.url).href;
+const abs = (u) => new URL(u, SITE.url).href;
+const shareImage = abs(SITE.shareImage);
+const aboutImage = page?.about?.image ? abs(page.about.image) : undefined;
+const logo = abs('/marks/logo-ke-horizontal-navy.webp');
+/* What she does, in her own words from the page, for the search and
+   answer engines that read the structured data below. */
+const knowsAbout = ['Pinterest marketing', 'Pinterest management', 'Pinterest keyword research', 'Pin design', 'Pinterest analytics'];
+const prices = (page?.packages?.items ?? []).map((p) => Number(String(p.price).replace(/[^0-9.]/g, ''))).filter((n) => n > 0);
+const priceRange = prices.length ? `$${Math.min(...prices)} to $${Math.max(...prices)}` : undefined;
+const aboutLead = String(page?.about?.body ?? '').split(/\n\s*\n/)[0]?.trim();
 
 /* The email list. One switch in the CMS shows or hides both buttons
    (this one and the one on the last screen). With the switch on and no
@@ -33,6 +43,10 @@ const person = {
   email: SITE.email,
   sameAs: [SITE.facebook],
   url: SITE.url,
+  worksFor: { '@id': `${SITE.url}/#business` },
+  knowsAbout,
+  ...(aboutLead ? { description: aboutLead } : {}),
+  ...(aboutImage ? { image: aboutImage } : {}),
 };
 
 const services = (page?.packages?.items ?? []).map((p) => ({
@@ -40,12 +54,22 @@ const services = (page?.packages?.items ?? []).map((p) => ({
   name: p.name,
   provider: { '@id': `${SITE.url}/#business` },
   serviceType: 'Pinterest marketing',
+  ...(p.summary ? { description: p.summary } : {}),
+  areaServed: { '@type': 'Country', name: 'United States' },
   offers: {
     '@type': 'Offer',
     price: String(p.price).replace(/[^0-9.]/g, ''),
     priceCurrency: 'USD',
     availability: 'https://schema.org/InStock',
     description: p.cadence ? `${p.price} ${p.cadence}` : p.price,
+    ...(/month/i.test(p.cadence ?? '') ? {
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: String(p.price).replace(/[^0-9.]/g, ''),
+        priceCurrency: 'USD',
+        unitText: 'MONTH',
+      },
+    } : {}),
   },
 }));
 
@@ -69,6 +93,15 @@ const faqs = (page?.faq?.items ?? [])
 const graph = [
   person,
   {
+    '@type': 'WebSite',
+    '@id': `${SITE.url}/#website`,
+    url: SITE.url,
+    name: SITE.name,
+    alternateName: SITE.shortName,
+    publisher: { '@id': `${SITE.url}/#business` },
+    inLanguage: 'en-US',
+  },
+  {
     '@type': 'ProfessionalService',
     '@id': `${SITE.url}/#business`,
     name: SITE.name,
@@ -77,6 +110,10 @@ const graph = [
     email: SITE.email,
     founder: { '@id': `${SITE.url}/#kandace` },
     areaServed: { '@type': 'Country', name: 'United States' },
+    logo,
+    image: shareImage,
+    knowsAbout,
+    ...(priceRange ? { priceRange } : {}),
     address: { '@type': 'PostalAddress', addressRegion: SITE.region, addressCountry: SITE.country },
     sameAs: [SITE.facebook],
     ...(reviews.length ? { review: reviews } : {}),
@@ -88,7 +125,11 @@ const graph = [
     url: canonical,
     name: title,
     description,
-    isPartOf: { '@id': `${SITE.url}/#business` },
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    about: { '@id': `${SITE.url}/#business` },
+    primaryImageOfPage: { '@type': 'ImageObject', url: shareImage, width: 1200, height: 630 },
+    inLanguage: 'en-US',
+    dateModified: new Date().toISOString(),
   },
 ];
 
@@ -119,7 +160,18 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={SITE.shareImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={shareImage} />
+    <meta name="twitter:image:alt" content={SITE.shareImageAlt} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
