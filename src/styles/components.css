@@ -2597,7 +2597,9 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
    Every size and position below is measured off her mockup as a share of
    its width (1u = 1% of it), so on a desktop the screen is her drawing at
    any size; on a short, wide window 1u shrinks so it all fits under the
-   header. The coral is the approved deeper coral. */
+   header. The coral is the approved deeper coral. Her layout is kept as
+   drawn but moved 5.6u right, so the group as a whole sits in the middle
+   of the screen. */
 .stats__highlight { margin: var(--sp-4) 0 0; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.6em; row-gap: 0.2em; }
 .stats__highlight-value {
   font-family: var(--font-display);
@@ -2626,7 +2628,7 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
     padding: 0;
   }
   /* heading: baseline at 16.45u, text starting 5.69u in */
-  #pinterest-stats > .act__inner:not(.act__inner--after-band) { padding: calc(var(--st-head-top, 13.2) * var(--su)) 0 0 calc(5.69 * var(--su)); }
+  #pinterest-stats > .act__inner:not(.act__inner--after-band) { padding: calc(var(--st-head-top, 13.2) * var(--su)) 0 0 calc(11.3 * var(--su)); }
   #pinterest-stats h2 {
     font-size: calc(3.97 * var(--su));
     line-height: 1;
@@ -2646,7 +2648,7 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
     grid-template-columns: repeat(auto-fill, calc(27.08 * var(--su)));
     gap: 0;
     margin: 0;
-    padding: calc(var(--st-num-top, 3.08) * var(--su)) 0 0 calc(6.25 * var(--su));
+    padding: calc(var(--st-num-top, 3.08) * var(--su)) 0 0 calc(11.86 * var(--su));
   }
   #pinterest-stats .stats__band .stat { gap: 0; }
   #pinterest-stats .stats__band .stat__value { font-size: calc(5.35 * var(--su)); line-height: 1; }
@@ -2659,7 +2661,7 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
     color: #fff;
   }
   /* the big coral figure and its line, on one baseline at 42.0u */
-  #pinterest-stats .act__inner--after-band { padding: 0 0 0 calc(5.69 * var(--su)); }
+  #pinterest-stats .act__inner--after-band { padding: 0 0 0 calc(11.3 * var(--su)); }
   #pinterest-stats .stats__highlight {
     margin: calc(var(--st-hl-top, 2.63) * var(--su)) 0 0;
     flex-wrap: nowrap;
