@@ -9,7 +9,7 @@ Everything you might want to change on your website is in this editor, and this 
 
 - **Getting in:** go to app.pagescms.org, click **Sign in with GitHub**, and open **PinterestMarketing**. Bookmark that page so it's one click next time.
 - **Nothing goes live until you click Save.** Type as much as you like, then save when you're happy.
-- **After you save, your site updates on its own in about two minutes.** Refresh your site to see it. If it still looks old, hold Shift and refresh again (on a Mac, Command + Shift + R).
+- **After you save, your site updates on its own in about two minutes.** Until then it keeps showing the last version, then switches over all at once, so visitors never see old and new words mixed. Refresh your site to see it. A tab you already had open keeps showing the old version until you refresh it. If it still looks old, hold Shift and refresh again (on a Mac, Command + Shift + R).
 - **You can't permanently break anything.** Every save is kept, and any earlier version can be brought back.
 - **Some boxes can't be left empty.** If a save won't go through, look for a box that needs filling in.
 - **Every box has a note under it saying where it shows on the page** (for example, "the small capital-letter line above the heading" or "the paragraph under the heading"), so you always know which spot you're filling. The note also mentions anything special about that box.
