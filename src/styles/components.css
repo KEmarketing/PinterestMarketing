@@ -47,7 +47,10 @@ li::marker { color: var(--leaf); }
 .act {
   position: sticky;
   top: 0;
-  min-height: calc(100svh - var(--header-h, 0px));
+  min-height: calc(100vh - var(--header-h, 0px));
+  /* the full window with the phone's address bar tucked away, so a
+     screen never comes up short and lets the one behind it show */
+  min-height: calc(100lvh - var(--header-h, 0px));
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -281,10 +281,30 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
            hundred pixels of whatever is holding. Its height is fluid
            (it wraps to two rows on a phone) so it is measured, published
            as --header-h for the stylesheet, and re-measured on resize. */
+        /* On a phone the browser's address bar and toolbar slide away as
+           you scroll and come back when you scroll up, so the window's
+           height keeps changing. Measuring against that made every screen
+           re-pin mid scroll (a jump, on a different screen each time), and
+           a screen measured with the bars showing came up short once they
+           slid away, so the screen behind it peeked through underneath.
+           So every screen is sized and pinned against the LARGEST height
+           the window has (bars hidden, which is how it is while you scroll
+           down): each screen always fills the whole window, and nothing
+           moves when the bars come and go. On a computer the two heights
+           are the same. */
+        var probe = document.createElement('div');
+        probe.setAttribute('aria-hidden', 'true');
+        probe.style.cssText = 'position:fixed;top:0;left:0;width:0;height:100vh;height:100lvh;visibility:hidden;pointer-events:none;';
+        document.body.appendChild(probe);
+        function screenHeight() {
+          var h = probe.getBoundingClientRect().height;
+          return h > 0 ? Math.max(h, window.innerHeight) : window.innerHeight;
+        }
+
         function fit() {
           var hh = header ? header.offsetHeight : 0;
           document.documentElement.style.setProperty('--header-h', hh + 'px');
-          var avail = window.innerHeight - hh;
+          var avail = screenHeight() - hh;
           for (var i = 0; i < acts.length; i++) {
             var a = acts[i];
             a.style.top = '';
@@ -312,9 +332,19 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
           document.addEventListener('toggle', fit, true);
         }
 
-        var t;
+        /* Re-measure only when the size that matters changes: the width
+           (a phone turned sideways, a desktop window resized) or the
+           largest height. The bars sliding in and out change neither,
+           so scrolling never triggers a re-pin. */
+        var lastW = window.innerWidth, lastH = screenHeight(), t;
         window.addEventListener('resize', function () {
-          clearTimeout(t); t = setTimeout(fit, 150);
+          clearTimeout(t);
+          t = setTimeout(function () {
+            var w = window.innerWidth, h = screenHeight();
+            if (w === lastW && Math.abs(h - lastH) < 2) return;
+            lastW = w; lastH = h;
+            fit();
+          }, 150);
         });
         if (reduce.addEventListener) reduce.addEventListener('change', fit);
       })();
