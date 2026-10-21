@@ -2692,3 +2692,12 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
   #pinterest-stats .stats__highlight-value { font-size: clamp(2.8rem, 2.2rem + 2.5vw, 3.6rem); }
   #pinterest-stats .stats__note { margin-top: var(--sp-2); }
 }
+
+/* Closing: the palm, brought in so more of it shows, as Kandace asked.
+   Sized and placed as a share of the screen's width rather than in
+   pixels, so it sits in the same spot and at the same size on every
+   desktop screen, as in her mockup, instead of slipping off the edge on
+   a wide one. */
+@media (min-width: 64rem) {
+  #book > .frond--tl { width: 62.4vw; left: -28vw; top: -22.7vw; }
+}
