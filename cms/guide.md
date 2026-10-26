@@ -202,4 +202,4 @@ Google says there's no special trick for its AI features: the same things that h
 
 ## What's not in the editor (on purpose)
 
-Your logo, colors, fonts, layout and the order of the sections are kept out of the editor so your site always stays on brand. Want something like that changed, a new page added, or help with anything else? Email hello@rootlineweb.co.
+Your logo, colors, fonts, layout and the order of the sections are built into your site's code, so they're kept out of the editor. Changing them there could break how your site looks or works, so they're locked to keep it safe. Want something like that changed, a new page added, or help with anything else? Email hello@rootlineweb.co.
