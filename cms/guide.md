@@ -10,7 +10,7 @@ Everything you might want to change on your website is done in your editor, and 
 - **Getting in:** click **Open your editor** at the top of this page. It opens in a new tab, so this guide stays open next to it. If it asks you to sign in, click **Sign in with GitHub**.
 - **Nothing goes live until you click Save.** Type as much as you like, then save when you're happy.
 - **After you save, your site updates on its own in about two minutes.** Until then it keeps showing the last version, then switches over all at once, so visitors never see old and new words mixed. Refresh your site to see it. A tab you already had open keeps showing the old version until you refresh it. If it still looks old, hold Shift and refresh again (on a Mac, Command + Shift + R).
-- **You can't permanently break anything.** Every save is kept, and any earlier version can be brought back.
+- **You can't permanently break anything.** Every save is kept, and any earlier version can be brought back. "If something goes wrong" near the end of this guide walks you through every fix.
 - **Some boxes can't be left empty.** If a save won't go through, look for a box that needs filling in.
 - **Every box has a note under it saying where it shows on the page** (for example, "the small capital-letter line above the heading" or "the paragraph under the heading"), so you always know which spot you're filling. The note also mentions anything special about that box.
 
@@ -202,6 +202,154 @@ Google says there's no special trick for its AI features: the same things that h
 - **Google Business Profile: only if you ever meet clients in person.** Google's rules say a profile is for businesses that see customers face to face, either at your location or theirs. If you do, you can set one up as a service-area business with your home address hidden. If you work fully online, Google lists online-only businesses as not eligible, and a profile that breaks the rules can be suspended. Either way, the testimonials on your site help people trust you, so keep adding them.
 - **Skip the old tricks.** Stuffing keywords, buying links, paying for directory listings, or mass-producing AI-written pages no longer work, and some of them are against Google's rules now.
 - **Results take time.** New sites usually take a few weeks to a few months to show up well. Consistency wins, just like Pinterest.
+
+## If something goes wrong
+
+Nothing you do in your editor can permanently break your site. Two things protect you:
+
+- **A save that can't be published never goes live.** If something in a save stops your site from building, your live site simply keeps showing the last version that worked.
+- **Every save is kept forever.** Any earlier version of any word, photo or setting can be brought back.
+
+Find what happened below and follow the steps in order.
+
+### Undo something before you've saved
+
+Nothing goes live until you click **Save**, so just close the editor tab without saving. Everything you typed is thrown away, and your site stays exactly as it was. Open your editor again to start fresh.
+
+### Undo something you already saved
+
+This is the everyday fix: copying back what it said before.
+
+1. Click **Open your editor** at the top of this page.
+2. Open the part you changed: **Your page** or **Site settings**.
+3. Click the **clock button** at the top right, next to **Save**. It lists every save, newest first.
+4. Click the save that caused the problem. GitHub opens in a new tab and shows exactly what changed: **red** lines are what it said before, **green** lines are what you changed it to.
+5. In the red lines, find the words that were on your page. They come right after the box's name (like `heading:`), sometimes inside quote marks. Copy just those words, not the name or the quote marks, and paste them back into the same box in your editor.
+6. Click **Save**. Your site updates in about two minutes.
+
+### Put the whole site back right now (emergency)
+
+Use this when the site looks broken and you need it fixed this minute, before you've worked out what went wrong.
+
+1. Go to **dash.cloudflare.com** and log in.
+2. In the left sidebar, click **Workers & Pages**, then click **pinterestmarketing**.
+3. You're on the **Deployments** tab. Under **All deployments**, each row is one version of your site, newest at the top. The gray line under **main** in each row says which save it was.
+4. Find the last row from **before** the problem that has a green check mark.
+5. Click the **three dots** at the far right of that row, then **Rollback to this deployment**, and confirm.
+6. Your live site switches back within seconds.
+
+**Important:** a rollback is a bandage, not the fix. Your editor still holds the change that caused the problem, and the next time you save anything, your site is published again from what's in your editor. So before your next save, undo the problem change in your editor (the steps above).
+
+### Bring back a whole section or page from an earlier date
+
+If a lot went wrong and retyping it would take forever, you can put a whole file back the way it was. **Your page** is one file and **Site settings** is another.
+
+1. In your editor, open **Your page** or **Site settings**, click the **clock button**, and click the last save from **before** things went wrong. GitHub opens.
+2. Click **Browse files** at the top right. You're now looking at your site exactly as it was after that save.
+3. Click into the file:
+   - **Your page:** click **src**, then **content**, then **pages**, then **index.md**.
+   - **Site settings:** click **src**, then **data**, then **site.json**.
+4. Click the **Copy raw file** button (two overlapping squares, top right of the file).
+5. Open today's version of that file to edit it (sign in to GitHub if it asks):
+   - **Your page:** github.com/KEmarketing/PinterestMarketing/edit/main/src/content/pages/index.md
+   - **Site settings:** github.com/KEmarketing/PinterestMarketing/edit/main/src/data/site.json
+6. Click inside the text, select everything (Command + A on a Mac, Ctrl + A on Windows) and paste (Command + V or Ctrl + V).
+7. Click the green **Commit changes...** button, then **Commit changes** in the box that opens.
+8. Your site updates in about two minutes.
+
+This undoes **every** change to that file made after the save you picked, so use it for big messes and the copy-back steps for small ones.
+
+### The Save button won't work or shows an error
+
+- Look for a box outlined in red or marked **Required**. Some boxes can't be left empty.
+- You may have been signed out. Copy anything long you typed into a note first, then refresh the page and sign in with GitHub again.
+- If it still won't save, save smaller changes one at a time to find the one it doesn't like.
+
+### You saved, but your site didn't change
+
+1. Wait three minutes, then refresh. Hold Shift while you refresh (on a Mac, Command + Shift + R).
+2. Check on your phone, or in a private browser window. If it's right there, your computer was just showing an old copy.
+3. Still old? Go to **dash.cloudflare.com**, then **Workers & Pages**, then **pinterestmarketing**, and look at the top row under **All deployments**:
+   - **Green check:** it's live. Your browser is holding on to an old copy; refresh again holding Shift.
+   - **Still building:** wait a minute and check again.
+   - **Red X (failed):** your live site is safe and still showing the version before. Undo your last change in the editor and save again. If you're sure nothing was wrong with your change, click the **three dots** on that row and choose **Retry deployment**, because sometimes it's just a hiccup on Cloudflare's end.
+   - **Your save isn't listed at all:** see "Your saves stopped publishing" below.
+
+### Your saves stopped publishing
+
+If you save and nothing new appears under **All deployments** in Cloudflare:
+
+1. In Cloudflare, go to **Workers & Pages**, **pinterestmarketing**, then the **Settings** tab.
+2. Under **Build**, check **Git repository** says **KEmarketing/PinterestMarketing**, and **Branch control** says **Automatic deployments: Enabled**.
+3. If automatic deployments got turned off, click the pencil next to **Branch control** and turn them back on.
+4. If the Git repository is missing or shows an error, click **Manage**. It opens GitHub, where you choose **KEmarketing** and make sure **PinterestMarketing** is selected, then save.
+5. Back on the **Deployments** tab, your next save should show up within a minute.
+
+### A photo is missing or broken on the page
+
+- This almost always means a picture was deleted from **Media** while the page still used it. Open the box where the photo shows, pick or upload a picture again, and **Save**.
+- Before deleting anything in **Media**, make sure you've replaced it everywhere it's used.
+- If the page is slow to load, a photo is probably too big. Shrink it at squoosh.app (free) and upload it again.
+
+### A button goes to the wrong place
+
+- **Booking buttons** all use **Site settings, Booking link**. Click a booking button on your live site after saving to test it.
+- **Email list buttons** use **Your page, Email list, Signup link**.
+- Every link needs to start with **https://**. The easiest way is to copy it straight from your browser's address bar.
+
+### Words look wrong on the page
+
+- **Stars or underscores showing:** each highlight needs two on **both** sides, with no space inside, like `**ACTION!**` or `__search engine__`.
+- **Odd spacing:** an empty line makes a new paragraph. Take out extra empty lines.
+- **Something looks cramped:** short spots like the strips, stats and package names are made for short text. Keep new text about the same length as what's there now.
+
+### You can't sign in to your editor
+
+Your editor signs in with your GitHub account, **KEmarketing**.
+
+- **Forgot your password:** go to github.com, click **Sign in**, then **Forgot password?**. The reset email goes to your Gmail.
+- **Two-factor login:** if you turn it on (a good idea), GitHub gives you **recovery codes**. Download them and keep them somewhere safe outside your phone. If you lose your phone and those codes, you can be locked out for good.
+- **The editor says it can't find your site:** the editor's access to it was removed. Go to github.com/apps/pages-cms, click **Configure** (or **Install**), choose **KEmarketing**, pick **Only select repositories**, choose **PinterestMarketing**, and click **Save** (or **Install**).
+
+### The editor itself is down
+
+Pages CMS (your editor) is a separate free service and very rarely has an outage. Your site keeps working the whole time; you just can't edit until it's back. Wait a few hours and try again. If a change truly can't wait, use the GitHub edit links in "Bring back a whole section or page" above, find the words you want to change, change only those words (leave the box name, quote marks and spacing on that line exactly as they are), and click **Commit changes...**, then **Commit changes**.
+
+### The whole site is down
+
+1. Check it on your phone using mobile data instead of Wi-Fi. If it works there, the problem is your internet, not your site.
+2. Check cloudflarestatus.com. If Cloudflare is having an outage, wait; it fixes itself.
+3. Try pinterestmarketing.pages.dev. If that works but kandaceemory.com doesn't, the problem is your domain (see "Your domain" below).
+4. If neither works and Cloudflare is fine, use "Put the whole site back right now" above.
+
+### Your domain (kandaceemory.com)
+
+- **It's registered with Florida Registered Agent** (unless you've since moved it to Porkbun). It's paid through **July 7, 2027**, and auto-renew is on. Keep your account and payment details there up to date. If your domain ever expires, your site and your @kandaceemory.com email both stop working.
+- **Your domain points to Cloudflare through two nameservers:** clayton.ns.cloudflare.com and penny.ns.cloudflare.com. Never change these. Don't click anything at your registrar that offers to "set up a website," "use our nameservers" or "connect a site builder," because that would take your site down.
+- **If the nameservers ever get changed,** put those two back: in Florida Registered Agent, click **Services**, **Domains**, **kandaceemory.com**, then on the **General** tab find **Nameserver Settings**, click **Edit**, choose **External nameservers**, enter the two above, and save. Your site comes back within a few hours.
+- **Moving the domain to Porkbun:** when you transfer, leave the box for setting up DNS on Porkbun **unchecked**. Your nameservers carry over and your site stays up the whole time.
+- **Your email:** your @kandaceemory.com inboxes depend on email records saved in Cloudflare. In Cloudflare, never delete records under **DNS** that mention "mail," "MX," "spf," "dmarc" or "domainkey."
+
+### Letting a helper or developer in
+
+- **A helper who edits words and photos:** they need their own free GitHub account. On github.com, open **PinterestMarketing**, click **Settings**, then **Collaborators**, then **Add people**, and enter their GitHub username. They sign in to the editor at app.pagescms.org with their own GitHub. To remove them later, go back to **Collaborators** and remove them.
+- **Never share your passwords.** Give people their own access instead, so you can take it back.
+- **A new web developer:** your site is a standard Astro website, and all of its files are in your GitHub account at github.com/KEmarketing/PinterestMarketing. Any web developer can pick it up from there. Send them the link to this guide too.
+
+### Your accounts (keep these safe)
+
+- **GitHub (KEmarketing):** holds every file of your website and is how you sign in to your editor.
+- **Cloudflare (your Gmail):** publishes your site, runs your domain's settings, and keeps your past versions.
+- **Florida Registered Agent (or Porkbun, if you move it):** where your domain is registered.
+- **Acuity:** your booking calendar.
+- **Google Search Console and Bing Webmaster Tools:** once you set them up.
+
+Everything above is free except your domain's yearly renewal. Cloudflare's free plan publishes up to 500 saves a month, far more than you'll ever use.
+
+### Quick checks once in a while
+
+- **Every month or so:** click each button on your live site, including booking, email, Facebook and the email list, to make sure they still go to the right place.
+- **Every year:** update your Pinterest stats, check your prices and packages, and make sure your domain renewal went through.
 
 ## What's not in the editor (on purpose)
 

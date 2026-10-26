@@ -162,7 +162,14 @@ const sections = Guide.getHeadings().filter((h) => h.depth === 2);
           ['menu', 'nav', 'navigation'],
           ['paragraph', 'paragraphs', 'new line', 'line break', 'enter', 'spacing', 'formatting', 'bold', 'italic'],
           ['booking', 'book', 'calendar', 'call', 'acuity'],
-          ['verify', 'verification', 'ownership', 'code', 'claim']
+          ['verify', 'verification', 'ownership', 'code', 'claim'],
+          ['undo', 'revert', 'restore', 'rollback', 'roll back', 'go back', 'bring back', 'earlier version', 'mistake'],
+          ['broken', 'broke', 'wrong', 'error', 'problem', 'fix', 'not working'],
+          ['showing', 'updated', 'updating', 'publish', 'published', 'publishing', 'saved', 'live'],
+          ['down', 'offline', 'outage', 'not loading'],
+          ['password', 'login', 'log in', 'sign in', 'locked out'],
+          ['domain', 'nameserver', 'nameservers', 'registrar', 'renewal', 'expire', 'porkbun'],
+          ['helper', 'collaborator', 'assistant', 'developer', 'access']
         ];
 
         /* Split the guide into sections at every h2 and h3, so a search
@@ -224,7 +231,7 @@ const sections = Guide.getHeadings().filter((h) => h.depth === 2);
           });
         }
         /* Everyday words that don't help find anything ("how do I change my..."). */
-        var filler = ['a','an','the','my','i','me','to','do','how','can','where','what','is','it','on','in','of','for','and','change','changing','edit','editing','update','updating','fix','want','need','add','adding','new','put','find','make','site','website','page','set','up','setup','get','started','start','use','with','about','your','you','show','shows','see'];
+        var filler = ['a','an','the','my','i','me','to','do','how','can','where','what','is','it','on','in','of','for','and','change','changing','edit','editing','update','updating','fix','want','need','add','adding','new','put','find','make','site','website','page','set','up','setup','get','started','start','use','with','about','your','you','show','shows','see','not','isn','isnt','does','doesn','doesnt','didn','didnt','why','still','anymore','someone','else','let','give'];
 
         /* Whole words for short terms, word starts for longer ones, so
            "ai" doesn't match "maintain" but "photo" still finds "photos". */
