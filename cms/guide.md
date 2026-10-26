@@ -5,6 +5,8 @@
 
 Everything you might want to change on your website is in this editor, and this guide walks through all of it. It always lives at the top of the menu, so you never have to go looking for it.
 
+**Looking for something specific?** Open the searchable version at [kandaceemory.com/guide](https://kandaceemory.com/guide) and type what you want to change, like "photo", "price" or "email list". It's this same guide with a search box, and it stays up to date on its own.
+
 ## The basics
 
 - **Getting in:** go to app.pagescms.org, click **Sign in with GitHub**, and open **PinterestMarketing**. Bookmark that page so it's one click next time.
