@@ -199,7 +199,7 @@ Google says there's no special trick for its AI features: the same things that h
 
 ### Good to know
 
-- **Google Business Profile isn't for you, and that's okay.** Google only allows it for businesses that meet customers face to face, and online-only businesses aren't eligible. Trying anyway can get a listing suspended. The testimonials on your site do that job instead, so keep adding them.
+- **Google Business Profile: only if you ever meet clients in person.** Google's rules say a profile is for businesses that see customers face to face, either at your location or theirs. If you do, you can set one up as a service-area business with your home address hidden. If you work fully online, Google lists online-only businesses as not eligible, and a profile that breaks the rules can be suspended. Either way, the testimonials on your site help people trust you, so keep adding them.
 - **Skip the old tricks.** Stuffing keywords, buying links, paying for directory listings, or mass-producing AI-written pages no longer work, and some of them are against Google's rules now.
 - **Results take time.** New sites usually take a few weeks to a few months to show up well. Consistency wins, just like Pinterest.
 
