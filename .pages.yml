@@ -1,6 +1,6 @@
-# The editor Kandace uses (Pages CMS). Three things show in its menu:
-# the guide, the page itself, and site settings. Every box says where
-# on the page it shows.
+# The editor Kandace uses (Pages CMS). Two things show in its menu:
+# the page itself and site settings. Every box says where on the page
+# it shows. Her guide lives on the site at /guide (from cms/guide.md).
 
 media:
   input: public/images
@@ -16,19 +16,6 @@ media:
   - gif
   rename: safe
 content:
-- name: guide
-  label: 'Start here: how to edit your site'
-  type: file
-  path: cms/guide.md
-  fields:
-  - name: body
-    label: false
-    type: rich-text
-    readonly: true
-    options:
-      format: markdown
-      switcher: false
-      media: false
 - name: page
   label: Your page
   type: file

@@ -3,22 +3,19 @@
 
 # Your site guide
 
-Everything you might want to change on your website is in this editor, and this guide walks through all of it. It always lives at the top of the menu, so you never have to go looking for it.
-
-**Looking for something specific?** Open the searchable version at [kandaceemory.com/guide](https://kandaceemory.com/guide) and type what you want to change, like "photo", "price" or "email list". It's this same guide with a search box, and it stays up to date on its own.
+Everything you might want to change on your website is done in your editor, and this guide walks through all of it. Type what you're looking for in the search box at the top, like "photo", "price" or "email list", and only the parts that answer it stay on screen. Bookmark this page so it's always one click away.
 
 ## The basics
 
-- **Getting in:** go to app.pagescms.org, click **Sign in with GitHub**, and open **PinterestMarketing**. Bookmark that page so it's one click next time.
+- **Getting in:** click **Open your editor** at the top of this page. It opens in a new tab, so this guide stays open next to it. If it asks you to sign in, click **Sign in with GitHub**.
 - **Nothing goes live until you click Save.** Type as much as you like, then save when you're happy.
 - **After you save, your site updates on its own in about two minutes.** Until then it keeps showing the last version, then switches over all at once, so visitors never see old and new words mixed. Refresh your site to see it. A tab you already had open keeps showing the old version until you refresh it. If it still looks old, hold Shift and refresh again (on a Mac, Command + Shift + R).
 - **You can't permanently break anything.** Every save is kept, and any earlier version can be brought back.
 - **Some boxes can't be left empty.** If a save won't go through, look for a box that needs filling in.
 - **Every box has a note under it saying where it shows on the page** (for example, "the small capital-letter line above the heading" or "the paragraph under the heading"), so you always know which spot you're filling. The note also mentions anything special about that box.
 
-## What's in the menu
+## What's in your editor's menu
 
-- **Start here:** this guide.
 - **Your page:** every word, photo and button on your website. The sections are numbered 1 to 13 in the same order you see them on the page, top to bottom.
 - **Site settings:** the things used in more than one spot (your booking link, email and Facebook), the menu words, the small print, your share picture, your profile links and your ownership codes for Google, Bing and Pinterest.
 
@@ -159,7 +156,7 @@ This is how you tell Google your site exists and see how people find you, includ
 1. Go to search.google.com/search-console and sign in with your Google account.
 2. Click **Add property**, choose **URL prefix**, and enter `https://kandaceemory.com/`.
 3. Choose the **HTML tag** method and copy the tag.
-4. Here in the editor, open **Site settings**, paste it into **Ownership codes, Google Search Console code**, and click **Save**.
+4. In your editor, open **Site settings**, paste it into **Ownership codes, Google Search Console code**, and click **Save**.
 5. Wait about two minutes, go back to Search Console and click **Verify**.
 6. In Search Console, open **Sitemaps**, type `sitemap-index.xml` and click **Submit**.
 

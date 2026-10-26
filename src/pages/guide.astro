@@ -1,7 +1,6 @@
 ---
 /* Kandace's site guide, searchable. The words come from cms/guide.md,
-   the same file she reads at the top of her editor, so there is only
-   ever one copy to keep up to date. This page is just for her: it is
+   so there is only ever one copy to keep up to date. This page is just for her: it is
    kept out of search results and out of the sitemap. */
 import * as Guide from '../../cms/guide.md';
 import { SITE } from '../site.config.mjs';
@@ -23,14 +22,14 @@ const sections = Guide.getHeadings().filter((h) => h.depth === 2);
         <div class="g-bar">
           <p class="g-title">Your site guide</p>
           <nav class="g-links">
-            <a href="https://app.pagescms.org" target="_blank" rel="noopener">Open your editor</a>
+            <a class="g-edit" href="https://app.pagescms.org/kemarketing/pinterestmarketing/main" target="_blank" rel="noopener">Open your editor<span class="g-sr"> (opens in a new tab)</span></a>
             <a href="/">View your site</a>
           </nav>
         </div>
         <label class="g-label" for="g-search">What do you want to change or set up?</label>
         <div class="g-field">
           <input id="g-search" type="search" autocomplete="off" spellcheck="false"
-                 placeholder="Try: photo, price, button, email list, Google" />
+                 placeholder="Try: photo, price, email list" />
           <button type="button" class="g-clear" hidden aria-label="Clear the search">Clear</button>
         </div>
         <p class="g-status" aria-live="polite"></p>
@@ -94,7 +93,11 @@ const sections = Guide.getHeadings().filter((h) => h.depth === 2);
       .g-bar { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1rem; }
       .g-title { margin: 0; font-family: var(--font-display); font-size: 1.9rem; font-weight: 600; line-height: 1.1; }
       .g-links { display: flex; gap: 1rem; font-size: 0.85rem; }
+      .g-links { align-items: center; }
       .g-links a { color: #fff; }
+      .g-links a.g-edit { background: var(--gold); color: var(--navy-deep); font-weight: 700; text-decoration: none; padding: 0.4rem 0.85rem; border-radius: 999px; }
+      .g-links a.g-edit:hover, .g-links a.g-edit:focus-visible { background: #fff; }
+      .g-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
       .g-label { display: block; margin: 0.75rem 0 0.35rem; font-size: 0.9rem; font-weight: 600; }
       .g-field { display: flex; gap: 0.5rem; }
       #g-search { flex: 1; min-width: 0; font: inherit; font-size: 1.05rem; padding: 0.7rem 0.9rem; border: 2px solid var(--mint); border-radius: 0.5rem; background: #fff; color: var(--ink); }
