@@ -333,6 +333,7 @@ Pages CMS (your editor) is a separate free service and very rarely has an outage
 ### Letting a helper or developer in
 
 - **A helper who edits words and photos:** they need their own free GitHub account. On github.com, open **PinterestMarketing**, click **Settings**, then **Collaborators**, then **Add people**, and enter their GitHub username. They sign in to the editor at app.pagescms.org with their own GitHub. To remove them later, go back to **Collaborators** and remove them.
+- **Someone who needs Cloudflare** (a developer who has to roll your site back or fix your domain): go to dash.cloudflare.com, scroll down the left sidebar to **Manage account** and click **Members**, then click **Invite members** (blue button, top right). Type their email under **Add email addresses**. Under **Assign roles**, check **Administrator**: they can fix anything on your site and domain, but can't touch your billing or who has access. Click **Invite members** at the bottom. They get an email to accept. To remove them later, go back to **Members**, click the **three dots** next to their email, and remove them.
 - **Never share your passwords.** Give people their own access instead, so you can take it back.
 - **A new web developer:** your site is a standard Astro website, and all of its files are in your GitHub account at github.com/KEmarketing/PinterestMarketing. Any web developer can pick it up from there. Send them the link to this guide too.
 
