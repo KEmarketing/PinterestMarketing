@@ -283,6 +283,11 @@ details p { margin-top: 0; padding-bottom: var(--sp-3); }
      under it. It is wide and shallow, so it is set by width. */
   width: min(300px, 72vw);
   height: auto;
+  /* Held to her logo's own shape, so a different logo she uploads is
+     fitted inside the same spot instead of pushing the header around. */
+  aspect-ratio: 922 / 143;
+  object-fit: contain;
+  object-position: center;
 }
 
 /* Section links. They scroll rather than navigate, so they are set quietly:
@@ -1503,7 +1508,11 @@ summary::after { color: var(--navy); opacity: 0.65; }
   width: min(210px, 62vw);
   height: auto;
   flex: none;
+  /* Same idea as the header logo: any logo fits this spot. */
+  aspect-ratio: 536 / 206;
+  object-fit: contain;
 }
+@media (min-width: 80rem) { .site-footer__wordmark { object-position: left center; } }
 .site-footer__nav {
   display: flex;
   flex-wrap: wrap;
@@ -2301,7 +2310,7 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
     gap: var(--sp-2);
   }
   .wordmark { flex: 0 1 auto; justify-content: flex-start; }
-  .wordmark__mark { width: min(210px, 56vw); }
+  .wordmark__mark { width: min(210px, 56vw); object-position: left center; }
 
   .menu-toggle {
     display: inline-flex;
@@ -2318,6 +2327,8 @@ p, li, dd, dt, blockquote, figcaption, h3, h4, .stat__note, .stat__label { text-
     text-transform: uppercase;
     cursor: pointer;
   }
+  /* Her own word for it stays on one line, however long. */
+  .menu-toggle__label { white-space: nowrap; }
   .menu-toggle__bars { position: relative; display: block; width: 22px; height: 14px; }
   .menu-toggle__bars span {
     position: absolute;

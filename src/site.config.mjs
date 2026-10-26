@@ -14,7 +14,12 @@ import settings from './data/site.json' with { type: 'json' };
 
 export const SITE = {
   url: 'https://kandaceemory.com',
-  name: 'Kandace Emory Pinterest Marketing',
+  /* her business name, from Site settings */
+  name: String(settings.name ?? '').trim() || 'Kandace Emory Pinterest Marketing',
+  /* her logos and browser-tab icon, from Site settings */
+  logo: settings.logo || '/images/logo-top.webp',
+  logoFooter: settings.logoFooter || '/images/logo-footer.webp',
+  icon: settings.icon || '/favicon.svg',
   shortName: 'Kandace Emory',
   email: settings.email,
   facebook: settings.facebook,
@@ -22,7 +27,7 @@ export const SITE = {
   region: 'FL',
   country: 'US',
   nav: settings.nav,
-  labels: settings.labels,
+  labels: { ...settings.labels, menu: String(settings.labels?.menu ?? '').trim() || 'Menu' },
   footerNote: settings.footerNote,
   /* the picture shown when the link is shared (texts, Facebook, LinkedIn) */
   shareImage: settings.shareImage || '/images/share.jpg',

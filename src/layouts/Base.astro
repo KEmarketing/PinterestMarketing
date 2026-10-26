@@ -17,7 +17,13 @@ const shareType = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', web
    uploads is left for the apps to measure */
 const shareIsDefault = SITE.shareImage === '/images/share.jpg';
 const aboutImage = page?.about?.image ? abs(page.about.image) : undefined;
-const logo = abs('/marks/logo-ke-horizontal-navy.webp');
+const logo = abs(SITE.logo);
+/* The built-in logos have known sizes, so the page doesn't shift while
+   they load. A logo she uploads is fitted into the same spot instead. */
+const logoTopSize = SITE.logo === '/images/logo-top.webp' ? { width: 922, height: 143 } : {};
+const logoFooterSize = SITE.logoFooter === '/images/logo-footer.webp' ? { width: 536, height: 206 } : {};
+const iconExt = String(SITE.icon).split('.').pop().toLowerCase();
+const iconType = { svg: 'image/svg+xml', png: 'image/png', webp: 'image/webp', jpg: 'image/jpeg', jpeg: 'image/jpeg', gif: 'image/gif', avif: 'image/avif' }[iconExt];
 /* What she does, in her own words from the page, for the search and
    answer engines that read the structured data below. */
 const knowsAbout = ['Pinterest marketing', 'Pinterest management', 'Pinterest keyword research', 'Pin design', 'Pinterest analytics'];
@@ -154,7 +160,7 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={SITE.icon} type={iconType} />
     <link rel="preload" href="/fonts/cormorant-garamond.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/cormorant-garamond-italic.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
@@ -196,14 +202,14 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
             the email list button. The logo is first in the markup so it
             leads on a phone, where the bar stacks. */}
         <a class="wordmark" href="/" aria-label={`${SITE.name}, back to top`}>
-          <img class="wordmark__mark" src="/marks/logo-ke-horizontal-navy.webp" alt={SITE.name} width="922" height="143" />
+          <img class="wordmark__mark" src={SITE.logo} alt={SITE.name} {...logoTopSize} />
         </a>
 
         {/* On a phone the links fold into a menu behind this button, so the
             frozen header is one slim row. Hidden on larger screens. */}
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
           <span class="menu-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
-          <span class="menu-toggle__label">Menu</span>
+          <span class="menu-toggle__label">{SITE.labels.menu}</span>
         </button>
 
         <div class="site-menu" id="site-menu">
@@ -640,7 +646,7 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
         <div class="site-footer__brand">
           {/* Her stacked wordmark, which already carries the name, so there
               is no typeset name beside it. */}
-          <img class="site-footer__wordmark" src="/marks/logo-ke-wordmark.webp" alt={SITE.name} width="536" height="206" loading="lazy" />
+          <img class="site-footer__wordmark" src={SITE.logoFooter} alt={SITE.name} {...logoFooterSize} loading="lazy" />
         </div>
 
         <nav class="site-footer__nav" aria-label="Sections of this page, footer">

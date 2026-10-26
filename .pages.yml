@@ -593,6 +593,32 @@ content:
   type: file
   path: src/data/site.json
   fields:
+  - name: name
+    label: Business name
+    type: string
+    required: true
+    description: 'Where it shows: the copyright line at the bottom of the footer, the name on the browser
+      tab, and the name Google and AI tools use for your business.'
+  - name: logo
+    label: Logo at the top
+    type: image
+    required: true
+    description: 'Where it shows: the middle of the menu bar at the top of every screen (on the left on
+      phones). It sits on a light background, so use your navy or dark version. A wide, short logo fills
+      the spot best; any other shape is fitted inside it, so it never pushes the menu around. Use a PNG
+      or WebP with a see-through background.'
+  - name: logoFooter
+    label: Logo in the footer
+    type: image
+    required: true
+    description: 'Where it shows: the bottom of the page, on dark navy, so use your light or colored
+      version (not navy). Any shape is fitted inside the spot. Use a PNG or WebP with a see-through
+      background.'
+  - name: icon
+    label: Browser tab icon (optional)
+    type: image
+    description: 'Where it shows: the tiny picture on the browser tab and in bookmarks. Use a square
+      PNG, at least 512 x 512. Leave it empty to keep your current KE monogram.'
   - name: booking
     label: Booking link
     type: string
@@ -662,6 +688,11 @@ content:
       type: string
       required: true
       description: 'Where it shows: the Facebook link text in the footer.'
+    - name: menu
+      label: Menu button word (phones)
+      type: string
+      required: true
+      description: 'Where it shows: next to the three lines that open the menu at the top, on phones.'
     description: The small hint words around the page.
   - name: footerNote
     label: Small print in the footer

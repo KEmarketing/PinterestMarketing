@@ -129,10 +129,13 @@ The heading, the paragraphs and the last line. Its button is the email list butt
 
 ## Site settings
 
+- **Business name:** the name in the copyright line, on the browser tab, and the one Google and AI tools use.
+- **Logo at the top** and **Logo in the footer:** click a logo to upload a new one. The top one sits on a light background, so use your navy version. The footer one sits on dark navy, so use a light or colored version. Use a PNG or WebP with a see-through background. Any shape fits; it's sized into the same spot so your menu never moves.
+- **Browser tab icon:** the tiny picture on browser tabs and bookmarks. A square PNG, at least 512 x 512. Leave it empty to keep your KE monogram.
 - **Booking link:** your Acuity link. Every booking button on the page uses it, so if it ever changes, change it here once.
 - **Email address** and **Facebook page link:** used in the Contact box and the footer.
 - **Menu links:** the words in the menu at the top and in the footer.
-- **Small labels:** the little "swipe" and "scroll" hints, and the Facebook link words.
+- **Small labels:** the little "swipe" and "scroll" hints, the Facebook link words, and the word on the phone menu button.
 - **Small print in the footer.**
 - **Your Pinterest profile link** and **Your other profile links:** not shown on the page. They tell Google and AI tools that these profiles and this site are the same business. Fill these in.
 - **Share picture:** what shows when someone shares your link.
@@ -202,4 +205,4 @@ Google says there's no special trick for its AI features: the same things that h
 
 ## What's not in the editor (on purpose)
 
-Your logo, colors, fonts, layout and the order of the sections are built into your site's code, so they're kept out of the editor. Changing them there could break how your site looks or works, so they're locked to keep it safe. Want something like that changed, a new page added, or help with anything else? Email hello@rootlineweb.co.
+Your colors, fonts, layout and the order of the sections are built into your site's code, so they're kept out of the editor. Changing them there could break how your site looks or works, so they're locked to keep it safe. Want something like that changed, a new page added, or help with anything else? Email hello@rootlineweb.co.
